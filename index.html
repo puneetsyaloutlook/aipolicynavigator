@@ -713,15 +713,21 @@ const FORM = { leg: "Legislation", exec: "Executive", vol: "Voluntary" };
 const NS = "http://www.w3.org/2000/svg";
 const tip = document.getElementById("tip");
 
-function showTip(d, c, i) {
+function showTip(d, c, i, mode) {
   document.querySelectorAll(".dot.active, tr.active").forEach(e => e.classList.remove("active"));
   document.querySelectorAll(`.dot[data-i="${i}"], tr[data-i="${i}"]`).forEach(e => e.classList.add("active"));
   tip.innerHTML = "";
   const b = document.createElement("b"); b.textContent = d.n;
   const mk = (t, cls) => { const s = document.createElement("span"); s.textContent = t; if (cls) s.className = cls; return s; };
-  tip.append(b,
-    mk(`Push: direction ${d.pushDir}, strength ${d.pushStr}`, "nums"), mk(d.pw),
-    mk(`Bite: direction ${d.respDir}, strength ${d.respStr} (enabling ${d.boost}, constraining ${d.bite})`, "nums"), mk(d.why), mk(d.bw),
+  const lean = v => v <= 100 / 3 ? "promotion" : v >= 200 / 3 ? "protection" : "mixed";
+  const bl = v => v <= 100 / 3 ? "enabling" : v >= 200 / 3 ? "constraining" : "balanced";
+  const pushLine = mode === "str"
+    ? `Push strength: ${d.pushStr} out of 100 (all eight push factors added)`
+    : `Push direction: ${d.pushDir} (0 is promotion, 100 is protection), so ${lean(d.pushDirRaw)}`;
+  const biteLine = mode === "str"
+    ? `Bite strength: ${d.respStr} out of 100 (average of constraining ${d.bite} and enabling ${d.boost})`
+    : `Bite direction: ${d.respDir} (0 is enabling, 100 is constraining), so ${bl(d.respDirRaw)}. Constraining bite is ${d.bite} and enabling bite is ${d.boost}.`;
+  tip.append(b, mk(pushLine, "nums"), mk(d.pw), mk(biteLine, "nums"), mk(d.why), mk(d.bw),
     mk(d.share == null ? "Private AI investment: no figure" : `Private AI investment: ${fmtShare(d.share)} of GDP`, "nums"));
   tip.hidden = false;
   const pr = c.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
@@ -824,11 +830,11 @@ function drawChart(id, cfg) {
   /* hit areas go on top, smallest last, so small dots inside large ones stay reachable */
   pts.forEach(pt => {
     const c = pt.c, h = el("circle", { class: "hit", cx: pt.cx, cy: pt.cy, r: Math.max(pt.r, 9) });
-    h.addEventListener("mouseenter", () => showTip(pt.d, c, pt.i));
+    h.addEventListener("mouseenter", () => showTip(pt.d, c, pt.i, cfg.x === "pushStr" ? "str" : "dir"));
     h.addEventListener("mouseleave", hideTip);
-    c.addEventListener("focus", () => showTip(pt.d, c, pt.i));
+    c.addEventListener("focus", () => showTip(pt.d, c, pt.i, cfg.x === "pushStr" ? "str" : "dir"));
     c.addEventListener("blur", hideTip);
-    h.addEventListener("click", () => showTip(pt.d, c, pt.i));
+    h.addEventListener("click", () => showTip(pt.d, c, pt.i, cfg.x === "pushStr" ? "str" : "dir"));
   });
 
   /* greedy label placement: try eight directions at three distances, keep the least crowded */
