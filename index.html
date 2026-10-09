@@ -722,11 +722,11 @@ function showTip(d, c, i, mode) {
   const lean = v => v <= 100 / 3 ? "promotion" : v >= 200 / 3 ? "protection" : "mixed";
   const bl = v => v <= 100 / 3 ? "enabling" : v >= 200 / 3 ? "constraining" : "balanced";
   const pushLine = mode === "str"
-    ? `Push strength: ${d.pushStr}`
-    : `Push direction: ${d.pushDir}, ${lean(d.pushDirRaw)}`;
+    ? `Push score: ${d.pushStr}`
+    : `Push score: ${d.pushDir}, ${lean(d.pushDirRaw)}`;
   const biteLine = mode === "str"
-    ? `Bite strength: ${d.respStr} (constraining ${d.bite}, enabling ${d.boost})`
-    : `Bite direction: ${d.respDir}, ${bl(d.respDirRaw)} (constraining ${d.bite}, enabling ${d.boost})`;
+    ? `Bite score: ${d.respStr} (constraining ${d.bite}, enabling ${d.boost})`
+    : `Bite score: ${d.respDir}, ${bl(d.respDirRaw)} (constraining ${d.bite}, enabling ${d.boost})`;
   tip.append(b, mk(pushLine, "nums"), mk(d.pw), mk(biteLine, "nums"), mk(d.why), mk(d.bw),
     mk(d.share == null ? "Private AI investment: no figure" : `Private AI investment: ${fmtShare(d.share)} of GDP`, "nums"));
   tip.hidden = false;
