@@ -258,19 +258,19 @@ td.chg { box-shadow: inset 3px 0 0 var(--rule); }
 .chart-block > h3 { padding-top: var(--space-sm); border-top: 1px solid var(--rule); }
 .panel > h2 { padding-top: var(--space-sm); border-top: 3px solid var(--rule); }
 /* charts page: question blocks */
-#panel-charts .chart-block { gap: var(--space-md); padding-top: var(--space-md); border-top: 3px solid var(--rule); }
-#panel-charts .chart-block + .chart-block { margin-top: var(--space-2xl); }
-#panel-charts .chart-block { scroll-margin-top: 110px; }
-#panel-charts .chart-no { margin: 0; }
-#panel-charts .chart-no span { display: inline-block; background: var(--rule); color: var(--surface-page); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 10px; }
-#panel-charts .chart-q { font-size: 1.625rem; line-height: 1.25; }
+#panel-planning .chart-block, #panel-charts .chart-block { gap: var(--space-md); padding-top: var(--space-md); border-top: 3px solid var(--rule); }
+#panel-planning .chart-block + .chart-block, #panel-charts .chart-block + .chart-block { margin-top: var(--space-2xl); }
+#panel-planning .chart-block, #panel-charts .chart-block { scroll-margin-top: 110px; }
+#panel-planning .chart-no, #panel-charts .chart-no { margin: 0; }
+#panel-planning .chart-no span, #panel-charts .chart-no span { display: inline-block; background: var(--rule); color: var(--surface-page); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 10px; }
+#panel-planning .chart-q, #panel-charts .chart-q { font-size: 1.625rem; line-height: 1.25; }
 .chart-unit { border: 1px solid var(--border-default); background: var(--surface-card); }
 .chart-unit .chart-card { padding: var(--space-md) var(--space-md) 0; }
 .chart-unit .insights { background: var(--surface-quiet); border-top: 2px solid var(--rule); padding: var(--space-md) var(--space-lg) var(--space-lg); gap: var(--space-md); }
 .chart-unit .insights h3 { font-size: 0.75rem; font-family: var(--font-sans); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin: 0; color: var(--text-secondary); }
 .chart-unit .insights .axes { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md) var(--space-xl); }
 .chart-unit .insights .axes li { border-top: 1px solid var(--border-strong); padding-top: var(--space-sm); }
-@media (max-width: 760px) { .chart-unit .insights .axes { grid-template-columns: 1fr; } .chart-unit .insights { padding-inline: var(--space-md); } #panel-charts .chart-q { font-size: 1.375rem; } }
+@media (max-width: 760px) { .chart-unit .insights .axes { grid-template-columns: 1fr; } .chart-unit .insights { padding-inline: var(--space-md); } #panel-charts .chart-q, #panel-planning .chart-q { font-size: 1.375rem; } }
 .legend-bar { display: flex; gap: var(--space-sm); padding: var(--space-sm) var(--space-md); border-top: 1px solid var(--border-default); position: relative; flex-wrap: wrap; }
 .fly { position: relative; }
 .fly summary { cursor: pointer; list-style: none; font-size: 0.8125rem; font-weight: 600; padding: 5px 12px; border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--text-primary); user-select: none; }
@@ -282,6 +282,19 @@ td.chg { box-shadow: inset 3px 0 0 var(--rule); }
 .fly-body { position: absolute; bottom: calc(100% + 6px); left: 0; z-index: 4; background: var(--surface-card); border: 1px solid var(--rule); box-shadow: 0 4px 14px rgba(0,0,0,0.18); padding: var(--space-sm) var(--space-md); width: max-content; max-width: calc(100vw - 32px); }
 .fly-body svg.lg { display: block; max-width: calc(100vw - 66px); height: auto; }
 .axes ul.sub { margin: var(--space-xs) 0 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: var(--space-xs); list-style: circle; }
+.fig-gap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); margin: var(--space-xs) 0; }
+.fig-gap figure { margin: 0; border-top: 1px solid var(--rule); padding-top: var(--space-sm); display: flex; flex-direction: column; gap: var(--space-xs); }
+.fig-gap figcaption { font-size: 0.8125rem; line-height: 1.45; color: var(--text-secondary); }
+.fig-gap svg { width: 100%; height: auto; display: block; }
+.fig-gap .ax { stroke: var(--chart-ink); stroke-opacity: 0.45; stroke-width: 1; }
+.fig-gap .tr { fill: var(--chart-ink); fill-opacity: 0.07; }
+.fig-gap .b1 { fill: var(--chart-ink); fill-opacity: 0.8; }
+.fig-gap .b2 { fill: var(--chart-ink); fill-opacity: 0.32; }
+.fig-gap .br { stroke: var(--rule); stroke-width: 2; fill: none; }
+.fig-gap text { fill: var(--chart-ink); font-size: 12px; }
+.fig-gap text.m { fill: var(--text-muted); font-size: 11px; }
+.fig-gap text.k { font-weight: 700; fill: var(--text-primary); }
+@media (max-width: 760px) { .fig-gap { grid-template-columns: 1fr; } }
 .cell-name { fill: var(--text-muted); font-size: 12px; font-weight: 600; }
 .cell-def { fill: var(--text-muted); fill-opacity: 1; font-size: 11px; font-weight: 400; font-style: italic; }
 .axis-title { fill: var(--text-muted); font-size: 12.5px; font-weight: 600; }
@@ -438,8 +451,9 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
     <div class="pagehead"><p class="kicker">Planning</p><h1>What the scores suggest</h1><p class="deck">This page uses the scores to look ahead. It shows where policy is likely to change, which signals show a pressure rising, and the kind of bite governments tend to answer it with. It also plots how each jurisdiction's scores have moved since 2024 and are projected to move to 2028. The scores are judgements made at a single date and have not been tested against outcomes, so treat the patterns as leads to check and not as predictions.</p></div>
 
   <div class="chart-block">
-    <h3>The gap between push and bite as a forecast</h3>
-    <p class="chart-read">Governments tend to move their bite toward their push, with a delay. Two measures show where that is likely to happen.</p>
+    <p class="chart-no"><span>Theme 1 of 3</span></p>
+    <h2 class="chart-q">The gap between push and bite as a forecast</h2>
+    <p class="chart-read">Governments tend to move their bite toward their push, with a delay. The gap measures how far apart the two are in strength, and the lean measures how far apart they are in direction. When push is well ahead of bite, the pressure has not been answered yet, so bite is more likely to rise. When bite is well ahead of push, the government acted before the pressure arrived, so the extra bite is more likely to stay flat or fall.</p>
     <ul class="axes">
       <li><b>Gap:</b> the strength of the push minus the strength of the bite, using the scores on the strength chart. A gap of 10 points or more is treated as a signal, because a one-step change in a single rating moves a score by about that much. It reads two ways:
         <ul class="sub">
@@ -449,16 +463,33 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       </li>
       <li><b>Lean:</b> the direction of the bite minus the direction of the push, using the direction chart. A positive lean means the bite is more constraining than the push behind it.</li>
     </ul>
-    <div class="table-scroll">
-      <table style="min-width: 900px">
-        <thead><tr><th>Jurisdiction</th><th class="num">Push strength</th><th class="num">Bite strength</th><th>Gap</th><th class="num">Lean</th><th>Reading</th><th>What it suggests</th></tr></thead>
-        <tbody id="gapRows"></tbody>
-      </table>
+    <div class="fig-gap" id="figGap"></div>
+    <div class="chart-unit">
+      <div class="insights">
+        <h3>Insights</h3>
+        <ul class="axes">
+          <li><b>Only two jurisdictions have push clearly ahead of bite, and both have weak bite.</b> Taiwan is at +15 and the African Union and members at +12. Taiwan's push is led by promotion factors, so the likely answer is funding and relief and not duties. The African Union evidence is too limited for a further reading.</li>
+          <li><b>Six jurisdictions have bite ahead of push, and in each the extra comes mostly from enabling bite.</b> Singapore has the widest gap at 29 points, followed by the United Kingdom, India, Japan, the UAE and Saudi Arabia, and South Korea. Their policy is built on funding and adoption, so a rise in constraint would need a protection trigger first.</li>
+          <li><b>China and the United States are one rating away from joining that group.</b> Their gaps are 6 and 9 points, just under the threshold, and both have strong enabling bite. A one-step rise in a single enabling rating would put each of them in the bite-ahead group.</li>
+          <li><b>Lean shows a difference that the gap hides in Brazil and Montana.</b> Brazil's push and bite are close in strength, but its bite is 18 points more constraining than its push direction. Montana's bite is 26 points more enabling than its push direction.</li>
+        </ul>
+        <p class="caption">The gap and lean are calculated from sixteen scores made by judgement, so treat them as indications and not proof.</p>
+      </div>
     </div>
+    <details class="boxes">
+      <summary>Gap and lean for all sixteen jurisdictions</summary>
+      <div class="table-scroll">
+        <table style="min-width: 900px">
+          <thead><tr><th>Jurisdiction</th><th class="num">Push strength</th><th class="num">Bite strength</th><th>Gap</th><th class="num">Lean</th><th>Reading</th><th>What it suggests</th></tr></thead>
+          <tbody id="gapRows"></tbody>
+        </table>
+      </div>
+    </details>
   </div>
 
   <div class="chart-block">
-    <h3>Early-warning signals and what to build</h3>
+    <p class="chart-no"><span>Theme 2 of 3</span></p>
+    <h2 class="chart-q">Early-warning signals and what to build</h2>
     <p class="chart-read">Each push factor has signals that show it rising, and each tends to be answered with particular parts of bite. Reading the two together tells an organisation what to watch and what to have in place before the rule arrives. The push table on the Scoring and evidence tab shows which factors are rated 3 in the places you operate, and those are the rows to watch. The last column shows Australia's current rating on the same 0 to 3 scale.</p>
     <div class="table-scroll">
       <table style="min-width: 1100px">
@@ -476,7 +507,8 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   </div>
 
   <div class="chart-block">
-    <h3>Scores over time, 2024 to 2028</h3>
+    <p class="chart-no"><span>Theme 3 of 3</span></p>
+    <h2 class="chart-q">Scores over time, 2024 to 2028</h2>
     <p class="chart-read">Each panel follows one jurisdiction across the same axes as the two charts. The solid line covers 2024 to 2026, with 2026, the current rating, as the large dot. The dashed line and hollow dots are projected to 2027 and 2028, and colour shows legal form as in the charts.</p>
     <div class="toggle" role="group" aria-label="Choose the chart to follow">
       <button type="button" data-mode="dir" aria-pressed="true">Direction of push and bite</button>
@@ -979,6 +1011,42 @@ const NEXT = {
   "Taiwan": "Push is stronger than bite, and the push is led by promotion factors. The gap is more likely to narrow with funding and relief than with duties.",
   "Montana": "Push and bite are matched on strength, but bite leans toward enabling while push is mixed. The Act lists protecting minors among permitted reasons to regulate, so a protection trigger would change that."
 };
+(function () {
+  const d = DATA.find(x => x.n === "Taiwan"), host = byId("figGap");
+  const NS2 = "http://www.w3.org/2000/svg";
+  const mk = (svg, tag, at, t) => { const e = document.createElementNS(NS2, tag); for (const k in at) e.setAttribute(k, at[k]); if (t != null) e.textContent = t; svg.appendChild(e); return e; };
+  const fig = (cap) => { const f = document.createElement("figure"), svg = document.createElementNS(NS2, "svg"); svg.setAttribute("viewBox", "0 0 420 150"); svg.setAttribute("role", "img"); const c = document.createElement("figcaption"); c.textContent = cap; f.append(svg, c); host.appendChild(f); return svg; };
+  const X0 = 20, X1 = 400, sx = v => X0 + v / 100 * (X1 - X0);
+  const sig = (v, o) => (v > 0 ? "+" : v < 0 ? "\u2212" : "") + Math.abs(v);
+  /* strength: two bars and the gap between their ends */
+  const a = fig(`Gap, in the Taiwan row of the table: push strength ${d.pushStr} minus bite strength ${d.respStr} is ${sig(d.pushStr - d.respStr)}. Push is ahead, so bite is more likely to rise.`);
+  a.setAttribute("aria-label", `Bars for push strength ${d.pushStr} and bite strength ${d.respStr}, with the gap between them.`);
+  mk(a, "text", { class: "m", x: X0, y: 14 }, "Strength, 0 to 100");
+  mk(a, "rect", { class: "tr", x: X0, y: 30, width: X1 - X0, height: 26 });
+  mk(a, "rect", { class: "b1", x: X0, y: 30, width: sx(d.pushStr) - X0, height: 26 });
+  mk(a, "text", { x: X0 + 8, y: 47, fill: "#fff", style: "fill:#fff" }, "Push strength " + d.pushStr);
+  mk(a, "rect", { class: "tr", x: X0, y: 70, width: X1 - X0, height: 26 });
+  mk(a, "rect", { class: "b2", x: X0, y: 70, width: sx(d.respStr) - X0, height: 26 });
+  mk(a, "text", { x: X0 + 8, y: 87 }, "Bite strength " + d.respStr);
+  const gx0 = sx(d.respStr), gx1 = sx(d.pushStr);
+  mk(a, "path", { class: "br", d: `M${gx0} 104 V112 H${gx1} V104` });
+  mk(a, "text", { class: "k", x: (gx0 + gx1) / 2, y: 130, "text-anchor": "middle" }, "Gap " + sig(d.pushStr - d.respStr));
+  mk(a, "line", { class: "ax", x1: X0, x2: X0, y1: 24, y2: 100 });
+  /* direction: two markers on one scale and the lean between them */
+  const b = fig(`Lean, in the same row: bite direction ${d.respDir} minus push direction ${d.pushDir} is ${sig(d.respDir - d.pushDir)}. A negative lean means the bite is more enabling than the push behind it.`);
+  b.setAttribute("aria-label", `Push direction ${d.pushDir} and bite direction ${d.respDir} on one scale, with the lean between them.`);
+  mk(b, "text", { class: "m", x: X0, y: 14 }, "Direction, 0 to 100");
+  mk(b, "line", { class: "ax", x1: X0, x2: X1, y1: 62, y2: 62 });
+  mk(b, "text", { class: "m", x: X0, y: 30 }, "0: promotion, enabling");
+  mk(b, "text", { class: "m", x: X1, y: 30, "text-anchor": "end" }, "100: protection, constraining");
+  mk(b, "circle", { class: "b1", cx: sx(d.pushDir), cy: 62, r: 7 });
+  mk(b, "text", { x: sx(d.pushDir) + 12, y: 52 }, "Push direction " + d.pushDir);
+  mk(b, "circle", { class: "b2", cx: sx(d.respDir), cy: 62, r: 7, style: "stroke:var(--chart-ink);stroke-width:1.5" });
+  mk(b, "text", { x: sx(d.respDir) + 12, y: 86 }, "Bite direction " + d.respDir);
+  const lx0 = Math.min(sx(d.pushDir), sx(d.respDir)), lx1 = Math.max(sx(d.pushDir), sx(d.respDir));
+  mk(b, "path", { class: "br", d: `M${lx0} 108 V116 H${lx1} V108` });
+  mk(b, "text", { class: "k", x: (lx0 + lx1) / 2 + 20, y: 134, "text-anchor": "middle" }, "Lean " + sig(d.respDir - d.pushDir));
+})();
 (function () {
   const tb = byId("gapRows");
   DATA.map(d => ({ d, gap: d.pushStr - d.respStr, lean: d.respDir - d.pushDir }))
