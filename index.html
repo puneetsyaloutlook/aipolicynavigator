@@ -369,8 +369,8 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
     <h2 class="chart-q">How does policy bite, given the way the government is pushed?</h2>
     <p class="chart-read">Each box combines the kind of push on the government with the kind of bite in its policy.</p>
     <ul class="axes">
-      <li><b>Push, across:</b> the forces acting on the government, from promotion (growth, rivalry, sovereignty, industry) to protection (rights, harm, labour, control).</li>
-      <li><b>Bite, up:</b> what the policy does, from enabling (investment, adoption, relief, backing) to constraining (duties that are enforced).</li>
+      <li><b>Push, across:</b> the forces acting on the government, from promotion (growth, rivalry, sovereignty, industry) to protection (rights, harm, labour, control). A score of 0 is all promotion and 100 is all protection.</li>
+      <li><b>Bite, up:</b> what the policy does, from enabling (investment, adoption, relief, backing) to constraining (duties that are enforced). A score of 0 is all enabling and 100 is all constraining.</li>
       <li><b>Dotted line:</b> boxes along it are where the bite follows the push. Boxes away from it are where the bite goes against the push.</li>
       <li><b>Dot colour:</b> legal form, which is the main form the government's AI policy takes: legislation, executive or administrative action, or a voluntary framework or strategy.</li>
     </ul>
@@ -402,8 +402,8 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
     <h2 class="chart-q">How strongly does policy bite, given how hard the government is pushed?</h2>
     <p class="chart-read">Each box combines how strong the push on the government is with how strong its bite is.</p>
     <ul class="axes">
-      <li><b>Push, across:</b> the eight push factors added together, each rated 0 to 3.</li>
-      <li><b>Bite, up:</b> the average of enabling bite and constraining bite.</li>
+      <li><b>Push, across:</b> the eight push factors added together, each rated 0 to 3, then scaled so that 100 is the maximum possible push.</li>
+      <li><b>Bite, up:</b> the average of enabling bite and constraining bite, each scored 0 to 100.</li>
       <li><b>Dotted line:</b> boxes along it are where the bite matches the push. Boxes below it have weaker bite than push, and boxes above it have stronger bite.</li>
       <li><b>Dot colour:</b> legal form, which is the main form the government's AI policy takes: legislation, executive or administrative action, or a voluntary framework or strategy.</li>
     </ul>
@@ -722,11 +722,11 @@ function showTip(d, c, i, mode) {
   const lean = v => v <= 100 / 3 ? "promotion" : v >= 200 / 3 ? "protection" : "mixed";
   const bl = v => v <= 100 / 3 ? "enabling" : v >= 200 / 3 ? "constraining" : "balanced";
   const pushLine = mode === "str"
-    ? `Push strength: ${d.pushStr} out of 100 (all eight push factors added)`
-    : `Push direction: ${d.pushDir} (0 is promotion, 100 is protection), so ${lean(d.pushDirRaw)}`;
+    ? `Push strength: ${d.pushStr}`
+    : `Push direction: ${d.pushDir}, ${lean(d.pushDirRaw)}`;
   const biteLine = mode === "str"
-    ? `Bite strength: ${d.respStr} out of 100 (average of constraining ${d.bite} and enabling ${d.boost})`
-    : `Bite direction: ${d.respDir} (0 is enabling, 100 is constraining), so ${bl(d.respDirRaw)}. Constraining bite is ${d.bite} and enabling bite is ${d.boost}.`;
+    ? `Bite strength: ${d.respStr} (constraining ${d.bite}, enabling ${d.boost})`
+    : `Bite direction: ${d.respDir}, ${bl(d.respDirRaw)} (constraining ${d.bite}, enabling ${d.boost})`;
   tip.append(b, mk(pushLine, "nums"), mk(d.pw), mk(biteLine, "nums"), mk(d.why), mk(d.bw),
     mk(d.share == null ? "Private AI investment: no figure" : `Private AI investment: ${fmtShare(d.share)} of GDP`, "nums"));
   tip.hidden = false;
