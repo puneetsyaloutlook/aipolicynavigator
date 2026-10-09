@@ -472,7 +472,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
     <div class="def-row">
       <div class="def-text">
         <h3>Lean</h3>
-        <p>Whether policy points the same way as the pressure. A lean near zero means it does. A positive lean means policy leans further towards regulating AI than the pressure on the government asks for, and a negative lean means it leans further towards supporting AI than the pressure asks for. A large negative lean under a protection-led push, for example, means regulation is more likely to follow.</p>
+        <p>Whether policy points the same way as the pressure. A lean near zero means it does. A positive lean means policy leans further towards regulating AI than the pressure on the government asks for, and a negative lean means it leans further towards supporting AI than the pressure asks for. Under a mixed push, as in Montana, a large negative lean means regulation is more likely to follow if pressure to protect rises.</p>
       </div>
       <figure class="fig-gap" id="figGapB"></figure>
     </div>
@@ -1044,19 +1044,20 @@ const NEXT = {
   const gx0 = sx(d.respStr), gx1 = sx(d.pushStr);
   mk(a, "path", { class: "br", d: `M${gx0} 104 V112 H${gx1} V104` });
   mk(a, "text", { class: "k", x: (gx0 + gx1) / 2, y: 130, "text-anchor": "middle" }, "Gap " + sig(gap));
-  const b = fig(byId("figGapB"), `Example from the same row: ${d.respDir} minus ${d.pushDir} is ${sig(lean)}.`);
-  b.setAttribute("aria-label", `Push direction ${d.pushDir} and bite direction ${d.respDir} on one scale, with the lean of ${sig(lean)} between them.`);
+  const m = DATA.find(x => x.n === "Montana"), mlean = m.respDir - m.pushDir, mgap = m.pushStr - m.respStr;
+  const b = fig(byId("figGapB"), `Example from the Montana row of the table: ${m.respDir} minus ${m.pushDir} is ${sig(mlean)}. Its gap is only ${sig(mgap)}, so the gap alone would not show that its policy leans well towards supporting AI.`);
+  b.setAttribute("aria-label", `Push direction ${m.pushDir} and bite direction ${m.respDir} on one scale, with the lean of ${sig(mlean)} between them.`);
   mk(b, "text", { class: "m", x: X0, y: 14 }, "Direction, 0 to 100");
   mk(b, "text", { class: "m", x: X0, y: 30 }, "0: promotion, enabling");
   mk(b, "text", { class: "m", x: X1, y: 30, "text-anchor": "end" }, "100: protection, constraining");
   mk(b, "line", { class: "ax", x1: X0, x2: X1, y1: 62, y2: 62 });
-  mk(b, "circle", { class: "b1", cx: sx(d.pushDir), cy: 62, r: 7 });
-  mk(b, "text", { x: sx(d.pushDir) + 12, y: 52 }, "Push direction " + d.pushDir);
-  mk(b, "circle", { class: "b2", cx: sx(d.respDir), cy: 62, r: 7, style: "stroke:var(--chart-ink);stroke-width:1.5" });
-  mk(b, "text", { x: sx(d.respDir) + 12, y: 86 }, "Bite direction " + d.respDir);
-  const lx0 = Math.min(sx(d.pushDir), sx(d.respDir)), lx1 = Math.max(sx(d.pushDir), sx(d.respDir));
+  mk(b, "circle", { class: "b1", cx: sx(m.pushDir), cy: 62, r: 7 });
+  mk(b, "text", { x: sx(m.pushDir) + 12, y: 52 }, "Push direction " + m.pushDir);
+  mk(b, "circle", { class: "b2", cx: sx(m.respDir), cy: 62, r: 7, style: "stroke:var(--chart-ink);stroke-width:1.5" });
+  mk(b, "text", { x: sx(m.respDir) + 12, y: 86 }, "Bite direction " + m.respDir);
+  const lx0 = Math.min(sx(m.pushDir), sx(m.respDir)), lx1 = Math.max(sx(m.pushDir), sx(m.respDir));
   mk(b, "path", { class: "br", d: `M${lx0} 108 V116 H${lx1} V108` });
-  mk(b, "text", { class: "k", x: (lx0 + lx1) / 2 + 20, y: 134, "text-anchor": "middle" }, "Lean " + sig(lean));
+  mk(b, "text", { class: "k", x: (lx0 + lx1) / 2 + 20, y: 134, "text-anchor": "middle" }, "Lean " + sig(mlean));
 })();
 (function () {
   const tb = byId("gapRows");
