@@ -1,0 +1,1303 @@
+<title>Push x Bite</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Source+Serif+4:wght@400;600;700&display=swap">
+<style>
+/* Layout: app bar with logo and navigation, a hero home screen, then plain working screens in a newspaper-infographic style: white ground, black rules, serif headlines, grey chart scaffolding. */
+:root {
+  --surface-page: #FFFFFF;
+  --surface-card: #FFFFFF;
+  --surface-quiet: #F5F5F2;
+  --border-default: #DEDED9;
+  --border-strong: #9A9A94;
+  --rule: #121212;
+  --text-primary: #121212;
+  --text-secondary: #55554F;
+  --text-muted: #6F6F69;
+  --text-link: #326891;
+  --form-leg: #376DA4; --form-exec: #B8963E; --form-vol: #479FA4;
+  --chart-ink: #4D4D55; --chart-line: #D9D9D4; --chart-wash: #FAFAF8;
+  --focus: #326891;
+
+  --font-sans: 'Libre Franklin', system-ui, sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 32px; --space-2xl: 48px;
+  --radius-default: 2px; --radius-lg: 2px;
+  --shadow-elevated: 0 4px 12px rgba(0,0,0,0.12);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface-page: #121212; --surface-card: #181818; --surface-quiet: #202020;
+    --border-default: #333335; --border-strong: #6A6A66; --rule: #EDEDED;
+    --text-primary: #EDEDED; --text-secondary: #B4B4AE; --text-muted: #92928C;
+    --text-link: #8DB8E3;
+    --form-leg: #5A8DBE; --form-exec: #C39A44; --form-vol: #9AD4D4; --chart-ink: #C4C4CC; --chart-line: #3A3A40; --chart-wash: #1B1B1D;
+    --focus: #8DB8E3;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --surface-page: #121212; --surface-card: #181818; --surface-quiet: #202020;
+  --border-default: #333335; --border-strong: #6A6A66; --rule: #EDEDED;
+  --text-primary: #EDEDED; --text-secondary: #B4B4AE; --text-muted: #92928C;
+  --text-link: #8DB8E3;
+  --form-leg: #5A8DBE; --form-exec: #C39A44; --form-vol: #9AD4D4; --chart-ink: #C4C4CC; --chart-line: #3A3A40; --chart-wash: #1B1B1D;
+  --focus: #8DB8E3;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: var(--font-sans); font-size: 1rem; line-height: 1.6;
+  color: var(--text-primary); background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  padding-inline: var(--space-md); padding-block: var(--space-xl) var(--space-2xl);
+}
+.wrap { max-width: 1000px; margin-inline: auto; display: flex; flex-direction: column; gap: var(--space-lg); }
+header { display: flex; flex-direction: column; gap: var(--space-sm); }
+h1 { font-family: var(--font-serif); font-size: 2rem; line-height: 1.25; font-weight: 700; margin: 0; text-wrap: balance; }
+.tgroup { background: var(--surface-quiet); text-align: center; border-left: 1px solid var(--border-default); }
+td.gl, th.gl { border-left: 1px solid var(--border-default); }
+h3 { font-family: var(--font-sans); font-size: 1.125rem; line-height: 1.4; font-weight: 600; margin: 0; }
+h2 { font-family: var(--font-serif); font-size: 1.5rem; line-height: 1.3; font-weight: 600; margin: 0; }
+p { margin: 0; max-width: 68ch; }
+.lede { color: var(--text-secondary); }
+.caption { font-size: 0.75rem; line-height: 1.4; font-weight: 500; color: var(--text-secondary); }
+
+.defs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-md); }
+.defs div { min-width: 0; border-top: 1px solid var(--border-default); padding-top: var(--space-sm); display: flex; flex-direction: column; gap: var(--space-xs); }
+.defs strong { font-weight: 600; font-size: 0.875rem; }
+.defs span { font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); }
+@media (max-width: 860px) { .defs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .defs { grid-template-columns: 1fr; } }
+.comp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-sm) var(--space-lg); font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); }
+.comp div { min-width: 0; }
+.comp.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.comp h3 { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--text-primary); margin: 0 0 var(--space-xs); }
+.comp p { margin: 0 0 var(--space-xs); max-width: none; }
+.comp b { color: var(--text-primary); font-weight: 600; }
+@media (max-width: 720px) { .comp { grid-template-columns: 1fr; } }
+
+.concepts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+.concepts > div { min-width: 0; border: 1px solid var(--border-default); border-radius: var(--radius-lg); background: var(--surface-card); padding: var(--space-md) var(--space-lg); display: flex; flex-direction: column; gap: var(--space-sm); }
+.concepts p { font-size: 1rem; }
+.concepts p.eg { font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); border-top: 1px solid var(--border-default); padding-top: var(--space-sm); }
+.concepts dl { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: var(--space-xs) var(--space-md); font-size: 0.875rem; line-height: 1.5; }
+.concepts dt { font-weight: 600; }
+.concepts dd { margin: 0; color: var(--text-secondary); }
+.measures { font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); max-width: 90ch; }
+.measures b { color: var(--text-primary); font-weight: 600; }
+@media (max-width: 720px) { .concepts { grid-template-columns: 1fr; } .concepts dl { grid-template-columns: 1fr; gap: 0; } .concepts dd { margin-bottom: var(--space-xs); } }
+.chart-card { border: 1px solid var(--border-default); border-radius: var(--radius-lg); background: var(--surface-card); padding: var(--space-md); position: relative; }
+.chart-scroll { overflow-x: auto; }
+.chart-block { display: flex; flex-direction: column; gap: var(--space-sm); }
+.chart-q { font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.3; font-weight: 600; margin: 0; text-wrap: balance; }
+.chart-read { font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); max-width: 80ch; }
+svg.plot { display: block; width: 100%; min-width: 640px; height: auto; font-family: var(--font-sans); }
+.diag { stroke: var(--chart-ink); stroke-opacity: 0.55; stroke-width: 1; stroke-dasharray: 2 4; fill: none; }
+.diag-label { fill: var(--text-muted); font-size: 11.5px; font-weight: 500; }
+svg#plot { display: block; width: 100%; min-width: 640px; height: auto; font-family: var(--font-sans); }
+.grid-line { stroke: var(--border-default); stroke-width: 1; fill: none; }
+.mid-line { stroke: var(--border-strong); stroke-width: 1; stroke-dasharray: 4 4; fill: none; }
+.frame { fill: none; stroke: var(--chart-line); stroke-width: 1; }
+.plot-bg { fill: var(--chart-wash); stroke: none; }
+.cell-name { fill: var(--chart-ink); font-size: 12.5px; font-weight: 600; }
+.cell-def { fill: var(--chart-ink); fill-opacity: 0.72; font-size: 11px; font-weight: 500; }
+.third-line { stroke: var(--chart-line); stroke-width: 1; fill: none; }
+.types td.none { color: var(--text-muted); }
+.types table { min-width: 560px; }
+.axis-title { fill: var(--chart-ink); font-size: 13px; font-weight: 600; }
+.axis-end { fill: var(--chart-ink); fill-opacity: 0.8; font-size: 12px; font-weight: 500; }
+.dot-ring { fill: var(--chart-wash); stroke: none; }
+.dot { stroke-width: 1.5; fill-opacity: 0.62; cursor: pointer; transition: fill-opacity 120ms; }
+.f-leg { fill: var(--form-leg); stroke: var(--form-leg); }
+.f-exec { fill: var(--form-exec); stroke: var(--form-exec); }
+.f-vol { fill: var(--form-vol); stroke: var(--form-vol); }
+.dot.nodata { fill: var(--chart-wash); fill-opacity: 1; }
+.dot-nodata { fill: var(--surface-card); stroke: var(--chart-ink); stroke-width: 1.5; }
+.hit { fill: transparent; stroke: none; cursor: pointer; }
+.dot.active { fill-opacity: 0.95; }
+.dot:focus-visible { outline: none; stroke: var(--focus); stroke-width: 3; }
+.dot-label { fill: var(--text-primary); font-size: 12.5px; font-weight: 500; pointer-events: none; paint-order: stroke; stroke: var(--chart-wash); stroke-width: 3px; stroke-linejoin: round; }
+.leader { stroke: var(--text-muted); stroke-width: 1; }
+.legend-form { stroke-width: 1.5; fill-opacity: 0.72; }
+.legend-ring { fill: none; stroke: var(--chart-ink); stroke-opacity: 0.7; stroke-width: 1; }
+.legend-text { fill: var(--chart-ink); font-size: 11.5px; font-weight: 500; }
+
+#tip { position: fixed; max-width: 300px; background: var(--surface-card); border: 1px solid var(--border-strong); border-radius: var(--radius-default); box-shadow: var(--shadow-elevated); padding: var(--space-sm) 12px; font-size: 0.8125rem; line-height: 1.45; pointer-events: none; z-index: 2; }
+#tip b { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 2px; }
+#tip span { color: var(--text-secondary); display: block; }
+#tip .nums { color: var(--text-primary); font-variant-numeric: tabular-nums; margin-top: var(--space-xs); }
+
+.table-scroll { overflow-x: auto; border: 1px solid var(--border-default); border-radius: var(--radius-lg); }
+table { border-collapse: collapse; width: 100%; min-width: 980px; font-size: 0.875rem; line-height: 1.5; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--border-default); }
+th { font-weight: 600; font-size: 0.75rem; color: var(--text-secondary); background: var(--surface-quiet); white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+td.num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+th.num { text-align: right; }
+td.name { font-weight: 600; white-space: nowrap; }
+td.c, th.c { text-align: center; font-variant-numeric: tabular-nums; }
+td.why { min-width: 300px; width: 42%; }
+td.c, th.c, td.num, th.num { width: 1%; padding-inline: 8px; }
+tbody tr.active td { background: var(--surface-quiet); }
+.chart-block > h3 { font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.3; font-weight: 600; }
+.gapbar { display: grid; grid-template-columns: 56px 56px; align-items: center; gap: 0; min-width: 112px; }
+.gapbar span { height: 10px; display: block; }
+.gapbar .neg { justify-self: end; background: var(--form-vol); border-radius: 2px 0 0 2px; }
+.gapbar .pos { justify-self: start; background: var(--chart-ink); border-radius: 0 2px 2px 0; }
+.gapbar { position: relative; }
+.gapbar::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--border-strong); }
+td.gapcell { white-space: nowrap; }
+td.gapcell small { display: block; font-size: 0.75rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.minis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+.mini h4 { margin: 0 0 var(--space-xs); font-size: 0.875rem; font-weight: 600; }
+.mini .g { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; }
+.mini .g div { min-width: 0; font-size: 0.75rem; line-height: 1.3; padding: 8px; border: 1px solid var(--chart-line); background: var(--chart-wash); color: var(--text-secondary); border-radius: 4px; min-height: 52px; }
+.mini .g div.near { border-color: var(--chart-ink); color: var(--text-primary); }
+.mini .g div.now { background: var(--chart-ink); border-color: var(--chart-ink); color: var(--surface-card); font-weight: 600; }
+@media (max-width: 720px) { .minis { grid-template-columns: 1fr; } }
+.toggle { display: inline-flex; border: 1px solid var(--border-strong); border-radius: var(--radius-default); overflow: hidden; align-self: flex-start; }
+.toggle button { font: inherit; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; background: var(--surface-card); color: var(--text-secondary); border: 0; cursor: pointer; }
+.toggle button + button { border-left: 1px solid var(--border-strong); }
+.toggle button[aria-pressed="true"] { background: var(--chart-ink); color: var(--surface-card); }
+.toggle button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.trav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-md) var(--space-md); }
+@media (max-width: 900px) { .trav { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .trav { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tp { min-width: 0; border: 1px solid var(--border-default); border-radius: var(--radius-default); background: var(--surface-card); padding: 8px; }
+.tp h4 { margin: 0; font-size: 0.8125rem; font-weight: 600; line-height: 1.3; min-height: 2.1em; }
+.tp svg { display: block; width: 100%; height: auto; margin-top: 4px; }
+.tp .tnote { font-size: 0.6875rem; line-height: 1.35; color: var(--text-secondary); margin-top: 4px; min-height: 2.7em; }
+.tp .pb { fill: var(--chart-wash); }
+.tp .pl { stroke: var(--chart-line); stroke-width: 1; fill: none; }
+.tp .pf { fill: none; stroke: var(--chart-line); }
+.tp text { font-family: var(--font-sans); font-size: 10px; fill: var(--chart-ink); font-weight: 500; paint-order: stroke; stroke: var(--chart-wash); stroke-width: 2.5px; }
+td.chg { box-shadow: inset 3px 0 0 var(--chart-ink); background: var(--chart-wash); }
+td.proj { color: var(--text-secondary); }
+.tabbar { display: flex; gap: var(--space-xs); overflow-x: auto; position: sticky; top: 0; z-index: 3; background: var(--surface-page); border-bottom: 1px solid var(--border-default); padding-top: var(--space-xs); }
+.tabbar button { font: inherit; font-size: 0.9375rem; font-weight: 500; padding: 10px 16px; background: none; border: 0; border-bottom: 3px solid transparent; color: var(--text-secondary); cursor: pointer; white-space: nowrap; }
+.tabbar button:hover { color: var(--text-primary); }
+.tabbar button[aria-selected="true"] { color: var(--chart-ink); border-bottom-color: var(--chart-ink); font-weight: 600; }
+.tabbar button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.panel { display: flex; flex-direction: column; gap: var(--space-lg); }
+.panel[hidden] { display: none; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md); }
+.card { font: inherit; text-align: left; display: flex; flex-direction: column; gap: var(--space-xs); padding: var(--space-md); background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); color: var(--text-primary); cursor: pointer; }
+.card:hover { border-color: var(--chart-ink); }
+.card:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.card strong { font-weight: 600; color: var(--chart-ink); }
+.card span { font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); }
+@media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+.trav.two { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 640px; }
+.notes { display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--text-secondary); }
+.notes p { max-width: 80ch; }
+
+/* ---- newspaper-infographic treatment ---- */
+body { padding: 0 0 var(--space-2xl); font-family: var(--font-sans); }
+.wrap { max-width: 1100px; padding-inline: var(--space-md); padding-top: var(--space-lg); gap: var(--space-lg); }
+.appbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface-page); border-bottom: 3px double var(--rule); }
+.appbar-in { max-width: 1100px; margin-inline: auto; padding: 10px var(--space-md) 0; display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-md); flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: 10px; padding: 0 0 10px; background: none; border: 0; color: var(--text-primary); cursor: pointer; font: inherit; text-align: left; }
+.logo:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.logo .name { font-family: var(--font-serif); font-weight: 700; font-size: 1.625rem; letter-spacing: -0.01em; line-height: 1; white-space: nowrap; }
+.logo .name i { font-style: normal; font-weight: 400; padding-inline: 2px; }
+.logo .tag { font-size: 0.75rem; line-height: 1.2; color: var(--text-secondary); border-left: 1px solid var(--border-default); padding-left: 10px; max-width: 9em; }
+.tabbar { position: static; border: 0; background: none; padding: 0; margin-left: auto; min-width: 0; gap: 0; }
+.tabbar button { font-size: 0.875rem; padding: 12px 14px 10px; color: var(--text-secondary); border-bottom-width: 3px; }
+.tabbar button[aria-selected="true"] { color: var(--text-primary); border-bottom-color: var(--rule); }
+@media (max-width: 860px) { .tabbar { flex: 1 1 100%; margin-left: 0; overflow-x: auto; } .tabbar button { padding-inline: 12px; } }
+@media (max-width: 480px) { .logo .tag { display: none; } }
+h1, h2, h3 { font-family: var(--font-serif); }
+.kicker { margin: 0; font-size: 0.75rem; line-height: 1.3; font-weight: 600; letter-spacing: 0.06em; color: var(--text-secondary); }
+.pagehead { display: flex; flex-direction: column; gap: var(--space-sm); padding-bottom: var(--space-md); border-bottom: 1px solid var(--rule); }
+.pagehead h1 { font-size: 2rem; line-height: 1.15; letter-spacing: -0.01em; }
+.deck { font-family: var(--font-serif); font-size: 1.0625rem; line-height: 1.5; color: var(--text-secondary); max-width: 62ch; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: var(--space-xl); align-items: center; padding-bottom: var(--space-lg); border-bottom: 1px solid var(--rule); }
+.hero-text { display: flex; flex-direction: column; gap: var(--space-md); min-width: 0; }
+.hero h1 { font-size: clamp(2rem, 4.4vw, 3.25rem); line-height: 1.07; letter-spacing: -0.02em; text-wrap: balance; }
+.hero .deck { font-size: 1.1875rem; }
+.cta { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+.btn { font: inherit; font-size: 0.9375rem; font-weight: 600; padding: 11px 18px; border: 1px solid var(--rule); background: var(--rule); color: var(--surface-page); border-radius: var(--radius-default); cursor: pointer; }
+.btn.ghost { background: none; color: var(--text-primary); }
+.btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.hero-fig { margin: 0; min-width: 0; }
+.hero-fig svg { display: block; width: 100%; height: auto; font-family: var(--font-sans); }
+.hero-fig figcaption { font-size: 0.75rem; line-height: 1.4; color: var(--text-secondary); margin-top: var(--space-sm); max-width: 60ch; }
+@media (max-width: 820px) { .hero { grid-template-columns: 1fr; } }
+.hero-dots circle { transform-box: fill-box; transform-origin: center; animation: pop 560ms cubic-bezier(.2,.8,.3,1) both; animation-delay: calc(var(--i) * 40ms); }
+@keyframes pop { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .hero-dots circle { animation: none; } }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--border-default); }
+.stats div { display: flex; flex-direction: column; gap: 2px; padding: 0 var(--space-md) var(--space-md); border-left: 1px solid var(--border-default); }
+.stats div:first-child { border-left: 0; padding-left: 0; }
+.stats b { font-family: var(--font-serif); font-size: 2.5rem; line-height: 1.1; font-weight: 700; font-variant-numeric: tabular-nums; }
+.stats span { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.35; }
+@media (max-width: 640px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--space-md); } .stats div:nth-child(3) { border-left: 0; padding-left: 0; } }
+.concepts { gap: var(--space-xl); }
+.concepts > div { border: 0; border-top: 3px solid var(--rule); border-radius: 0; background: none; padding: 10px 0 0; }
+.concepts h2 { font-size: 1.75rem; }
+.concepts p { font-family: var(--font-serif); font-size: 1.0625rem; line-height: 1.5; }
+.concepts p.eg { font-family: var(--font-sans); font-size: 0.875rem; }
+.cards { display: flex; flex-direction: column; gap: 0; border-bottom: 1px solid var(--rule); }
+.card { flex-direction: row; align-items: baseline; gap: var(--space-lg); padding: 14px 0; border: 0; border-top: 1px solid var(--border-default); border-radius: 0; background: none; width: 100%; }
+.card:first-child { border-top: 1px solid var(--rule); }
+.card:hover { background: var(--surface-quiet); }
+.card strong { flex: 0 0 11rem; font-family: var(--font-serif); font-size: 1.1875rem; color: var(--text-primary); }
+.card span { flex: 1 1 auto; min-width: 0; }
+.card::after { content: "\2192"; color: var(--text-secondary); flex: 0 0 auto; }
+@media (max-width: 640px) { .card { flex-wrap: wrap; gap: var(--space-xs); } .card strong { flex-basis: 100%; } .card::after { display: none; } }
+.chart-card { border: 0; background: none; padding: 0; }
+.table-scroll { border: 0; border-top: 2px solid var(--rule); border-bottom: 1px solid var(--border-default); border-radius: 0; }
+th { background: none; color: var(--text-primary); border-bottom: 1px solid var(--rule); font-size: 0.75rem; }
+.tp { border: 0; border-top: 1px solid var(--rule); border-radius: 0; background: none; padding: 8px 0 0; }
+.toggle { border-radius: 0; }
+.toggle button[aria-pressed="true"] { background: var(--rule); color: var(--surface-page); }
+.mini .g div { border-radius: 0; }
+.mini .g div.now { background: var(--rule); border-color: var(--rule); color: var(--surface-page); }
+.mini .g div.near { border-color: var(--rule); }
+td.chg { box-shadow: inset 3px 0 0 var(--rule); }
+.chart-block > h3 { padding-top: var(--space-sm); border-top: 1px solid var(--rule); }
+.panel > h2 { padding-top: var(--space-sm); border-top: 3px solid var(--rule); }
+/* charts page: question blocks */
+#panel-charts .chart-block { gap: var(--space-md); padding-top: var(--space-md); border-top: 3px solid var(--rule); }
+#panel-charts .chart-block + .chart-block { margin-top: var(--space-2xl); }
+#panel-charts .chart-block { scroll-margin-top: 110px; }
+#panel-charts .chart-no { margin: 0; }
+#panel-charts .chart-no span { display: inline-block; background: var(--rule); color: var(--surface-page); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 10px; }
+#panel-charts .chart-q { font-size: 1.625rem; line-height: 1.25; }
+.chart-unit { border: 1px solid var(--border-default); background: var(--surface-card); }
+.chart-unit .chart-card { padding: var(--space-md) var(--space-md) 0; }
+.chart-unit .insights { background: var(--surface-quiet); border-top: 2px solid var(--rule); padding: var(--space-md) var(--space-lg) var(--space-lg); gap: var(--space-md); }
+.chart-unit .insights h3 { font-size: 0.75rem; font-family: var(--font-sans); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin: 0; color: var(--text-secondary); }
+.chart-unit .insights .axes { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md) var(--space-xl); }
+.chart-unit .insights .axes li { border-top: 1px solid var(--border-strong); padding-top: var(--space-sm); }
+@media (max-width: 760px) { .chart-unit .insights .axes { grid-template-columns: 1fr; } .chart-unit .insights { padding-inline: var(--space-md); } #panel-charts .chart-q { font-size: 1.375rem; } }
+.legend-bar { display: flex; gap: var(--space-sm); padding: var(--space-sm) var(--space-md); border-top: 1px solid var(--border-default); position: relative; flex-wrap: wrap; }
+.fly { position: relative; }
+.fly summary { cursor: pointer; list-style: none; font-size: 0.8125rem; font-weight: 600; padding: 5px 12px; border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--text-primary); user-select: none; }
+.fly summary::-webkit-details-marker { display: none; }
+.fly summary::after { content: " \25BE"; color: var(--text-secondary); }
+.fly[open] summary { background: var(--rule); color: var(--surface-page); border-color: var(--rule); }
+.fly[open] summary::after { color: var(--surface-page); }
+.fly summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.fly-body { position: absolute; bottom: calc(100% + 6px); left: 0; z-index: 4; background: var(--surface-card); border: 1px solid var(--rule); box-shadow: 0 4px 14px rgba(0,0,0,0.18); padding: var(--space-sm) var(--space-md); width: max-content; max-width: calc(100vw - 32px); }
+.fly-body svg.lg { display: block; max-width: calc(100vw - 66px); height: auto; }
+.cell-name { fill: var(--text-muted); font-size: 12px; font-weight: 600; }
+.cell-def { fill: var(--text-muted); fill-opacity: 1; font-size: 11px; font-weight: 400; font-style: italic; }
+.axis-title { fill: var(--text-muted); font-size: 12.5px; font-weight: 600; }
+.axis-end { fill: var(--text-muted); fill-opacity: 1; font-size: 12px; font-weight: 400; font-style: italic; }
+.legend-text { fill: var(--text-muted); font-style: italic; }
+.diag-label { font-style: italic; }
+.dot-label { fill: var(--text-primary); font-weight: 600; }
+.axes { margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: var(--space-xs); font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); max-width: 80ch; }
+.axes b { color: var(--text-primary); font-weight: 600; }
+p, .deck, .chart-read, .axes, .notes p, .measures, .hero-fig figcaption, .comp p { max-width: none; }
+.insights { display: flex; flex-direction: column; gap: var(--space-sm); padding-top: var(--space-sm); border-top: 1px solid var(--rule); }
+.insights h3 { font-size: 1.125rem; }
+.insights .axes { font-size: 0.9375rem; color: var(--text-primary); }
+details.boxes { border-top: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); padding-block: var(--space-sm); }
+details.boxes summary { cursor: pointer; font-weight: 600; font-size: 0.9375rem; padding-block: 4px; }
+details.boxes summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+details.boxes[open] summary { margin-bottom: var(--space-sm); }
+</style>
+
+<div class="appbar">
+  <div class="appbar-in">
+    <button type="button" class="logo" data-go="home" aria-label="Push x Bite, home">
+      <svg viewBox="0 0 28 28" width="30" height="30" aria-hidden="true"><defs><mask id="bm"><rect width="28" height="28" fill="#fff"/><circle cx="21" cy="7" r="7" fill="#000"/></mask></defs><circle cx="13" cy="15" r="11.5" fill="currentColor" mask="url(#bm)"/></svg>
+      <span class="name">Push <i>&times;</i> Bite</span>
+      <span class="tag">The AI policy navigator</span>
+    </button>
+    <div class="tabbar" role="tablist" aria-label="Sections">
+      <button type="button" role="tab" id="tab-home" aria-controls="panel-home" data-tab="home">Home</button>
+      <button type="button" role="tab" id="tab-charts" aria-controls="panel-charts" data-tab="charts">Charts</button>
+      <button type="button" role="tab" id="tab-planning" aria-controls="panel-planning" data-tab="planning">Planning</button>
+      <button type="button" role="tab" id="tab-australia" aria-controls="panel-australia" data-tab="australia">Australia</button>
+      <button type="button" role="tab" id="tab-method" aria-controls="panel-method" data-tab="method">Scoring and evidence</button>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+  <section class="panel" id="panel-home" role="tabpanel" aria-labelledby="tab-home">
+    <div class="hero">
+      <div class="hero-text">
+        <p class="kicker">AI policy in sixteen jurisdictions, as at 3 October 2026</p>
+        <h1>How hard governments are pushed on AI, and how much their policy bites</h1>
+        <p class="deck">Push is the pressure on a government to act. Bite is what its policy then does. The navigator scores sixteen jurisdictions on both, compares how each government's bite follows its push, and shows what the gap means for an organisation planning its own AI governance.</p>
+        <div class="cta">
+          <button type="button" class="btn" data-go="charts">Explore the charts</button>
+          <button type="button" class="btn ghost" data-go="australia">Open the Australia view</button>
+        </div>
+      </div>
+      <figure class="hero-fig">
+        <svg id="heroPlot" viewBox="0 0 560 500" role="img" aria-label="Sixteen jurisdictions plotted by direction of push, from promotion to protection, and direction of bite, from enabling to constraining."></svg>
+        <figcaption>Each dot is a jurisdiction. Its position across shows the direction of the push, from promotion to protection, and its position up shows the direction of the bite, from enabling to constraining. Dot area shows private AI investment as a share of GDP.</figcaption>
+      </figure>
+    </div>
+    <div class="stats">
+      <div><b>16</b><span>jurisdictions</span></div>
+      <div><b>8</b><span>push factors</span></div>
+      <div><b>10</b><span>bite components</span></div>
+      <div><b>9</b><span>patterns on each chart</span></div>
+    </div>
+  <div class="concepts">
+    <div>
+      <h2>Push</h2>
+      <p>The pressure on a government to act on AI. It comes from rival states, trading partners, industry, voters, incidents and the government's own economic and security aims. Push explains why a policy exists.</p>
+      <p class="eg">Chatbot harms to minors pushed United States states to legislate. Competitiveness concerns and pressure from Washington pushed the EU to delay its high-risk rules.</p>
+    </div>
+    <div>
+      <h2>Bite</h2>
+      <p>What the policy does to the firms and people it applies to. It is judged by effect on the reference date and not by legal text: a rule bites when it is in force, specific, monitored and enforced, and a program bites when money or capacity is committed.</p>
+      <p class="eg">A United States export control letter took two frontier models offline within days. The EU's high-risk rules were law and constrained no one.</p>
+    </div>
+  </div>
+
+    <h2>Where to go next</h2>
+    <div class="cards">
+      <button type="button" class="card" data-go="charts"><strong>Charts</strong><span>How sixteen jurisdictions compare on direction and on strength, and the patterns each chart gives.</span></button>
+      <button type="button" class="card" data-go="planning"><strong>Planning</strong><span>What the gap between push and bite suggests, which signals to watch, and how each jurisdiction's scores change to 2028.</span></button>
+      <button type="button" class="card" data-go="australia"><strong>Australia</strong><span>Where Australia's push comes from, what binds now, and the posture for each move it could make.</span></button>
+      <button type="button" class="card" data-go="method"><strong>Scoring and evidence</strong><span>How push, bite and dot size are scored, the sources, and the limits of the evidence.</span></button>
+    </div>
+    <p class="caption">All push and bite scores are judgements made from the research report, for sixteen jurisdictions as at 3 October 2026. They are not measurements. Government intent is scored. Self-regulation by firms is not.</p>
+  </section>
+
+  <section class="panel" id="panel-charts" role="tabpanel" aria-labelledby="tab-charts" hidden>
+    <div class="pagehead"><p class="kicker">Charts</p><h1>How sixteen jurisdictions compare</h1><p class="deck">Dot area shows private AI investment in 2025 as a share of GDP and dot colour shows legal form. Hover or focus a dot for its scores. The Scoring and evidence tab explains how each score is set.</p></div>
+  <div class="chart-block" id="q1">
+    <p class="chart-no"><span>Question 1 of 2</span></p>
+    <h2 class="chart-q">How does policy bite, given the way the government is pushed?</h2>
+    <p class="chart-read">Each box combines the kind of push on the government with the kind of bite in its policy.</p>
+    <ul class="axes">
+      <li><b>Push, across:</b> the forces acting on the government, from promotion (growth, rivalry, sovereignty, industry) to protection (rights, harm, labour, control).</li>
+      <li><b>Bite, up:</b> what the policy does, from enabling (investment, adoption, relief, backing) to constraining (duties that are enforced).</li>
+      <li><b>Dotted line:</b> boxes along it are where the bite follows the push. Boxes away from it are where the bite goes against the push.</li>
+      <li><b>Dot colour:</b> legal form, which is the main form the government's AI policy takes: legislation, executive or administrative action, or a voluntary framework or strategy.</li>
+    </ul>
+    <div class="chart-unit">
+    <div class="chart-card"><div class="chart-scroll"><svg id="c1" class="plot" viewBox="0 0 900 748" role="img" aria-label="Direction of push against direction of bite for sixteen jurisdictions. The tables below list every value."></svg></div></div>
+    <div class="legend-bar" aria-label="Chart legends">
+      <details class="fly"><summary>Dot size</summary><div class="fly-body"><svg id="lg-size-1" class="lg" role="img" aria-label="Dot size shows private AI investment in 2025 as a share of GDP: 0.03%, 0.1%, 0.3%, 1%, or no figure."></svg></div></details>
+      <details class="fly"><summary>Dot colour</summary><div class="fly-body"><svg id="lg-form-1" class="lg" role="img" aria-label="Dot colour shows legal form: legislation, executive or administrative action, or voluntary framework or strategy."></svg></div></details>
+    </div>
+    <div class="insights">
+      <h3>Insights</h3>
+      <ul class="axes">
+        <li><b>Pressure to protect almost always leads to constraining bite. Pressure to promote does not always lead to enabling bite.</b> Where the push is rivalry or security, as with chip export controls, governments promote AI and also restrict it.</li>
+        <li><b>Legal form is a poor guide to how hard policy bites.</b> The strongest constraining bite comes from executive or administrative action in China and the United States, not from legislatures. Singapore's voluntary policy bites harder than the statutes in Brazil, South Korea, Japan and Taiwan.</li>
+        <li><b>Policy in China and the United States bites hardest, but it does not look that way on this chart.</b> Both governments also promote AI heavily, so the enabling bite of their policy cancels out its constraining bite and they land near the middle. Strategic constraint, the box for chip export controls, is empty for the same reason. The strength chart below offers a better view of the magnitude of that bite.</li>
+        <li><b>Australian policy bites as hard as EU policy today.</b> The EU's law is more ambitious, but its high-risk rules do not apply until December 2027 and August 2028. Australia's online safety and privacy rules are already in force, and both score 44 on constraining bite. California's policy scores 44 as well.</li>
+      </ul>
+      <p class="caption">These patterns come from sixteen scores made by judgement, so treat them as indications and not proof.</p>
+    </div>
+    </div>
+    <details class="boxes">
+      <summary>All nine boxes and their jurisdictions</summary>
+      <div class="table-scroll types"><table><thead><tr><th>How policy bites</th><th>Push</th><th>Bite</th><th>Jurisdictions</th></tr></thead><tbody id="t1"></tbody></table></div>
+    </details>
+  </div>
+
+  <div class="chart-block" id="q2">
+    <p class="chart-no"><span>Question 2 of 2</span></p>
+    <h2 class="chart-q">How strongly does policy bite, given how hard the government is pushed?</h2>
+    <p class="chart-read">Each box combines how strong the push on the government is with how strong its bite is.</p>
+    <ul class="axes">
+      <li><b>Push, across:</b> the eight push factors added together, each rated 0 to 3.</li>
+      <li><b>Bite, up:</b> the average of enabling bite and constraining bite.</li>
+      <li><b>Dotted line:</b> boxes along it are where the bite matches the push. Boxes below it have weaker bite than push, and boxes above it have stronger bite.</li>
+      <li><b>Dot colour:</b> legal form, which is the main form the government's AI policy takes: legislation, executive or administrative action, or a voluntary framework or strategy.</li>
+    </ul>
+    <div class="chart-unit">
+    <div class="chart-card"><div class="chart-scroll"><svg id="c2" class="plot" viewBox="0 0 900 748" role="img" aria-label="Strength of push against strength of bite for sixteen jurisdictions. The tables below list every value."></svg></div></div>
+    <div class="legend-bar" aria-label="Chart legends">
+      <details class="fly"><summary>Dot size</summary><div class="fly-body"><svg id="lg-size-2" class="lg" role="img" aria-label="Dot size shows private AI investment in 2025 as a share of GDP: 0.03%, 0.1%, 0.3%, 1%, or no figure."></svg></div></details>
+      <details class="fly"><summary>Dot colour</summary><div class="fly-body"><svg id="lg-form-2" class="lg" role="img" aria-label="Dot colour shows legal form: legislation, executive or administrative action, or voluntary framework or strategy."></svg></div></details>
+    </div>
+    <div class="insights">
+      <h3>Insights</h3>
+      <ul class="axes">
+        <li><b>The harder a government is pushed, the harder its constraining bite.</b> Enabling bite is less tied to pressure, so governments choose how much of it to provide.</li>
+        <li><b>When policy goes well beyond what the pressure on the government explains, the extra is always enabling bite.</b> This applies to policy in the United Kingdom, Singapore, India, South Korea, Japan, and the UAE and Saudi Arabia. In each, enabling bite is strong and constraining bite is weak to moderate.</li>
+        <li><b>United States policy bites harder than EU policy, despite the US reputation for light regulation.</b> US export controls and procurement rules constrain more than EU rules do today, and US enabling bite is much higher. Overall strength of bite is 67 against 47.</li>
+        <li><b>The size of a jurisdiction's private AI industry does not follow how much its government does to enable it.</b> California's private investment is 5.1% of its economy, more than five times the next highest (the United States federal figure, 0.9%), yet its enabling bite is the lowest of the twelve jurisdictions with investment figures. Among the other eleven there is no consistent link either. China and Japan have very low investment and strong enabling bite, while the EU has similarly low investment and weaker enabling bite.</li>
+      </ul>
+      <p class="caption">These patterns come from sixteen scores made by judgement, so treat them as indications and not proof. Investment figures exist for twelve of the sixteen.</p>
+    </div>
+    </div>
+    <details class="boxes">
+      <summary>All nine boxes and their jurisdictions</summary>
+      <div class="table-scroll types"><table><thead><tr><th>How strongly policy bites</th><th>Push</th><th>Bite</th><th>Jurisdictions</th></tr></thead><tbody id="t2"></tbody></table></div>
+    </details>
+  </div>
+  <div id="tip" hidden></div>
+
+  </section>
+
+  <section class="panel" id="panel-planning" role="tabpanel" aria-labelledby="tab-planning" hidden>
+    <div class="pagehead"><p class="kicker">Planning</p><h1>What the scores suggest</h1><p class="deck">Written for an Australian organisation deciding how to govern its own use of AI. It reads patterns across sixteen entries that were scored by judgement at a single date. The patterns are prompts for planning and are not statistical findings. None has been tested against outcomes.</p></div>
+
+  <div class="chart-block">
+    <h3>The gap between push and bite as a forecast</h3>
+    <p class="chart-read">Governments tend to move their bite toward their push, with a delay. Two measures show where that is likely to happen.</p>
+    <ul class="axes">
+      <li><b>Gap:</b> the strength of the push minus the strength of the bite, using the scores on the strength chart. A gap of 10 points or more is treated as a signal, because a one-step change in a single rating moves a score by about that much.</li>
+      <li><b>Push stronger than bite:</b> bite is more likely to rise, toward the side the push comes from. A promotion-led push is met with funding and relief, and a protection-led push with duties.</li>
+      <li><b>Bite stronger than push:</b> the government has acted before the pressure arrived, and the extra bite is more likely to be reduced if pressure falls. When the extra bite is enabling bite, a harm incident that raises the push is the more likely way for the gap to narrow.</li>
+      <li><b>Lean:</b> the direction of the bite minus the direction of the push, using the direction chart. A positive lean means the bite is more constraining than the push behind it.</li>
+    </ul>
+    <div class="table-scroll">
+      <table style="min-width: 900px">
+        <thead><tr><th>Jurisdiction</th><th class="num">Push strength</th><th class="num">Bite strength</th><th>Gap</th><th class="num">Lean</th><th>Reading</th><th>What it suggests</th></tr></thead>
+        <tbody id="gapRows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="chart-block">
+    <h3>Early-warning signals and what to build</h3>
+    <p class="chart-read">Each push factor has signals that show it rising, and each tends to be answered with particular parts of bite. Reading the two together tells an organisation what to watch and what to have in place before the rule arrives. The push table on the Scoring and evidence tab shows which factors are rated 3 in the places you operate, and those are the rows to watch. The last column shows Australia's current rating on the same 0 to 3 scale.</p>
+    <div class="table-scroll">
+      <table style="min-width: 1100px">
+        <thead><tr><th>Push factor</th><th>Signals to watch</th><th>Speed</th><th>Bite the government is likely to use</th><th>What to build</th><th class="c">Australia</th></tr></thead>
+        <tbody id="trigRows"></tbody>
+      </table>
+    </div>
+    <p class="caption">Speed is a judgement of how quickly a rise in the factor has turned into binding rules in the research, from fast (months) to slow (years). Australian examples: the under-16 minimum age took effect on 10 December 2025, and the guardrails proposed in September 2024 were set aside by December 2025.</p>
+    <div class="defs">
+      <div><strong>Duty in force and specificity</strong><span>Build an internal standard written to the same wording as the rule: an owner, a risk assessment, a list of what is in scope.</span></div>
+      <div><strong>Point of control</strong><span>Build a gate at the same point the government would use: before launch, at procurement, at the platform, at the hosting provider.</span></div>
+      <div><strong>Detection</strong><span>Build monitoring and logs, so that a problem is found by you before it is found by a regulator or a journalist.</span></div>
+      <div><strong>Sanction and enforcement</strong><span>Build an evidence trail and an incident record: what was tested, what was found, what was fixed and when.</span></div>
+    </div>
+  </div>
+
+  <div class="chart-block">
+    <h3>Scores over time, 2024 to 2028</h3>
+    <p class="chart-read">Each panel follows one jurisdiction across the same axes as the two charts. The solid line runs from 2024 to 2026. 2026 is the current rating and is the large dot. The dashed line and hollow dots are projected to 2027 and 2028. Colour shows legal form, as in the charts.</p>
+    <div class="toggle" role="group" aria-label="Choose the chart to follow">
+      <button type="button" data-mode="dir" aria-pressed="true">Direction of push and bite</button>
+      <button type="button" data-mode="str" aria-pressed="false">Strength of push and bite</button>
+    </div>
+    <p class="caption" id="travAxes"></p>
+    <div class="trav" id="trav"></div>
+    <div class="table-scroll types">
+      <table style="min-width: 1100px">
+        <thead><tr><th>Jurisdiction</th><th>2024</th><th>2025</th><th>2026</th><th>2027, projected</th><th>2028, projected</th><th>What moved, 2024 to 2026</th><th>What is assumed, 2026 to 2028</th></tr></thead>
+        <tbody id="travRows"></tbody>
+      </table>
+    </div>
+    <p class="caption">2024 and 2025 ratings are made now, in hindsight, from dated events in the research. They are less certain than 2026, because the research concentrated on 2025 and 2026. 2027 and 2028 are projections and not forecasts of likelihood. The rule used: where a law or a notice sets a date, apply the change on that date, and otherwise keep the 2026 rating. Projections that depend on a bill passing say so. A cell with a shaded edge is a change of pattern from the year before.</p>
+  </div>
+
+  </section>
+
+  <section class="panel" id="panel-australia" role="tabpanel" aria-labelledby="tab-australia" hidden>
+    <div class="pagehead"><p class="kicker">Australia</p><h1>Australia in the framework</h1><p class="deck">Where Australia's push comes from, what binds now, and the posture for each move Australia could make. Written for an Australian organisation deciding how to govern its own use of AI.</p></div>
+  <div class="chart-block">
+    <h3>Australia's scores</h3>
+    <div id="ausSits" class="comp two"></div>
+  </div>
+
+  <div class="chart-block">
+    <h3>Watch first</h3>
+    <p class="chart-read">The push factors rated 2 or 3 for Australia are the ones most likely to move policy. The signals and builds are the general ones listed on the Planning tab.</p>
+    <div class="table-scroll">
+      <table style="min-width: 900px">
+        <thead><tr><th>Push factor</th><th class="c">Rating</th><th>Signals to watch</th><th>What to build</th></tr></thead>
+        <tbody id="ausWatch"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="chart-block">
+    <h3>Operating postures</h3>
+    <p class="chart-read">Australia falls in the centre cell on both charts. The cell sets the baseline posture. The four neighbouring cells are the moves Australia could make, so each comes with the signal that would show the move and the posture to adopt. Corner cells are not shown because a move to a corner would take more than one step on one chart.</p>
+    <div class="minis" id="minis"></div>
+    <div class="table-scroll">
+      <table style="min-width: 980px">
+        <thead><tr><th>Chart</th><th>Pattern</th><th>Relation to Australia now</th><th>Signal that Australia is moving there</th><th>Operating posture</th></tr></thead>
+        <tbody id="postureRows"></tbody>
+      </table>
+    </div>
+    <p class="caption">Regulators named are those in the research: eSafety for online safety, the OAIC for privacy and the ACCC for consumer law. Signals draw on the September 2026 exposure drafts of the Digital Duty of Care and the second privacy tranche, and the 18 September 2026 consultation paper on national AI standards.</p>
+  </div>
+
+
+  <div class="chart-block">
+    <h3>Australia's scores, 2024 to 2028</h3>
+    <p class="chart-read">These are the Planning tab's panels, enlarged for Australia. The solid line runs from 2024 to 2026 and the dashed line is projected. The projection assumes the national AI standards, the Digital Duty of Care and the second privacy tranche pass, which is not certain.</p>
+    <div class="trav two" id="ausTrail"></div>
+  </div>
+  </section>
+
+  <section class="panel" id="panel-method" role="tabpanel" aria-labelledby="tab-method" hidden>
+    <div class="pagehead"><p class="kicker">Scoring and evidence</p><h1>How the scores are built</h1><p class="deck">Every score is a judgement made from the research report. These tables show each rating, the evidence behind it and the limits of that evidence.</p></div>
+  <h2>How push is scored</h2>
+  <p>Each factor is rated 0 to 3 for how strongly it operated on policy in 2025 and 2026: 0 no evidence, 1 stated only or weak evidence, 2 documented, 3 dominant. Direction is the protection total as a share of both totals. Strength is both totals as a share of the maximum of 24.</p>
+  <div class="comp two">
+    <div>
+      <h3>Factors pushing toward promotion</h3>
+      <p><b>Strategic rivalry.</b> Competition between states and national security uses.</p>
+      <p><b>Sovereignty.</b> Domestic control of compute, data and models.</p>
+      <p><b>Growth and investment.</b> Productivity gains and competition for AI investment.</p>
+      <p><b>Industry and partner pressure.</b> Lobbying by developers and deployers, and pressure from a larger state to loosen rules.</p>
+    </div>
+    <div>
+      <h3>Factors pushing toward protection</h3>
+      <p><b>Rights tradition.</b> Fundamental rights, anti-discrimination law and constitutional values.</p>
+      <p><b>Public harm and demand.</b> Child and consumer safety, public opinion, and incidents that create a window for action.</p>
+      <p><b>Labour and stability.</b> Displacement, algorithmic management and the political cost of job loss.</p>
+      <p><b>Information control.</b> Control of content and the information environment.</p>
+    </div>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th rowspan="2">Jurisdiction</th><th rowspan="2" class="num">Direction</th><th rowspan="2" class="num">Strength</th><th colspan="4" class="tgroup">Toward promotion</th><th colspan="4" class="tgroup">Toward protection</th><th rowspan="2" class="gl">Basis for the scores</th></tr>
+        <tr><th class="c gl">Rivalry</th><th class="c">Sovereignty</th><th class="c">Growth</th><th class="c">Industry</th><th class="c gl">Rights</th><th class="c">Harm</th><th class="c">Labour</th><th class="c">Control</th></tr>
+      </thead>
+      <tbody id="pushRows"></tbody>
+    </table>
+  </div>
+
+  <h2>How bite is scored</h2>
+  <p>Bite has two sides. Constraining bite is how hard rules bind the actors they apply to. Enabling bite is how much the state commits to building and adopting AI. Direction is constraining bite as a share of both. Strength is the average of the two. The sides describe what the policy does to firms, not why: a constraint can serve a promotion aim, as United States export controls do.</p>
+
+  <h3>Constraining bite</h3>
+  <p>Each component is rated 0 to 3 for the main instruments operating on the reference date. Constraining bite is 60 per cent the lowest component and 40 per cent the average, scaled to 100, because the components form a chain and a missing link disables the rest.</p>
+  <div class="comp">
+    <div><b>Duty in force.</b> An obligation operates today. 0 none, 3 broad duties in force.</div>
+    <div><b>Specificity.</b> The duty is concrete enough to breach. 0 aspirational, 3 thresholds and deadlines.</div>
+    <div><b>Point of control.</b> 0 none, 1 penalty after harm, 2 reporting or ongoing supervision, 3 a gate before release.</div>
+    <div><b>Detection.</b> A designated, resourced body can see non-compliance. 0 none, 3 routine inspection.</div>
+    <div><b>Sanction.</b> Cost of a breach relative to the firm. 0 none, 3 loss of market access or turnover-based fines.</div>
+    <div><b>Enforcement.</b> The sanction has been used. 0 no record or not yet possible, 3 routine use.</div>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Jurisdiction</th><th class="num">Constraining bite</th><th>Form</th><th class="c">Duty</th><th class="c">Specific</th><th class="c">Control</th><th class="c">Detect</th><th class="c">Sanction</th><th class="c">Enforce</th><th>Basis for the scores</th></tr></thead>
+      <tbody id="biteRows"></tbody>
+    </table>
+  </div>
+
+  <h3>Enabling bite</h3>
+  <p>Each component is rated 0 to 3. Enabling bite is the plain average scaled to 100, because these measures substitute for each other and do not form a chain.</p>
+  <div class="comp two">
+    <div>
+      <p><b>Investment.</b> Public funding, state compute and data centre programs.</p>
+      <p><b>Adoption drive.</b> Diffusion targets, government adoption, procurement preference and skills programs.</p>
+    </div>
+    <div>
+      <p><b>Regulatory relief.</b> Active loosening: delays, exceptions, sandboxes, pre-emption or withdrawal of planned rules.</p>
+      <p><b>Strategic backing.</b> State-owned vehicles, export promotion, trade measures and deals with developers.</p>
+    </div>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Jurisdiction</th><th class="num">Enabling bite</th><th class="c">Investment</th><th class="c">Adoption</th><th class="c">Relief</th><th class="c">Backing</th><th class="num gl">Bite direction</th><th class="num">Bite strength</th><th class="gl">Basis for the scores</th></tr></thead>
+      <tbody id="boostRows"></tbody>
+    </table>
+  </div>
+
+  <h2>How dot size is set</h2>
+  <p>Dot size shows private AI investment in 2025 as a share of GDP. It is a measured proxy for how much AI weighs in the economy and is not a measure of AI's contribution to output, for which no comparable statistic exists. The area of each dot is proportional to its exact share, so a dot with twice the share has twice the area. Shares run from 0.03 per cent to 5.1 per cent. California, at 5.1 per cent, is larger than the biggest circle in the legend. Small hollow dots have no figure.</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Jurisdiction</th><th class="num">Investment, USD billion</th><th class="num">GDP, USD billion</th><th class="num">Share of GDP</th><th>Note</th></tr></thead>
+      <tbody id="sizeRows"></tbody>
+    </table>
+  </div>
+  <p class="caption">Investment: Stanford AI Index 2026, figure 4.2.8, from Quid data on companies that have raised more than USD 1.5 million. GDP: IMF World Economic Outlook, April 2026, estimates for 2025.</p>
+
+  <div class="notes">
+    <p>All push and bite scores are judgements made from the research report. They are not measurements, and no published index was used. Dot size is the only measured quantity on the charts.</p>
+    <p>The investment figures count venture and private funding of AI companies by where the company is based. They favour jurisdictions that host developers and say little about adoption, so China and Japan appear small.</p>
+    <p>Strength of push partly reflects how much evidence the research found. A factor with no evidence is rated 0, so jurisdictions with less coverage (India, Brazil, the Gulf states, Africa, Montana) and those with little independent analysis of motives (Singapore, Japan) will score low on push strength whether or not the pressure is weak.</p>
+    <p>The nine boxes on each chart come from cutting each axis at one third and two thirds. The cut points are arbitrary, and a jurisdiction near a line could fall either side with a one-point change in a rating. A jurisdiction exactly on a line is placed in the higher cell. The dotted lines compare two scales built in different ways, so distance from the line is indicative.</p>
+    <p>The push factors condense ten of the report's fourteen drivers. Institutional structure, state capacity, diffusion and electoral politics shape the form of a policy more than its direction and are left out. Enabling bite was not a focus of the research, and compute and industrial policy were covered in less depth than regulation.</p>
+    <p>Constraining bite is scored on whichever instruments operate on AI products today. In Australia, the United Kingdom, Singapore, India, Brazil and Canada those are mostly online safety, privacy or intermediary laws. Detection and enforcement ratings rest on limited evidence.</p>
+    <p>Scores reflect what governments do and intend. Self-regulation by firms, such as a developer pausing training, is not counted as bite, and neither is its absence.</p>
+    <p>United States states are shown as two examples from opposite ends of the range of approach. Montana's scores are inferred from the text of its Act only.</p>
+  </div>
+  </section>
+</div>
+
+<script>
+/* p = push [rivalry, sovereignty, growth, industry | rights, harm, labour, control]
+   c = constraining bite [duty, specificity, point of control, detection, sanction, enforcement]
+   b = enabling bite [investment, adoption, relief, backing]; all 0 to 3 */
+const DATA = [
+  { n: "China", inv: 12.41, gdp: 19626.25, invNote: "", f: "exec", p: [3,3,3,1, 0,2,3,3], c: [3,2,3,3,3,3], b: [3,3,1,3],
+    pw: "Both sides of the push are strong. Rivalry with the United States and the drive for self-reliance under chip controls push toward promotion, as do diffusion targets. Information control and job stability push toward protection.",
+    why: "A filing and security assessment is required before release, which works as a licence. A mandatory labelling standard and takedown campaigns operate. The rules are vaguely worded, which lowers specificity.",
+    bw: "The AI Plus program sets diffusion targets to 2030 and the state leads industrial policy. Drafts of rules were softened when the economy slowed." },
+  { n: "United States, federal", inv: 285.88, gdp: 30767.08, invNote: "Whole of United States.", f: "exec", p: [3,1,3,3, 0,3,0,1], c: [2,1,3,2,3,3], b: [2,2,3,3],
+    pw: "Dominance over China, growth and industry lobbying lead the push. Child safety has been a steady concern, and the 2026 agent incidents were serious enough to bring six developers to the White House on 29 September. Procurement rules on model outputs are a form of content control.",
+    why: "Export licensing and procurement act as gates and have been used, including a letter that took two models offline. Duties are discretionary and partly unpublished, so specificity is low. The September 2026 accord on audits is voluntary and has no verification or penalty, so it adds no constraint.",
+    bw: "The government revoked the 2023 order, pursued pre-emption of state laws, eased data centre permitting, and runs an export program and chip controls. It answered the 2026 agent incidents with a voluntary accord and not with binding rules. Public funding is small beside private funding." },
+  { n: "European Union", inv: 15.02, gdp: 21231.6, invNote: "Derived: Stanford's Europe figure of 20.92 less the United Kingdom's 5.90. Treat as approximate.", f: "leg", p: [0,2,3,3, 3,2,0,0], c: [2,2,1,2,3,1], b: [2,1,2,1],
+    pw: "Rights are the founding rationale. Since 2024, competitiveness concerns, industry lobbying and pressure from Washington have pushed toward delay and simplification.",
+    why: "Prohibitions, model duties and transparency rules are in force with turnover-based fines. The high-risk duties are postponed, 9 of 27 states had designated authorities, and no fine was found.",
+    bw: "Auditors found the compute programs not fully effective. The omnibus delayed the high-risk rules, and sandboxes are due in 2027." },
+  { n: "California", inv: 218.0, gdp: 4250.0, invNote: "State GDP from the Governor's office, citing a record USD 4.25 trillion for 2025.", f: "leg", p: [0,0,1,2, 1,3,2,0], c: [2,3,2,1,2,1], b: [0,1,1,0],
+    pw: "Child safety, chatbot harms and the 2026 agent incidents lead the push, along with worker protection laws. Industry lobbying narrowed the frontier law.",
+    why: "The frontier law sets a compute threshold, requires published frameworks and 15-day incident reports, and carries fines up to USD 1 million. Enforcement is the Attorney General's role, and no penalty was found.",
+    bw: "The state promotes little. Vetoes of stricter bills are the main relief." },
+  { n: "Australia", inv: 2.52, gdp: 1839.96, invNote: "", f: "leg", p: [0,2,3,2, 1,3,1,0], c: [2,2,1,2,2,2], b: [1,2,2,1],
+    pw: "Productivity and data centre investment lead general policy. Since July 2026 the government has framed investment as welcome only on Australian terms, which raises sovereignty. Child safety, Robodebt and the Medicare incident involving an OpenAI agent drive the binding parts.",
+    why: "The under-16 minimum age, online safety codes that reach AI companions and a deepfake offence are in force. Privacy disclosure of automated decisions applies from 10 December 2026. National AI standards, a Digital Duty of Care and a second privacy tranche are still drafts or consultations, so no AI-specific duty on private actors is in force.",
+    bw: "The government released the National AI Plan and adoption guidance, set aside the mandatory guardrails in December 2025, and in July 2026 announced mandatory national standards for large AI training and data centres, to be legislated in early 2027. A consultation paper (18 September 2026) closed on 9 October. The Office of AI in the Prime Minister's department is announced but not yet established. Public funding is modest." },
+  { n: "United Kingdom", inv: 5.9, gdp: 4003.02, invNote: "", f: "leg", p: [2,1,3,2, 0,2,0,0], c: [2,1,1,2,3,1], b: [3,2,2,2],
+    pw: "Growth and security lead the push. Alignment with Washington is reported on anonymous sourcing. Child safety is handled through online safety law.",
+    why: "The Online Safety Act applies to chatbots and Ofcom investigated Grok. The AI principles are non-statutory and the AI Security Institute has no powers.",
+    bw: "The government has created AI Growth Zones and a Sovereign AI Unit with up to GBP 500 million, set a skills target and planned a sandbox. A frontier bill was not introduced." },
+  { n: "Singapore", inv: 1.82, gdp: 603.87, invNote: "", f: "vol", p: [0,0,3,0, 0,2,1,0], c: [2,2,1,1,2,1], b: [2,3,2,1],
+    pw: "Growth as a hub is the lead factor, and online harms drive the targeted criminal laws. Few factors are rated, so the direction is sensitive to a single rating.",
+    why: "AI frameworks are voluntary. Bite comes from criminal law on election deepfakes and AI-generated intimate images. The launch of the Online Safety Commission is unconfirmed.",
+    bw: "Singapore has government-wide deployment, a National AI Council, testing tools for industry and a copyright exception for data analysis." },
+  { n: "India", inv: 4.09, gdp: 3916.31, invNote: "", f: "exec", p: [0,2,3,1, 1,2,0,1], c: [2,2,1,1,2,1], b: [3,2,2,2],
+    pw: "Innovation over restraint is a stated principle, with sovereign compute. Deepfake harms drive the labelling rules. Control through intermediary rules is inferred and not documented.",
+    why: "Delegated intermediary rules require labelling of synthetic content, with loss of safe harbour as the sanction, and a notice was issued to X. The detail of the rules rests on a weak source.",
+    bw: "The IndiaAI Mission provides more than 38,000 GPUs, there is no AI law by design, and the 2026 summit was used to attract investment pledges." },
+  { n: "Brazil", inv: null, gdp: 2279.92, invNote: "Not in Stanford's top 15, so below USD 0.97 billion.", f: "leg", p: [0,0,2,2, 2,1,1,0], c: [1,1,1,1,2,1], b: [1,1,0,0],
+    pw: "The bill is rights-based. Industry lobbying changed its high-risk list, and labour safeguards are in dispute in the Chamber.",
+    why: "The AI bill is not law. Bite comes from the data protection law and regulator orders, including a 30-day demand on xAI. The regulator's enforcement record is unconfirmed.",
+    bw: "A data centre tax regime is pursued separately and its status is unconfirmed. Little else was found." },
+  { n: "Canada", inv: 4.28, gdp: 2319.9, invNote: "", f: "vol", p: [0,3,3,2, 1,2,1,0], c: [1,1,1,1,1,1], b: [3,2,1,1],
+    pw: "Sovereignty and growth lead the 2026 strategy. Industry had privileged access while the AI bill was before Parliament. Privacy and online safety bills are the main source of protection pressure.",
+    why: "The AI bill lapsed and the code is voluntary. Existing privacy law applies with weak sanctions. A binding directive with impact assessments covers federal bodies only.",
+    bw: "Sovereign compute spending and the 2026 strategy make up the enabling bite. The lapsed AI bill will not be revived." },
+  { n: "South Korea", inv: 1.78, gdp: 1872.38, invNote: "", f: "leg", p: [0,2,3,1, 1,0,0,0], c: [2,1,1,1,1,0], b: [3,2,1,2],
+    pw: "Industrial support, sovereign investment and setting norms early lead the push. Trust and human oversight are stated aims.",
+    why: "The Framework Act has been in force since January 2026, but fines are capped at KRW 30 million and deferred for at least a year, guidance on high-impact AI is unclear, and no enforcement was found.",
+    bw: "The Act mandates state support for research, data centres and small firms. AI has procurement priority, and fines have a grace period." },
+  { n: "African Union and members", inv: null, gdp: null, invNote: "No figure found.", f: "vol", p: [0,1,2,1, 1,0,1,0], c: [1,1,0,1,1,0], b: [1,1,0,0],
+    pw: "Development and jobs lead the push. Rights language comes from UNESCO and the EU template. Evidence is limited.",
+    why: "The continental strategy is non-binding. Data protection authorities act as de facto regulators. Kenya's EU-style bill is not law.",
+    bw: "National strategies exist, but compute is scarce and states find it difficult to put the strategies into operation." },
+  { n: "Japan", inv: 1.11, gdp: 4435.16, invNote: "", f: "leg", p: [1,1,3,0, 0,1,0,0], c: [1,0,0,1,1,0], b: [2,3,3,1],
+    pw: "Adoption, labour shortage and stagnant wages lead the push. The Grok episode is the only documented protection pressure.",
+    why: "The Promotion Act contains a single duty to endeavour to cooperate. The only sanction is publication of names.",
+    bw: "Japan aims to be the most AI-friendly country, with 180,000 government users and a broad copyright exception for training. The Act has no penalties by design." },
+  { n: "UAE and Saudi Arabia", inv: 2.03, gdp: 1848.58, invNote: "Saudi Arabia only over combined GDP. The UAE is not in Stanford's top 15, so this is a lower bound.", f: "vol", p: [1,3,3,1, 0,0,0,0], c: [1,1,0,0,1,0], b: [3,3,1,3],
+    pw: "Sovereign compute and investment lead the push. No protection factor was documented, and no independent analysis of control motives was retrieved.",
+    why: "Strategies and non-binding principles apply, with data protection law in the background. Evidence is weak.",
+    bw: "State-owned compute vehicles work with US partners, and adoption is a stated national goal. Evidence is weak." },
+  { n: "Taiwan", inv: null, gdp: 920.05, invNote: "Not in Stanford's top 15, so below USD 0.97 billion.", f: "leg", p: [2,2,3,1, 1,0,1,0], c: [1,1,0,0,0,0], b: [2,2,1,1],
+    pw: "Growth, security and sovereignty lead the push. The Act states rights principles and a duty to assist displaced workers.",
+    why: "The basic act has no penalties. Its duties fall on government, and delivery against its deadlines is unconfirmed.",
+    bw: "The 2026 budget is above NTD 30 billion, and the basic act is aimed at promotion." },
+  { n: "Montana", inv: null, gdp: null, invNote: "Stanford names no figure for Montana.", f: "leg", p: [0,0,2,1, 1,1,0,0], c: [1,1,0,0,0,0], b: [0,0,3,0],
+    pw: "Scored from the text of the Act only. The Act protects private use of computing and lists protecting minors among permitted reasons to regulate.",
+    why: "The Right to Compute Act limits state restrictions on private computing. The only duty on firms is a risk policy where AI controls critical infrastructure, and it has no penalty.",
+    bw: "The Act itself is the relief. State restrictions on computing must meet a compelling-interest test." }
+];
+const sum = a => a.reduce((x, y) => x + y, 0);
+DATA.forEach(d => {
+  d.bite = Math.round(100 * (0.6 * Math.min(...d.c) + 0.4 * sum(d.c) / d.c.length) / 3);
+  d.boost = Math.round(100 * sum(d.b) / 12);
+  const pro = sum(d.p.slice(0, 4)), prot = sum(d.p.slice(4));
+  d.pushDirRaw = 100 * prot / (pro + prot); d.pushStrRaw = 100 * (pro + prot) / 24;
+  d.respDirRaw = 100 * d.bite / (d.bite + d.boost); d.respStrRaw = (d.bite + d.boost) / 2;
+  d.pushDir = Math.round(d.pushDirRaw); d.pushStr = Math.round(d.pushStrRaw);
+  d.respDir = Math.round(d.respDirRaw); d.respStr = Math.round(d.respStrRaw);
+  d.share = d.inv == null ? null : 100 * d.inv / d.gdp;
+});
+/* dot area is proportional to the share: radius = K * sqrt(share in per cent) */
+const SHMAX = Math.max(...DATA.filter(d => d.share != null).map(d => d.share));
+const RBIG = 70, K = RBIG / Math.sqrt(SHMAX), RNONE = 4;
+const rOf = share => Math.max(2.5, K * Math.sqrt(share));
+const radius = d => d.share == null ? RNONE : rOf(d.share);
+const fmtShare = v => v >= 1 ? v.toFixed(1) + "%" : v >= 0.1 ? v.toFixed(2) + "%" : v.toFixed(3) + "%";
+const FORM = { leg: "Legislation", exec: "Executive", vol: "Voluntary" };
+const NS = "http://www.w3.org/2000/svg";
+const tip = document.getElementById("tip");
+
+function showTip(d, c, i) {
+  document.querySelectorAll(".dot.active, tr.active").forEach(e => e.classList.remove("active"));
+  document.querySelectorAll(`.dot[data-i="${i}"], tr[data-i="${i}"]`).forEach(e => e.classList.add("active"));
+  tip.innerHTML = "";
+  const b = document.createElement("b"); b.textContent = d.n;
+  const mk = (t, cls) => { const s = document.createElement("span"); s.textContent = t; if (cls) s.className = cls; return s; };
+  tip.append(b,
+    mk(`Push: direction ${d.pushDir}, strength ${d.pushStr}`, "nums"), mk(d.pw),
+    mk(`Bite: direction ${d.respDir}, strength ${d.respStr} (enabling ${d.boost}, constraining ${d.bite})`, "nums"), mk(d.why), mk(d.bw),
+    mk(d.share == null ? "Private AI investment: no figure" : `Private AI investment: ${fmtShare(d.share)} of GDP`, "nums"));
+  tip.hidden = false;
+  const pr = c.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+  let left = pr.right + 10, top = pr.bottom + 8;
+  if (left + tw > window.innerWidth - 8) left = Math.max(8, pr.left - tw - 10);
+  if (top + th > window.innerHeight - 8) top = Math.max(8, pr.top - th - 8);
+  tip.style.left = left + "px"; tip.style.top = top + "px";
+}
+function hideTip() {
+  tip.hidden = true;
+  document.querySelectorAll(".dot.active, tr.active").forEach(e => e.classList.remove("active"));
+}
+
+function drawChart(id, cfg) {
+  const svg = document.getElementById(id);
+  const M = { l: 78, r: 22, t: 30, b: 62 }, PAD = 28, W = 900, H = 748;
+  const PW = W - M.l - M.r, PH = H - M.t - M.b;
+  const sx = v => M.l + PAD + v / 100 * (PW - 2 * PAD);
+  const sy = v => M.t + PAD + (1 - v / 100) * (PH - 2 * PAD);
+  const X0 = M.l, X1 = M.l + PW, Y0 = M.t, Y1 = M.t + PH, R = 7;
+  const el = (tag, attrs, text) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    svg.appendChild(e); return e;
+  };
+  el("rect", { class: "plot-bg", x: X0, y: Y0, width: PW, height: PH });
+  const T1 = 100 / 3, T2 = 200 / 3;
+  [T1, T2].forEach(v => {
+    el("line", { class: "third-line", x1: sx(v), x2: sx(v), y1: Y0, y2: Y1 });
+    el("line", { class: "third-line", x1: X0, x2: X1, y1: sy(v), y2: sy(v) });
+  });
+  el("line", { class: "diag", x1: sx(0), y1: sy(0), x2: sx(100), y2: sy(100) });
+  el("rect", { class: "frame", x: X0, y: Y0, width: PW, height: PH });
+
+  const boxes = [];
+  const colX = [X0, sx(T1), sx(T2)], rowY = [Y0, sy(T2), sy(T1)];
+  const colX1 = [sx(T1), sx(T2), X1], rowY1 = [sy(T2), sy(T1), Y1];
+  const dotsEarly = DATA.map(d => { const r = radius(d) + 3, cx = sx(d[cfg.x]), cy = sy(d[cfg.y]); return { x0: cx - r, x1: cx + r, y0: cy - r, y1: cy + r }; });
+  const hit = (a, b) => a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0;
+  cfg.cells.forEach(([name, def], k) => {
+    const c = k % 3, r = Math.floor(k / 3);
+    const e1 = el("text", { class: "cell-name" }, name), e2 = el("text", { class: "cell-def" }, def);
+    const w = Math.max(e1.getComputedTextLength() || name.length * 6.8, e2.getComputedTextLength() || def.length * 5.6);
+    /* corners in order of preference: top left, top right, bottom left, bottom right */
+    const spots = [[colX[c] + 10, rowY[r] + 19, "start"], [colX1[c] - 10, rowY[r] + 19, "end"], [colX[c] + 10, rowY1[r] - 24, "start"], [colX1[c] - 10, rowY1[r] - 24, "end"]];
+    let pick = null;
+    for (const [x, y, anchor] of spots) {
+      const box = { x0: anchor === "end" ? x - w - 2 : x - 2, x1: anchor === "end" ? x + 2 : x + w + 2, y0: y - 13, y1: y + 20 };
+      if (!dotsEarly.some(d => hit(box, d))) { pick = { x, y, anchor, box }; break; }
+      if (!pick) pick = { x, y, anchor, box };
+    }
+    [e1, e2].forEach((e, n) => { e.setAttribute("x", pick.x); e.setAttribute("y", pick.y + n * 15); e.setAttribute("text-anchor", pick.anchor); });
+    boxes.push(pick.box);
+  });
+
+  el("text", { class: "axis-end", x: X0, y: Y1 + 22 }, cfg.xEnds[0]);
+  el("text", { class: "axis-end", x: X1, y: Y1 + 22, "text-anchor": "end" }, cfg.xEnds[1]);
+  el("text", { class: "axis-title", x: sx(50), y: Y1 + 22, "text-anchor": "middle" }, cfg.xTitle);
+  el("text", { class: "axis-title", "text-anchor": "middle", transform: `translate(${M.l - 46} ${sy(50)}) rotate(-90)` }, cfg.yTitle);
+  el("text", { class: "axis-end", "text-anchor": "end", transform: `translate(${M.l - 12} ${Y0}) rotate(-90)` }, cfg.yEnds[1]);
+  el("text", { class: "axis-end", "text-anchor": "start", transform: `translate(${M.l - 12} ${Y1}) rotate(-90)` }, cfg.yEnds[0]);
+
+  const mk = (host, w, h) => {
+    host.setAttribute("viewBox", `0 0 ${w} ${h}`); host.setAttribute("width", w);
+    return (tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; host.appendChild(e); return e; };
+  };
+  const n = id.slice(1);
+  const hs = document.getElementById("lg-size-" + n), hf = document.getElementById("lg-form-" + n);
+  if (hs && hf) {
+    hs.textContent = ""; hf.textContent = "";
+    const e1 = mk(hs, 700, 150); let sxl = 4; const sly = 75;
+    e1("text", { class: "legend-text", x: sxl, y: sly + 4 }, "Private AI investment, share of GDP"); sxl += 226;
+    [0.03, 0.1, 0.3, 1].forEach(v => {
+      const r = rOf(v), t = v + "%";
+      e1("circle", { class: "legend-ring", cx: sxl + r, cy: sly, r });
+      e1("text", { class: "legend-text", x: sxl + 2 * r + 6, y: sly + 4 }, t);
+      sxl += 2 * r + 6 + t.length * 6.5 + 18;
+    });
+    e1("circle", { class: "dot-nodata", cx: sxl + RNONE, cy: sly, r: RNONE });
+    e1("text", { class: "legend-text", x: sxl + 2 * RNONE + 6, y: sly + 4 }, "no figure");
+    const tw = Math.ceil(sxl + 2 * RNONE + 6 + 62); hs.setAttribute("viewBox", `0 0 ${tw} 150`); hs.setAttribute("width", tw);
+    const e2 = mk(hf, 540, 30); let lx = 4; const ly = 15;
+    e2("text", { class: "legend-text", x: lx, y: ly + 4 }, "Legal form"); lx += 78;
+    [["leg", "Legislation", 96], ["exec", "Executive or administrative", 186], ["vol", "Voluntary or strategy", 150]].forEach(([k, t, w]) => {
+      e2("circle", { class: "legend-form f-" + k, cx: lx + 8, cy: ly, r: R });
+      e2("text", { class: "legend-text", x: lx + 22, y: ly + 4 }, t); lx += w;
+    });
+  }
+
+  const pts = DATA.map((d, i) => ({ d, i, r: radius(d), cx: sx(d[cfg.x]), cy: sy(d[cfg.y]) })).sort((a, b) => b.r - a.r);
+  const leaders = document.createElementNS(NS, "g"); svg.appendChild(leaders);
+  pts.forEach(pt => {
+    if (pt.r <= 30) el("circle", { class: "dot-ring", cx: pt.cx, cy: pt.cy, r: pt.r + 1.5 });
+    const c = el("circle", { class: "dot f-" + pt.d.f + (pt.d.share == null ? " nodata" : ""), cx: pt.cx, cy: pt.cy, r: pt.r, tabindex: 0, role: "img", "data-i": pt.i,
+      "aria-label": `${pt.d.n}. ${cfg.xTitle} ${pt.d[cfg.x]}, ${cfg.yTitle} ${pt.d[cfg.y]}.` });
+    if (pt.r > 30) c.style.fillOpacity = pt.r > 50 ? 0.25 : 0.4;
+    pt.c = c;
+  });
+  /* hit areas go on top, smallest last, so small dots inside large ones stay reachable */
+  pts.forEach(pt => {
+    const c = pt.c, h = el("circle", { class: "hit", cx: pt.cx, cy: pt.cy, r: Math.max(pt.r, 9) });
+    h.addEventListener("mouseenter", () => showTip(pt.d, c, pt.i));
+    h.addEventListener("mouseleave", hideTip);
+    c.addEventListener("focus", () => showTip(pt.d, c, pt.i));
+    c.addEventListener("blur", hideTip);
+    h.addEventListener("click", () => showTip(pt.d, c, pt.i));
+  });
+
+  /* greedy label placement: try eight directions at three distances, keep the least crowded */
+  const ov = (a, b) => Math.max(0, Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0)) * Math.max(0, Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0));
+  const dotBoxes = pts.map(p => ({ i: p.i, x0: p.cx - p.r - 2, x1: p.cx + p.r + 2, y0: p.cy - p.r - 2, y1: p.cy + p.r + 2 }));
+  const dirs = [[1, 0], [-1, 0], [0, -1], [0, 1], [1, -1], [1, 1], [-1, -1], [-1, 1]];
+  const crowd = p => pts.filter(q => q !== p && Math.hypot(q.cx - p.cx, q.cy - p.cy) < 70).length;
+  pts.slice().sort((a, b) => crowd(a) - crowd(b)).reverse().forEach(pt => {
+    const t = el("text", { class: "dot-label" }, pt.d.n);
+    const w = t.getComputedTextLength() || pt.d.n.length * 6.6, h = 13;
+    let best = null;
+    [pt.r + 5, pt.r + 20, pt.r + 38].forEach((dist, di) => dirs.forEach(([dx, dy], k) => {
+      const ax = pt.cx + dx * dist * (dy ? 0.75 : 1), ay = pt.cy + dy * (dist * (dx ? 0.75 : 1) + (dx ? 2 : 6));
+      const box = dx > 0 ? { x0: ax, x1: ax + w } : dx < 0 ? { x0: ax - w, x1: ax } : { x0: ax - w / 2, x1: ax + w / 2 };
+      box.y0 = ay - h / 2 - 1; box.y1 = ay + h / 2 + 1;
+      let cost = di * 14 + k * 0.6;
+      boxes.forEach(b => cost += ov(box, b) * 2);
+      dotBoxes.forEach(b => { if (b.i !== pt.i) cost += ov(box, b) * 3; });
+      if (box.x0 < X0 + 4 || box.x1 > X1 - 4 || box.y0 < Y0 + 4 || box.y1 > Y1 - 4) cost += 5000;
+      if (!best || cost < best.cost) best = { cost, box, ax, ay, dx, dy, di };
+    }));
+    const b = best;
+    t.setAttribute("x", b.dx > 0 ? b.box.x0 : b.dx < 0 ? b.box.x1 : (b.box.x0 + b.box.x1) / 2);
+    t.setAttribute("y", b.ay + 4.5);
+    t.setAttribute("text-anchor", b.dx > 0 ? "start" : b.dx < 0 ? "end" : "middle");
+    boxes.push(b.box);
+    if (b.di > 0) {
+      const ex = b.dx > 0 ? b.box.x0 - 2 : b.dx < 0 ? b.box.x1 + 2 : pt.cx;
+      const ey = b.dy < 0 ? b.box.y1 : b.dy > 0 ? b.box.y0 : b.ay;
+      const ln = document.createElementNS(NS, "line");
+      ln.setAttribute("class", "leader"); ln.setAttribute("x1", pt.cx); ln.setAttribute("y1", pt.cy);
+      ln.setAttribute("x2", ex); ln.setAttribute("y2", ey); leaders.appendChild(ln);
+    }
+  });
+  /* which cell each jurisdiction falls in; a value on a boundary goes to the higher cell */
+  const third = v => v < T1 - 1e-6 ? 0 : v < T2 - 1e-6 ? 1 : 2;
+  const tb = document.getElementById(cfg.types);
+  cfg.cells.forEach(([name, def], k) => {
+    const col = k % 3, rowFromTop = Math.floor(k / 3);
+    const names = DATA.filter(d => third(d[cfg.x + "Raw"]) === col && 2 - third(d[cfg.y + "Raw"]) === rowFromTop).map(d => d.n);
+    const tr = document.createElement("tr");
+    [[name, "name"], [cfg.pushBands[col], ""], [cfg.biteBands[rowFromTop], ""], [names.length ? names.join(", ") : "None", names.length ? "" : "none"]].forEach(([v, cls]) => {
+      const td = document.createElement("td"); if (cls) td.className = cls; td.textContent = v; tr.appendChild(td);
+    });
+    tb.appendChild(tr);
+  });
+}
+
+const CELLS1 = [
+  ["Strategic constraint", "promotion push, constraining bite"],
+  ["Constraint under mixed push", "mixed push, constraining bite"],
+  ["Protective regulation", "protection push, constraining bite"],
+  ["Promotion with limits", "promotion push, balanced bite"],
+  ["Balanced", "mixed push, balanced bite"],
+  ["Protection with support", "protection push, balanced bite"],
+  ["Promotion", "promotion push, enabling bite"],
+  ["Enabling under mixed push", "mixed push, enabling bite"],
+  ["Enabling against the push", "protection push, enabling bite"]];
+const CELLS2 = [
+  ["Acts without pressure", "weak push, strong bite"],
+  ["Acts ahead of pressure", "moderate push, strong bite"],
+  ["High pressure, strong action", "strong push, strong bite"],
+  ["Moderate action, little pressure", "weak push, moderate bite"],
+  ["In step", "moderate push, moderate bite"],
+  ["Lags behind pressure", "strong push, moderate bite"],
+  ["Low activity", "weak push, weak bite"],
+  ["Under-responds", "moderate push, weak bite"],
+  ["Stalled under pressure", "strong push, weak bite"]];
+
+function build() {
+  drawChart("c1", { x: "pushDir", y: "respDir", types: "t1",
+    xTitle: "Direction of push", yTitle: "Direction of bite",
+    xEnds: ["Promotion (0)", "Protection (100)"], yEnds: ["Enabling (0)", "Constraining (100)"],
+    pushBands: ["Growth, rivalry, sovereignty, industry", "Both sets of forces", "Rights, harm, labour, control"],
+    biteBands: ["Enforced duties and controls", "Support and duties together", "Investment, adoption, relief, backing"],
+    cells: CELLS1 });
+  drawChart("c2", { x: "pushStr", y: "respStr", types: "t2",
+    xTitle: "Strength of push", yTitle: "Strength of bite",
+    xEnds: ["Weak (0)", "Strong (100)"], yEnds: ["Weak (0)", "Strong (100)"],
+    pushBands: ["Little pressure to act", "Moderate pressure to act", "Strong pressure to act"],
+    biteBands: ["Strong policy effect", "Moderate policy effect", "Little policy effect"],
+    cells: CELLS2 });
+}
+
+function row(tbody, i, cells) {
+  const tr = document.createElement("tr"); tr.dataset.i = i;
+  cells.forEach(([v, cls]) => { const td = document.createElement("td"); if (cls) td.className = cls; td.textContent = v; tr.appendChild(td); });
+  tbody.appendChild(tr);
+}
+const byId = id => document.getElementById(id);
+DATA.slice().sort((a, b) => b.pushDir - a.pushDir).forEach(d => row(byId("pushRows"), DATA.indexOf(d),
+  [[d.n, "name"], [d.pushDir, "num"], [d.pushStr, "num"]].concat(d.p.map((v, k) => [v, k % 4 === 0 ? "c gl" : "c"])).concat([[d.pw, "why gl"]])));
+DATA.slice().sort((a, b) => b.bite - a.bite).forEach(d => row(byId("biteRows"), DATA.indexOf(d),
+  [[d.n, "name"], [d.bite, "num"], [FORM[d.f], ""]].concat(d.c.map(v => [v, "c"])).concat([[d.why, "why"]])));
+DATA.slice().sort((a, b) => (b.share ?? -1) - (a.share ?? -1)).forEach(d => row(byId("sizeRows"), DATA.indexOf(d),
+  [[d.n, "name"], [d.inv == null ? "n/a" : d.inv.toFixed(2), "num"], [d.gdp == null ? "n/a" : Math.round(d.gdp).toLocaleString("en-AU"), "num"], [d.share == null ? "n/a" : fmtShare(d.share), "num"], [d.invNote, "why"]]));
+DATA.slice().sort((a, b) => b.boost - a.boost).forEach(d => row(byId("boostRows"), DATA.indexOf(d),
+  [[d.n, "name"], [d.boost, "num"]].concat(d.b.map(v => [v, "c"])).concat([[d.respDir, "num gl"], [d.respStr, "num"], [d.bw, "why gl"]])));
+
+/* ---------- so what: shared helpers ---------- */
+function cellOf(x, y, cells) {
+  const t = v => v < 100 / 3 - 1e-6 ? 0 : v < 200 / 3 - 1e-6 ? 1 : 2;
+  const idx = (2 - t(y)) * 3 + t(x);
+  return { idx, name: cells[idx][0] };
+}
+function cellEl(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+/* ---------- 1. gap as forecast ---------- */
+const NEXT = {
+  "China": "Push and bite are matched on both measures. Expect refinement of existing controls and no change of pattern.",
+  "United States, federal": "Push and bite are within 10 points of each other, with bite slightly stronger because of export controls and procurement. A further agent incident would raise push and create a gap that the voluntary September 2026 accord does not address.",
+  "European Union": "Push and bite are matched on strength. The scheduled rise in bite is the high-risk rules from 2 December 2027, which push alone would not predict, because competitiveness pressure works against them.",
+  "California": "Push and bite are matched at low strength, in the Protective regulation box. The 2026 laws will set the level of bite as reporting and enforcement mature.",
+  "Australia": "Push and bite are close. Binding bite still comes from online safety and privacy, and the mandatory national standards are a proposal until legislated. Harm is already at the maximum, so a gap is more likely to appear through sovereignty, rights or labour pressure.",
+  "United Kingdom": "Bite is stronger than push, mostly because of enabling bite. Expect little new constraint unless a harm incident raises push. Ofcom's chatbot work is the unresolved item.",
+  "Singapore": "This is the largest gap. Bite is much stronger than push, mostly because of enabling bite. Push is rated on few factors, so part of the gap reflects limited evidence.",
+  "India": "Bite is stronger than push, mostly because of enabling bite. Constraint is likely to stay limited to the labelling rules while the investment framing lasts.",
+  "Brazil": "Push and bite are matched on strength, but bite leans more toward constraining than push does, because it comes from data protection law and not from AI policy. The AI bill has not progressed in the Chamber.",
+  "Canada": "Push and bite are matched at moderate strength. New bite is more likely to come from the pending privacy and online safety bills than from an AI law.",
+  "South Korea": "Bite is stronger than push, mostly because of enabling bite. The scheduled change is the end of the fine deferral, at least one year after January 2026.",
+  "African Union and members": "Push is stronger than bite, both are weak, and the evidence is limited, so no further reading is offered.",
+  "Japan": "Bite is stronger than push, mostly because of enabling bite, under a Promotion Act with no penalties. Expect no constraint without a new protection trigger.",
+  "UAE and Saudi Arabia": "Bite is stronger than push, mostly because of enabling bite, and the evidence is weak.",
+  "Taiwan": "Push is stronger than bite, and the push is led by promotion factors. The gap is more likely to narrow with funding and relief than with duties.",
+  "Montana": "Push and bite are matched on strength, but bite leans toward enabling while push is mixed. The Act lists protecting minors among permitted reasons to regulate, so a protection trigger would change that."
+};
+(function () {
+  const tb = byId("gapRows");
+  DATA.map(d => ({ d, gap: d.pushStr - d.respStr, lean: d.respDir - d.pushDir }))
+    .sort((a, b) => b.gap - a.gap).forEach(({ d, gap, lean }) => {
+      const tr = document.createElement("tr"); tr.dataset.i = DATA.indexOf(d);
+      tr.appendChild(cellEl("td", "name", d.n));
+      tr.appendChild(cellEl("td", "num", d.pushStr));
+      tr.appendChild(cellEl("td", "num", d.respStr));
+      const g = cellEl("td", "gapcell");
+      const bar = cellEl("div", "gapbar");
+      const neg = cellEl("span", "neg"), pos = cellEl("span", "pos");
+      neg.style.width = gap < 0 ? Math.min(56, Math.abs(gap) * 56 / 30) + "px" : "0";
+      pos.style.width = gap > 0 ? Math.min(56, gap * 56 / 30) + "px" : "0";
+      bar.appendChild(neg); bar.appendChild(pos);
+      bar.setAttribute("aria-hidden", "true");
+      g.appendChild(bar);
+      g.appendChild(cellEl("small", "", (gap > 0 ? "+" : gap < 0 ? "−" : "") + Math.abs(gap)));
+      tr.appendChild(g);
+      tr.appendChild(cellEl("td", "num", (lean > 0 ? "+" : lean < 0 ? "−" : "") + Math.abs(lean)));
+      tr.appendChild(cellEl("td", "name", gap >= 10 ? "Push ahead of bite" : gap <= -10 ? "Bite ahead of push" : "In step"));
+      tr.appendChild(cellEl("td", "why", NEXT[d.n]));
+      tb.appendChild(tr);
+    });
+})();
+
+/* ---------- 2. triggers and what to build ---------- */
+const TRIG = [
+  ["Strategic rivalry", "Watch for export control rulings, outcomes of summits between the United States and China, frontier releases from rival states and procurement exclusions of foreign models.", "Medium", "Governments act at the point of control over compute, chips and model access, and add backing for domestic capacity.", "Keep a register of which models and providers are in use and where each is hosted, and test a path to switch to a second provider."],
+  ["Sovereignty", "Watch for sovereign compute and data centre announcements, and for data location terms in procurement and critical-infrastructure rules.", "Medium", "Governments act at the point of control and add specificity about where data and compute are located.", "Map where data, inference and logs are kept for each use case, and list the hosting options."],
+  ["Growth and investment", "Watch for productivity reviews and national plans, dropped or delayed duties, and new funding lines.", "Slow, and reversible", "Governments use enabling bite: investment, an adoption drive and relief.", "Scale use cases while the rules are light. Keep the internal standard at the level of the dropped rules, because relief given by omission can be taken back."],
+  ["Industry and partner pressure", "Watch for peak body submissions, pauses and delays, and objections from partner governments.", "Medium, and it works against new duties", "Governments grant relief and delay duties that are already legislated.", "Plan to the original date of a duty and not the delayed one. Record a delay as a date that moved and not as a cancellation."],
+  ["Rights tradition", "Watch for privacy reform, transparency requirements for automated decisions, court decisions, and commissioner and ombudsman reports.", "Slow", "Governments put a duty in force and make it specific.", "Give notice and an explanation for decisions made with AI, provide a way for a person to contest one, and keep a register of automated decisions."],
+  ["Public harm and demand", "Watch for child safety findings, high-profile incidents, regulator reports, polling and inquiries.", "Fast", "Governments apply sanctions and enforcement, with a point of control at the platform.", "Set up an incident response and escalation path, test for vulnerable users before launch, and keep an evidence trail of what was tested and fixed."],
+  ["Labour and stability", "Watch for union campaigns, retrenchments tied to AI, workplace law reviews and state work health and safety changes.", "Medium", "Governments set duties with specific steps, such as consultation and assessment.", "Record consultation with staff, and complete an impact assessment before AI is used for rostering, monitoring or hiring."],
+  ["Information control", "Watch for election deepfake incidents, labelling proposals and takedown orders to platforms.", "Fast near elections", "Governments act at a point of control and add detection, such as labelling and provenance.", "Add provenance and labelling to generated content, and keep logs that let an output be traced to its source."]
+];
+(function () {
+  const au = DATA.find(d => d.n === "Australia");
+  const tb = byId("trigRows");
+  TRIG.forEach((r, k) => {
+    const tr = document.createElement("tr");
+    tr.appendChild(cellEl("td", "name", r[0]));
+    r.slice(1).forEach(v => tr.appendChild(cellEl("td", "", v)));
+    tr.appendChild(cellEl("td", "c", au.p[k]));
+    tb.appendChild(tr);
+  });
+})();
+
+/* ---------- 3. Australia postures ---------- */
+const POSTURE = [
+  { chart: 1, cell: "Balanced", rel: "Australia now", sig: "Push is mixed and bite is balanced.",
+    post: "Run to the instruments in force and use the voluntary guidance as the internal baseline. In force: the under-16 minimum age and online safety codes, privacy, consumer and discrimination law, and from 10 December 2026 disclosure of automated decisions in privacy policies. The six practices in the Guidance for AI Adoption are the government's own baseline. The mandatory national standards, announced in July 2026, are not law yet." },
+  { chart: 1, cell: "Promotion with limits", rel: "Push moves toward promotion", sig: "Watch for further calls to pause rules, more relief for developers, faster data centre approvals and new funding rounds.",
+    post: "Adopt faster. Keep the internal standard where it is, because the relief is given by omitting rules and the omission can be reversed." },
+  { chart: 1, cell: "Protection with support", rel: "Push moves toward protection", sig: "Watch for new findings on AI companions or automated decisions, a visible failure of an automated decision system, and polling in favour of stronger rules.",
+    post: "Bring forward pre-launch testing and complaint handling for anything customer-facing. Expect rules to be narrow and aimed at the harm, as the under-16 law was." },
+  { chart: 1, cell: "Constraint under mixed push", rel: "Bite moves toward constraining", sig: "Watch for the introduction of the national AI standards bill (planned early 2027), the Digital Duty of Care or the second privacy tranche, the Joint Select Committee report due 30 November 2026, or changes to workplace law on surveillance or rostering.",
+    post: "Write the internal standard so it can be audited, with an owner, a risk assessment and a record of testing. Documented risk mitigation is already the test in the Digital Duty of Care draft, and the standards paper raises incident reporting." },
+  { chart: 1, cell: "Enabling under mixed push", rel: "Bite moves toward enabling", sig: "Watch for larger funding lines, adoption targets for the public service and relief from existing rules.",
+    post: "Use the funding and procurement channels. Treat the change as leaving your obligations as they were." },
+  { chart: 2, cell: "In step", rel: "Australia now", sig: "Push and bite are matched at moderate strength.",
+    post: "Keep a steady posture. Meet existing obligations, and check the gap on the Planning tab each time a regulator or minister publishes." },
+  { chart: 2, cell: "Lags behind pressure", rel: "Push rises", sig: "Watch for an incident or inquiry on AI harms, such as AI companions, automated decisions or the Medicare incident involving an OpenAI agent, which has led to Senate and Joint Select Committee hearings in October 2026.",
+    post: "Expect a fast rule that is narrower than an AI Act. Keep an incident playbook ready and know which of eSafety, the OAIC or the ACCC would act." },
+  { chart: 2, cell: "Under-responds", rel: "Bite weakens", sig: "Watch for cuts or turnover at regulators, enforcement that does not follow, and an AI Safety Institute that stays advisory.",
+    post: "The rules still apply on paper while enforcement is limited. Do not read limited enforcement as permission, and expect customers and partners to ask for the standard in contracts." },
+  { chart: 2, cell: "Acts ahead of pressure", rel: "Bite rises faster than push", sig: "Watch for duties drafted ahead of a visible trigger. The September 2026 exposure drafts and the national AI standards consultation paper are current examples.",
+    post: "Build to the draft text when it is released and not when it passes." },
+  { chart: 2, cell: "Moderate action, little pressure", rel: "Push falls", sig: "Watch for a quiet period after a plan or reform, when public discussion is mostly about promotion.",
+    post: "Expect pauses and relaxations. Do not remove controls, since pressure returns with the next incident." }
+];
+(function () {
+  const au = DATA.find(d => d.n === "Australia");
+  const cfgs = [
+    { t: "Chart 1: direction of push and bite", cells: CELLS1, at: cellOf(au.pushDirRaw, au.respDirRaw, CELLS1) },
+    { t: "Chart 2: strength of push and bite", cells: CELLS2, at: cellOf(au.pushStrRaw, au.respStrRaw, CELLS2) }
+  ];
+  const wrap = byId("minis");
+  cfgs.forEach((c, n) => {
+    const box = cellEl("div", "mini");
+    box.appendChild(cellEl("h4", "", c.t));
+    const g = cellEl("div", "g");
+    const a = c.at.idx, ar = Math.floor(a / 3), ac = a % 3;
+    c.cells.forEach(([name], k) => {
+      const kr = Math.floor(k / 3), kc = k % 3;
+      const cls = k === a ? "now" : (Math.abs(kr - ar) + Math.abs(kc - ac) === 1 ? "near" : "");
+      g.appendChild(cellEl("div", cls, name));
+    });
+    box.appendChild(g); wrap.appendChild(box);
+  });
+  const tb = byId("postureRows");
+  POSTURE.forEach(r => {
+    const tr = document.createElement("tr");
+    tr.appendChild(cellEl("td", "name", "Chart " + r.chart));
+    tr.appendChild(cellEl("td", "name", r.cell));
+    tr.appendChild(cellEl("td", "", r.rel));
+    tr.appendChild(cellEl("td", "why", r.sig));
+    tr.appendChild(cellEl("td", "why", r.post));
+    tb.appendChild(tr);
+  });
+})();
+
+/* ---------- 4. direction of travel ---------- */
+/* Overrides to the 2026 ratings, by year. A field that is not listed carries from the nearest year toward 2026
+   (2024 from 2025, 2025 from 2026) or from 2026 (2027), then from 2027 (2028). */
+const TRAJ = {
+  "China": { 2024: { c: [3,2,3,2,3,2], b: [3,2,1,3] },
+    hist: "Labelling rules in force from September 2025 and takedown campaigns raised detection and enforcement. The AI Plus program raised adoption drive.",
+    proj: "No dated change found. Kept at 2026 ratings." },
+  "United States, federal": { 2024: { p: [3,1,2,3,1,2,1,0], c: [2,2,3,2,3,3], b: [2,2,1,2] }, 2025: { p: [3,1,3,3,0,2,0,1] },
+    hist: "Order 14110 was in force in 2024 with reporting duties and less relief. It was revoked in January 2025 and the July 2025 action plan moved weight to relief and adoption. Harm pressure rose with the 2026 agent incidents.",
+    proj: "No dated change. Kept at 2026 ratings." },
+  "European Union": { 2024: { p: [0,2,2,2,3,2,0,0], c: [1,2,1,1,3,0], b: [1,1,0,1] }, 2025: { c: [2,2,1,1,3,0], b: [2,1,1,1] },
+    2027: { c: [2,2,1,2,3,2], b: [2,1,3,2] }, 2028: { c: [3,2,2,2,3,2], b: [2,2,3,2] },
+    hist: "The Act entered into force in August 2024 with no duties applying. Prohibitions (February 2025) and general-purpose model rules (August 2025) followed. Competitiveness and lobbying pressure rose from 2025.",
+    proj: "Commission enforcement of the general-purpose model rules began in August 2026 and sandboxes are due by August 2027. High-risk rules apply from 2 December 2027 and 2 August 2028 if there is no further delay." },
+  "California": { 2024: { p: [0,0,1,2,1,2,1,0], c: [1,2,1,1,1,1] }, 2025: { c: [1,3,2,1,2,1] }, 2027: { c: [2,3,2,2,2,2] },
+    hist: "The frontier bill SB 1047 was vetoed in 2024. The 2025 frontier and companion chatbot laws were signed and took effect in January 2026.",
+    proj: "Detection and enforcement rise as incident reporting under the 2026 laws runs. No dated penalty found." },
+  "Australia": { 2024: { p: [0,1,2,1,1,2,1,0], c: [1,2,1,1,1,1], b: [1,1,0,1] }, 2025: { p: [0,1,3,2,1,2,1,0], c: [2,2,1,1,2,1] },
+    2027: { p: [0,2,3,2,1,3,2,0], c: [3,2,2,2,2,2] }, 2028: { c: [3,3,2,2,3,2] },
+    hist: "Ten mandatory guardrails were proposed in September 2024 and set aside on 2 December 2025, after the Productivity Commission called for a pause. The under-16 minimum age took effect on 10 December 2025. On 15 July 2026 the Prime Minister reversed the light-touch approach and announced mandatory national standards for large AI training and data centres.",
+    proj: "Disclosure of automated decisions applies from 10 December 2026. The national AI standards are planned for Parliament in early 2027, after consultation closed on 9 October 2026. The Digital Duty of Care (exposure draft September 2026) and the second privacy tranche are assumed to pass. The Joint Select Committee on AI reports by 30 November 2026. None of these is certain." },
+  "United Kingdom": { 2024: { p: [1,1,2,1,0,2,0,0], c: [1,1,1,1,3,0], b: [2,1,1,1] }, 2025: { c: [2,1,1,1,3,1], b: [3,2,1,2] },
+    2027: { c: [2,1,1,2,3,2], b: [3,2,3,2] },
+    hist: "Online Safety Act duties phased in during 2025. The AI Opportunities Action Plan followed in January 2025.",
+    proj: "A planned sandbox is assumed to open and Ofcom's chatbot work to reach enforcement. A frontier bill was not introduced and is not assumed." },
+  "Singapore": { 2024: { p: [0,0,3,0,0,1,1,0], c: [2,1,1,1,2,1], b: [2,2,1,1] }, 2025: { b: [2,3,1,1] }, 2027: { c: [2,2,1,1,2,2] },
+    hist: "Targeted criminal laws on deepfakes and intimate images were added over 2024 and 2025, and generative AI guidance stayed voluntary.",
+    proj: "The launch of the Online Safety Commission is unconfirmed. It is assumed to raise enforcement." },
+  "India": { 2024: { p: [0,2,3,1,1,1,0,1], c: [1,1,1,1,1,1], b: [3,1,1,2] }, 2025: { c: [1,1,1,1,1,1], b: [3,2,2,2] },
+    hist: "IndiaAI Mission funding came in 2024. Synthetic content labelling rules and a notice to X moved constraining bite up by 2026.",
+    proj: "No dated change. The government states it has no AI law by design. Kept at 2026 ratings." },
+  "Brazil": { 2024: { p: [0,0,2,1,2,1,1,0] },
+    hist: "The Senate passed the AI bill on 10 December 2024. Industry lobbying in the Chamber has since changed the bill.",
+    proj: "The bill awaits a rapporteur's opinion in the Chamber with no vote scheduled. Kept at 2026 ratings." },
+  "Canada": { 2024: { p: [0,2,2,2,1,2,1,0], b: [2,1,1,1] }, 2025: { b: [3,1,1,1] },
+    hist: "The AI bill lapsed in January 2025. Sovereignty pressure rose with the 2025 tariffs and sovereign compute spending followed.",
+    proj: "No dated change. The lapsed bill will not be revived. Kept at 2026 ratings." },
+  "South Korea": { 2024: { c: [0,1,1,0,0,0] }, 2025: { c: [0,1,1,0,0,0] }, 2027: { c: [2,1,1,1,1,1] },
+    hist: "The Framework Act passed in December 2024 and took effect on 22 January 2026.",
+    proj: "Fines are deferred for at least one year from January 2026 and the ministry may extend. Assumes they begin in 2027." },
+  "African Union and members": {
+    hist: "No dated change found. Evidence is limited.",
+    proj: "No dated change. Kept at 2026 ratings." },
+  "Japan": { 2024: { p: [1,1,3,0,0,0,0,0], c: [0,0,0,0,0,0], b: [2,2,2,1] }, 2025: { p: [1,1,3,0,0,0,0,0] },
+    hist: "The AI Promotion Act passed in May 2025 and took full effect in September 2025. Before it, only guidelines applied.",
+    proj: "No dated change. The Act has no penalties by design. Kept at 2026 ratings." },
+  "UAE and Saudi Arabia": { 2024: { c: [1,0,0,0,1,0], b: [3,2,1,2] },
+    hist: "State compute and adoption goals built up gradually. Evidence is weak.",
+    proj: "No dated change. Kept at 2026 ratings." },
+  "Taiwan": { 2024: { c: [0,0,0,0,0,0], b: [2,1,1,1] },
+    hist: "A draft basic act was published in 2024 and the Act is now in place, with duties on government.",
+    proj: "No confirmed date for secondary rules. Kept at 2026 ratings." },
+  "Montana": { 2024: { p: [0,0,1,0,1,0,0,0], c: [0,0,0,0,0,0], b: [0,0,0,0] },
+    hist: "There was no AI policy before the Right to Compute Act of 2025.",
+    proj: "No dated change. Kept at 2026 ratings." }
+};
+const YEARS = [2024, 2025, 2026, 2027, 2028];
+function scoreSet(p, c, b) {
+  const pro = sum(p.slice(0, 4)), prot = sum(p.slice(4));
+  const bite = Math.round(100 * (0.6 * Math.min(...c) + 0.4 * sum(c) / c.length) / 3);
+  const boost = Math.round(100 * sum(b) / 12);
+  return { pushDir: 100 * prot / (pro + prot), pushStr: 100 * (pro + prot) / 24,
+    respDir: bite + boost ? 100 * bite / (bite + boost) : null, respStr: (bite + boost) / 2 };
+}
+function seriesFor(d) {
+  const t = TRAJ[d.n] || {}, v = { 2026: { p: d.p, c: d.c, b: d.b }, 2025: {}, 2024: {}, 2027: {}, 2028: {} };
+  ["p", "c", "b"].forEach(k => {
+    const o = y => t[y] && t[y][k];
+    v[2025][k] = o(2025) || d[k]; v[2024][k] = o(2024) || v[2025][k];
+    v[2027][k] = o(2027) || d[k]; v[2028][k] = o(2028) || v[2027][k];
+  });
+  return YEARS.map(y => Object.assign({ year: y }, scoreSet(v[y].p, v[y].c, v[y].b)));
+}
+DATA.forEach(d => { d.series = seriesFor(d); });
+
+const MODES = {
+  dir: { x: "pushDir", y: "respDir", cells: CELLS1, name: "Direction of push and bite",
+    ax: "Across is the direction of the push, from promotion (0) to protection (100). Up is the direction of the bite, from enabling (0) to constraining (100)." },
+  str: { x: "pushStr", y: "respStr", cells: CELLS2, name: "Strength of push and bite",
+    ax: "Across is the strength of the push, from weak (0) to strong (100). Up is the strength of the bite, from weak (0) to strong (100)." }
+};
+const typeAt = (s, M) => s[M.y] == null ? "No policy" : cellOf(s[M.x], s[M.y], M.cells).name;
+function panelFor(d, M, title) {
+  const W = 220, PAD = 8, S = W - 2 * PAD;
+  const sx = v => PAD + v / 100 * S, sy = v => PAD + S * (1 - v / 100);
+  const pts = d.series.filter(s => s[M.y] != null);
+  const span = Math.max(...pts.map(s => Math.hypot(s[M.x] - pts[0][M.x], s[M.y] - pts[0][M.y])));
+  const panel = cellEl("div", "tp");
+  panel.appendChild(cellEl("h4", "", title || d.n));
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("viewBox", `0 0 ${W} ${W}`);
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", `${d.n}: ${pts.map(s => `${s.year} push ${Math.round(s[M.x])}, bite ${Math.round(s[M.y])}`).join("; ")}`);
+  const mk = (n, a) => { const e = document.createElementNS(NS, n); Object.keys(a).forEach(k => e.setAttribute(k, a[k])); svg.appendChild(e); return e; };
+  mk("rect", { class: "pb", x: PAD, y: PAD, width: S, height: S });
+  [100 / 3, 200 / 3].forEach(t => { mk("line", { class: "pl", x1: sx(t), x2: sx(t), y1: PAD, y2: PAD + S }); mk("line", { class: "pl", x1: PAD, x2: PAD + S, y1: sy(t), y2: sy(t) }); });
+  mk("rect", { class: "pf", x: PAD, y: PAD, width: S, height: S });
+  const col = `var(--form-${d.f})`;
+  const line = (arr, dash) => { if (arr.length > 1) mk("polyline", { points: arr.map(s => `${sx(s[M.x])},${sy(s[M.y])}`).join(" "), fill: "none", stroke: col, "stroke-width": 2, "stroke-dasharray": dash ? "4 3" : "none", "stroke-linejoin": "round" }); };
+  line(pts.filter(s => s.year <= 2026), false);
+  line(pts.filter(s => s.year >= 2026), true);
+  pts.forEach(s => {
+    const cx = sx(s[M.x]), cy = sy(s[M.y]);
+    const c = mk("circle", s.year === 2026 ? { cx, cy, r: 6, fill: col, "fill-opacity": 0.9, stroke: col, "stroke-width": 1.5 }
+      : s.year > 2026 ? { cx, cy, r: 3.8, fill: "var(--chart-wash)", stroke: col, "stroke-width": 1.8 }
+      : { cx, cy, r: 3.2, fill: col, "fill-opacity": 0.55, stroke: col, "stroke-width": 1 });
+    const t = document.createElementNS(NS, "title"); t.textContent = `${s.year}${s.year > 2026 ? " (projected)" : ""}: push ${Math.round(s[M.x])}, bite ${Math.round(s[M.y])}`; c.appendChild(t);
+  });
+  if (span >= 4) {
+    [pts[0], pts[pts.length - 1]].forEach(s => {
+      const cx = sx(s[M.x]), cy = sy(s[M.y]);
+      const right = cx < W / 2, down = cy < W / 2;
+      mk("text", { x: cx + (right ? 8 : -8), y: cy + (down ? 15 : -8), "text-anchor": right ? "start" : "end" }).textContent = String(s.year);
+    });
+  }
+  panel.appendChild(svg);
+  const seq = [typeAt(d.series[0], M), typeAt(d.series[2], M), typeAt(d.series[4], M)].filter((v, k, a) => k === 0 || v !== a[k - 1]);
+  panel.appendChild(cellEl("div", "tnote", span < 4 ? "No movement across the chart." : seq.length === 1 ? "Same pattern throughout." : seq.join(" to ")));
+  return panel;
+}
+
+let travMode = "dir";
+function drawTraj() {
+  const M = MODES[travMode];
+  byId("travAxes").textContent = M.ax;
+  const host = byId("trav"); host.textContent = "";
+  const tb = byId("travRows"); tb.textContent = "";
+  DATA.forEach(d => {
+    host.appendChild(panelFor(d, M));
+    const tr = document.createElement("tr");
+    tr.appendChild(cellEl("td", "name", d.n));
+    d.series.forEach((s, k) => {
+      const nm = typeAt(s, M), prev = k ? typeAt(d.series[k - 1], M) : nm;
+      tr.appendChild(cellEl("td", (nm !== prev ? "chg " : "") + (s.year > 2026 ? "proj" : ""), nm));
+    });
+    const t = TRAJ[d.n] || {};
+    tr.appendChild(cellEl("td", "why", t.hist || ""));
+    tr.appendChild(cellEl("td", "why", t.proj || ""));
+    tb.appendChild(tr);
+  });
+}
+document.querySelectorAll(".toggle button").forEach(b => b.addEventListener("click", () => {
+  travMode = b.dataset.mode;
+  document.querySelectorAll(".toggle button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  drawTraj();
+}));
+drawTraj();
+
+/* ---------- Australia tab ---------- */
+(function () {
+  const au = DATA.find(d => d.n === "Australia");
+  const trail = byId("ausTrail");
+  ["dir", "str"].forEach(k => trail.appendChild(panelFor(au, MODES[k], MODES[k].name)));
+  const sits = byId("ausSits");
+  const box = (h, t) => { const e = cellEl("div"); e.appendChild(cellEl("h3", "", h)); e.appendChild(cellEl("p", "", t)); sits.appendChild(e); };
+  box("Push", `Direction ${au.pushDir} and strength ${au.pushStr}. ${au.pw}`);
+  box("Bite", `Direction ${au.respDir} and strength ${au.respStr}. Constraining bite scores ${au.bite} and enabling bite ${au.boost}.`);
+  box("What binds now", au.why);
+  box("What enables now", au.bw);
+  const tb = byId("ausWatch");
+  au.p.map((v, k) => ({ v, k })).filter(o => o.v >= 2).sort((a, b) => b.v - a.v).forEach(({ v, k }) => {
+    const tr = document.createElement("tr");
+    tr.appendChild(cellEl("td", "name", TRIG[k][0]));
+    tr.appendChild(cellEl("td", "c", v));
+    tr.appendChild(cellEl("td", "why", TRIG[k][1]));
+    tr.appendChild(cellEl("td", "why", TRIG[k][4]));
+    tb.appendChild(tr);
+  });
+})();
+
+/* ---------- hero plot on the home screen ---------- */
+function drawHero() {
+  const svg = byId("heroPlot"); if (!svg) return;
+  const W = 560, H = 500, L = 46, R = 14, T = 14, B = 48, pw = W - L - R, ph = H - T - B;
+  const sx = v => L + v / 100 * pw, sy = v => T + (1 - v / 100) * ph;
+  const mk = (n, a, txt) => { const e = document.createElementNS(NS, n); Object.keys(a).forEach(k => e.setAttribute(k, a[k])); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+  mk("rect", { class: "plot-bg", x: L, y: T, width: pw, height: ph });
+  [100 / 3, 200 / 3].forEach(t => { mk("line", { class: "third-line", x1: sx(t), x2: sx(t), y1: T, y2: T + ph }); mk("line", { class: "third-line", x1: L, x2: L + pw, y1: sy(t), y2: sy(t) }); });
+  mk("rect", { class: "frame", x: L, y: T, width: pw, height: ph });
+  mk("line", { class: "diag", x1: sx(0), y1: sy(0), x2: sx(100), y2: sy(100) });
+  mk("text", { class: "axis-end", x: L, y: H - 28, "text-anchor": "start" }, "Promotion");
+  mk("text", { class: "axis-end", x: L + pw, y: H - 28, "text-anchor": "end" }, "Protection");
+  mk("text", { class: "axis-title", x: L + pw / 2, y: H - 12, "text-anchor": "middle" }, "Direction of push");
+  mk("text", { class: "axis-end", x: L - 10, y: T + ph, "text-anchor": "start", transform: `rotate(-90 ${L - 10} ${T + ph})` }, "Enabling");
+  mk("text", { class: "axis-end", x: L - 10, y: T, "text-anchor": "end", transform: `rotate(-90 ${L - 10} ${T})` }, "Constraining");
+  mk("text", { class: "axis-title", x: 14, y: T + ph / 2, "text-anchor": "middle", transform: `rotate(-90 14 ${T + ph / 2})` }, "Direction of bite");
+  const rr = d => d.share == null ? 4 : Math.max(2.5, 0.56 * K * Math.sqrt(d.share));
+  const g = mk("g", { class: "hero-dots" });
+  const order = DATA.map((d, i) => ({ d, i })).sort((a, b) => rr(b.d) - rr(a.d));
+  order.forEach(({ d }, n) => {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", sx(d.pushDir)); c.setAttribute("cy", sy(d.respDir)); c.setAttribute("r", rr(d));
+    c.setAttribute("class", d.share == null ? "dot-nodata" : "dot f-" + d.f);
+    c.style.setProperty("--i", n);
+    if (d.share != null && rr(d) > 20) c.style.fillOpacity = 0.35;
+    const t = document.createElementNS(NS, "title"); t.textContent = `${d.n}: push ${d.pushDir}, bite ${d.respDir}`; c.appendChild(t);
+    g.appendChild(c);
+  });
+  const call = (name, lx, ly, anchor) => {
+    const d = DATA.find(x => x.n === name), cx = sx(d.pushDir), cy = sy(d.respDir), r = rr(d);
+    const dx = lx - cx, dy = ly - cy, len = Math.hypot(dx, dy);
+    mk("line", { class: "leader", x1: cx + dx / len * r, y1: cy + dy / len * r, x2: lx - (anchor === "end" ? -3 : 3), y2: ly });
+    mk("text", { class: "dot-label", x: lx + (anchor === "end" ? -6 : 6), y: ly + 4, "text-anchor": anchor }, name);
+  };
+  call("California", sx(97), sy(95), "end");
+  call("China", sx(12), sy(64), "start");
+  call("Australia", sx(62), sy(26), "start");
+  call("Japan", sx(30), sy(3), "start");
+}
+drawHero();
+
+/* ---------- tabs ---------- */
+let chartsBuilt = false;
+function ensureCharts() {
+  if (chartsBuilt) return; chartsBuilt = true;
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build, build); else build();
+}
+const TABS = ["home", "charts", "planning", "australia", "method"];
+function showTab(name, focus) {
+  if (!TABS.includes(name)) name = "home";
+  TABS.forEach(t => {
+    const on = t === name, b = byId("tab-" + t);
+    b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1;
+    byId("panel-" + t).hidden = !on;
+    if (on && focus) b.focus();
+  });
+  if (name === "charts") ensureCharts();
+  document.getElementById("tip").hidden = true;
+  try { history.replaceState(null, "", "#" + name); } catch (e) {}
+}
+document.querySelectorAll("[data-tab]").forEach(b => {
+  b.addEventListener("click", () => { showTab(b.dataset.tab); window.scrollTo(0, 0); });
+  b.addEventListener("keydown", e => {
+    const i = TABS.indexOf(b.dataset.tab);
+    if (e.key === "ArrowRight") { e.preventDefault(); showTab(TABS[(i + 1) % TABS.length], true); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); showTab(TABS[(i + TABS.length - 1) % TABS.length], true); }
+  });
+});
+document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => { showTab(b.dataset.go); window.scrollTo(0, 0); }));
+window.addEventListener("hashchange", () => showTab(location.hash.slice(1)));
+showTab(location.hash.slice(1));
+document.addEventListener("click", e => { document.querySelectorAll("details.fly[open]").forEach(d => { if (!d.contains(e.target)) d.removeAttribute("open"); }); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll("details.fly[open]").forEach(d => d.removeAttribute("open")); });
+</script>
