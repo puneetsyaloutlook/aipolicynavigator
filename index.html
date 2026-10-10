@@ -265,19 +265,19 @@ td.chg { box-shadow: inset 3px 0 0 var(--rule); }
 .chart-block > h3 { padding-top: var(--space-sm); border-top: 1px solid var(--rule); }
 .panel > h2 { padding-top: var(--space-sm); border-top: 3px solid var(--rule); }
 /* charts page: question blocks */
-#panel-planning .chart-block, #panel-charts .chart-block { gap: var(--space-md); padding-top: var(--space-md); border-top: 3px solid var(--rule); }
-#panel-planning .chart-block + .chart-block, #panel-charts .chart-block + .chart-block { margin-top: var(--space-2xl); }
+#panel-planning .chart-block, #panel-charts .chart-block, #panel-australia .chart-block { gap: var(--space-md); padding-top: var(--space-md); border-top: 3px solid var(--rule); }
+#panel-planning .chart-block + .chart-block, #panel-charts .chart-block + .chart-block, #panel-australia .chart-block + .chart-block { margin-top: var(--space-2xl); }
 #panel-planning .chart-block, #panel-charts .chart-block { scroll-margin-top: 110px; }
-#panel-planning .chart-no, #panel-charts .chart-no { margin: 0; }
-#panel-planning .chart-no span, #panel-charts .chart-no span { display: inline-block; background: var(--rule); color: var(--surface-page); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 10px; }
-#panel-planning .chart-q, #panel-charts .chart-q { font-size: 1.625rem; line-height: 1.25; }
+#panel-planning .chart-no, #panel-charts .chart-no, #panel-australia .chart-no { margin: 0; }
+#panel-planning .chart-no span, #panel-charts .chart-no span, #panel-australia .chart-no span { display: inline-block; background: var(--rule); color: var(--surface-page); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 10px; }
+#panel-planning .chart-q, #panel-charts .chart-q, #panel-australia .chart-q { font-size: 1.625rem; line-height: 1.25; }
 .chart-unit { border: 1px solid var(--border-default); background: var(--surface-card); }
 .chart-unit .chart-card { padding: var(--space-md) var(--space-md) 0; }
 .chart-unit .insights { background: var(--surface-quiet); border-top: 2px solid var(--rule); padding: var(--space-md) var(--space-lg) var(--space-lg); gap: var(--space-md); }
 .chart-unit .insights h3 { font-size: 0.75rem; font-family: var(--font-sans); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin: 0; color: var(--text-secondary); }
 .chart-unit .insights .axes { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md) var(--space-xl); }
 .chart-unit .insights .axes li { border-top: 1px solid var(--border-strong); padding-top: var(--space-sm); }
-@media (max-width: 760px) { .chart-unit .insights .axes { grid-template-columns: 1fr; } .chart-unit .insights { padding-inline: var(--space-md); } #panel-charts .chart-q, #panel-planning .chart-q { font-size: 1.375rem; } }
+@media (max-width: 760px) { .chart-unit .insights .axes { grid-template-columns: 1fr; } .chart-unit .insights { padding-inline: var(--space-md); } #panel-charts .chart-q, #panel-planning .chart-q, #panel-australia .chart-q { font-size: 1.375rem; } }
 .legend-bar { display: flex; gap: var(--space-sm); padding: var(--space-sm) var(--space-md); border-top: 1px solid var(--border-default); position: relative; flex-wrap: wrap; }
 .fly { position: relative; }
 .fly summary { cursor: pointer; list-style: none; font-size: 0.8125rem; font-weight: 600; padding: 5px 12px; border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--text-primary); user-select: none; }
@@ -448,6 +448,14 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 .jx-legend b { color: var(--text-primary); }
 .jx-legend .lsw { flex: 0 0 auto; width: 22px; height: 3px; transform: translateY(-3px); }
 .jx-legend .lsw.sprot { background: var(--side-prot); } .jx-legend .lsw.spro { background: var(--side-pro); }
+.au-fig { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(14rem, 1fr); grid-template-areas: "c n" "l n"; gap: var(--space-sm) var(--space-lg); align-items: start; }
+.au-fig .jx-svg { grid-area: c; } .au-fig .jx-legend { grid-area: l; } .au-fig .jx-note { grid-area: n; padding-top: var(--space-lg); }
+@media (max-width: 820px) { .au-fig { grid-template-columns: 1fr; grid-template-areas: "c" "l" "n"; } .au-fig .jx-note { padding-top: 0; } }
+.scen { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+.scen > div { border-top: 3px solid var(--rule); padding-top: var(--space-sm); display: flex; flex-direction: column; gap: var(--space-xs); font-size: 0.9375rem; line-height: 1.5; }
+.scen h3 { font-family: var(--font-serif); font-size: 1.125rem; margin-bottom: 2px; }
+.scen b { font-weight: 600; }
+@media (max-width: 700px) { .scen { grid-template-columns: 1fr; } }
 /* Theme 3: controls */
 .qswitch .ct-txt strong { font-size: 1rem; line-height: 1.3; }
 .qswitch .qn { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -536,7 +544,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
     <div class="cards">
       <button type="button" class="card" data-go="charts"><strong>Charts</strong><span>How sixteen jurisdictions compare on direction and on strength, and the patterns each chart gives.</span></button>
       <button type="button" class="card" data-go="planning"><strong>Outlook</strong><span>Where policy is likely to change next, which jurisdictions face the same pressures, and how policy has moved since 2024 and is scheduled to move to 2028.</span></button>
-      <button type="button" class="card" data-go="australia"><strong>Australia</strong><span>Where Australia's push comes from, what binds now, and the posture for each move it could make.</span></button>
+      <button type="button" class="card" data-go="australia"><strong>Australia</strong><span>Where Australian AI policy stands now, how it got here, and four ways it could change next.</span></button>
       <button type="button" class="card" data-go="method"><strong>Scoring and evidence</strong><span>How push, bite and dot size are scored, the sources, and the limits of the evidence.</span></button>
     </div>
     <p class="caption">All push and bite scores are judgements made from the research report, for sixteen jurisdictions as at 3 October 2026. They are not measurements. Government intent is scored. Self-regulation by firms is not.</p>
@@ -764,41 +772,67 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   </section>
 
   <section class="panel" id="panel-australia" role="tabpanel" aria-labelledby="tab-australia" hidden>
-    <div class="pagehead"><p class="kicker">Australia</p><h1>Australia in the framework</h1><p class="deck">This page covers where Australia's push comes from, what binds now, and the moves Australia could make next. Each possible move comes with the signal that would show it.</p></div>
-  <div class="chart-block">
-    <h3>Australia's scores</h3>
-    <div id="ausSits" class="comp two"></div>
-  </div>
+    <div class="pagehead"><p class="kicker">Australia</p><h1>Australia's AI policy</h1><p class="deck">Where Australian AI policy stands in October 2026, how it got here, and four ways it could change next, with the signs that would show each one.</p></div>
 
   <div class="chart-block">
-    <h3>Watch first</h3>
-    <p class="chart-read">The push factors rated 2 or 3 for Australia are the ones most likely to move policy. The signals and builds are the general ones listed on the Outlook tab.</p>
-    <div class="table-scroll">
-      <table style="min-width: 900px">
-        <thead><tr><th>Push factor</th><th class="c">Rating</th><th>Signals to watch</th><th>What to build</th></tr></thead>
-        <tbody id="ausWatch"></tbody>
-      </table>
+    <p class="chart-no"><span>Now</span></p>
+    <h2 class="chart-q">Where Australia stands</h2>
+    <div class="chart-unit">
+      <div class="insights">
+        <ul class="axes">
+          <li><b>The pressure on the government is mixed and moderate.</b> Productivity and data centre investment push it to promote AI, and since July 2026 it has wanted that investment on Australian terms. Child safety, Robodebt and the Medicare incident involving an OpenAI agent push it to protect people.</li>
+          <li><b>Policy balances regulation and support, at moderate strength.</b> It matches the pressure in both strength and direction, so no clear gap is pushing for change.</li>
+          <li><b>The binding rules are narrow and aimed at specific harms.</b> The under-16 minimum age, online safety codes that reach AI companions and a deepfake offence are in force. Disclosure of automated decisions in privacy policies applies from 10 December 2026. No AI-specific duty on businesses is in force yet.</li>
+          <li><b>Support comes from plans more than money.</b> The National AI Plan and adoption guidance set the direction, and public funding is modest. The Office of AI in the Prime Minister's department is announced but not yet set up.</li>
+        </ul>
+      </div>
     </div>
   </div>
 
   <div class="chart-block">
-    <h3>Operating postures</h3>
-    <p class="chart-read">Australia falls in the centre cell on both charts, which sets the baseline posture. The four neighbouring cells are the moves Australia could make, so each comes with the signal that would show the move and the posture to adopt. Corner cells are not shown, because reaching one would take more than one step on a chart.</p>
-    <div class="minis" id="minis"></div>
-    <div class="table-scroll">
-      <table style="min-width: 980px">
-        <thead><tr><th>Chart</th><th>Pattern</th><th>Relation to Australia now</th><th>Signal that Australia is moving there</th><th>Operating posture</th></tr></thead>
-        <tbody id="postureRows"></tbody>
-      </table>
+    <p class="chart-no"><span>Since 2024</span></p>
+    <h2 class="chart-q">How Australia got here, and what is scheduled</h2>
+    <div class="concepts qswitch" role="tablist" aria-label="Choose a chart" id="auSwitch">
+      <button type="button" role="tab" aria-selected="true" data-q="dir"><span class="ct-txt"><strong>Policy</strong><span>Regulation and support for AI</span></span></button>
+      <button type="button" role="tab" aria-selected="false" data-q="str" tabindex="-1"><span class="ct-txt"><strong>Pressure</strong><span>To promote AI and to protect people</span></span></button>
     </div>
-    <p class="caption">Regulators named are those in the research: eSafety for online safety, the OAIC for privacy and the ACCC for consumer law. Signals draw on the September 2026 exposure drafts of the Digital Duty of Care and the second privacy tranche, and the 18 September 2026 consultation paper on national AI standards.</p>
+    <div class="jx-fig au-fig">
+      <svg class="jx-svg" id="auLine" viewBox="0 0 560 320" role="img"></svg>
+      <div class="jx-legend" id="auLegend"></div>
+      <div class="jx-note" id="auNote" aria-live="polite"></div>
+    </div>
   </div>
 
-
   <div class="chart-block">
-    <h3>Australia's scores, 2024 to 2028</h3>
-    <p class="chart-read">These are the Outlook tab's panels, enlarged for Australia. The solid line runs from 2024 to 2026 and the dashed line is projected. The projection assumes the national AI standards, the Digital Duty of Care and the second privacy tranche pass, which is not certain.</p>
-    <div class="trav two" id="ausTrail"></div>
+    <p class="chart-no"><span>Next</span></p>
+    <h2 class="chart-q">Four ways Australian policy could change</h2>
+    <div class="scen">
+      <div><h3>Regulation catches up</h3>
+        <p><b>What happens:</b> Parliament passes the national AI standards in 2027, with the Digital Duty of Care and the second privacy reforms.</p>
+        <p><b>Signs to watch:</b> the standards bill is introduced, as planned for early 2027, and the Joint Select Committee on AI reports by 30 November 2026.</p>
+        <p><b>What it means:</b> regulation becomes strong for the first time, with duties on businesses that train large AI models or run large data centres. This is the scheduled path, and the chart above assumes it.</p></div>
+      <div><h3>An incident forces a narrow rule</h3>
+        <p><b>What happens:</b> a serious harm leads to a fast rule aimed at that harm, as with the under-16 minimum age.</p>
+        <p><b>Signs to watch:</b> findings from the Senate and Joint Select Committee hearings on the Medicare incident, or new findings on AI companions or automated decisions.</p>
+        <p><b>What it means:</b> regulation rises quickly but narrowly, enforced by an existing regulator: eSafety for online safety, the OAIC for privacy or the ACCC for consumer law.</p></div>
+      <div><h3>Growth wins again</h3>
+        <p><b>What happens:</b> the government pauses or waters down planned rules to attract investment, as it did when the guardrails were set aside in December 2025.</p>
+        <p><b>Signs to watch:</b> calls to pause rules, relief for developers, faster data centre approvals and new funding rounds.</p>
+        <p><b>What it means:</b> support rises and regulation stalls. Rules dropped this way can be brought back later.</p></div>
+      <div><h3>Rules stay on paper</h3>
+        <p><b>What happens:</b> new laws pass, but regulators do not enforce them.</p>
+        <p><b>Signs to watch:</b> cuts or turnover at regulators, enforcement that does not follow a breach, and an AI Safety Institute that stays advisory.</p>
+        <p><b>What it means:</b> regulation looks strong in law but stays weak in effect. This framework scores policy by its effect, so it would score as weak.</p></div>
+    </div>
+    <details class="boxes">
+      <summary>All eight pressures on Australia, with signs and likely responses</summary>
+      <div class="table-scroll">
+        <table style="min-width: 820px">
+          <thead><tr><th>Pressure</th><th>Rating for Australia</th><th>Signs it is rising</th><th>Likely policy response</th></tr></thead>
+          <tbody id="ausWatch"></tbody>
+        </table>
+      </div>
+    </details>
   </div>
   </section>
 
@@ -1323,60 +1357,6 @@ const PRESS_ROWS = [["Strategic rivalry", "Outcomes of summits between the Unite
   });
 })();
 
-/* ---------- 3. Australia postures ---------- */
-const POSTURE = [
-  { chart: 1, cell: "Balanced", rel: "Australia now", sig: "Push is mixed and bite is balanced.",
-    post: "Run to the instruments in force and use the voluntary guidance as the internal baseline. In force: the under-16 minimum age and online safety codes, privacy, consumer and discrimination law, and from 10 December 2026 disclosure of automated decisions in privacy policies. The six practices in the Guidance for AI Adoption are the government's own baseline. The mandatory national standards, announced in July 2026, are not law yet." },
-  { chart: 1, cell: "Promotion with limits", rel: "Push moves toward promotion", sig: "Watch for further calls to pause rules, more relief for developers, faster data centre approvals and new funding rounds.",
-    post: "Adopt faster. Keep the internal standard where it is, because the relief is given by omitting rules and the omission can be reversed." },
-  { chart: 1, cell: "Protection with support", rel: "Push moves toward protection", sig: "Watch for new findings on AI companions or automated decisions, a visible failure of an automated decision system, and polling in favour of stronger rules.",
-    post: "Bring forward pre-launch testing and complaint handling for anything customer-facing. Expect rules to be narrow and aimed at the harm, as the under-16 law was." },
-  { chart: 1, cell: "Constraint under mixed push", rel: "Bite moves toward constraining", sig: "Watch for the introduction of the national AI standards bill (planned early 2027), the Digital Duty of Care or the second privacy tranche, the Joint Select Committee report due 30 November 2026, or changes to workplace law on surveillance or rostering.",
-    post: "Write the internal standard so it can be audited, with an owner, a risk assessment and a record of testing. Documented risk mitigation is already the test in the Digital Duty of Care draft, and the standards paper raises incident reporting." },
-  { chart: 1, cell: "Enabling under mixed push", rel: "Bite moves toward enabling", sig: "Watch for larger funding lines, adoption targets for the public service and relief from existing rules.",
-    post: "Use the funding and procurement channels. Treat the change as leaving your obligations as they were." },
-  { chart: 2, cell: "In step", rel: "Australia now", sig: "Push and bite are matched at moderate strength.",
-    post: "Keep a steady posture. Meet existing obligations, and check the gap on the Outlook tab each time a regulator or minister publishes." },
-  { chart: 2, cell: "Lags behind pressure", rel: "Push rises", sig: "Watch for an incident or inquiry on AI harms, such as AI companions, automated decisions or the Medicare incident involving an OpenAI agent, which has led to Senate and Joint Select Committee hearings in October 2026.",
-    post: "Expect a fast rule that is narrower than an AI Act. Keep an incident playbook ready and know which of eSafety, the OAIC or the ACCC would act." },
-  { chart: 2, cell: "Under-responds", rel: "Bite weakens", sig: "Watch for cuts or turnover at regulators, enforcement that does not follow, and an AI Safety Institute that stays advisory.",
-    post: "The rules still apply on paper while enforcement is limited. Do not read limited enforcement as permission, and expect customers and partners to ask for the standard in contracts." },
-  { chart: 2, cell: "Acts ahead of pressure", rel: "Bite rises faster than push", sig: "Watch for duties drafted ahead of a visible trigger. The September 2026 exposure drafts and the national AI standards consultation paper are current examples.",
-    post: "Build to the draft text when it is released and not when it passes." },
-  { chart: 2, cell: "Moderate action, little pressure", rel: "Push falls", sig: "Watch for a quiet period after a plan or reform, when public discussion is mostly about promotion.",
-    post: "Expect pauses and relaxations. Do not remove controls, since pressure returns with the next incident." }
-];
-(function () {
-  const au = DATA.find(d => d.n === "Australia");
-  const cfgs = [
-    { t: "Chart 1: direction of push and bite", cells: CELLS1, at: cellOf(au.pushDirRaw, au.respDirRaw, CELLS1) },
-    { t: "Chart 2: strength of push and bite", cells: CELLS2, at: cellOf(au.pushStrRaw, au.respStrRaw, CELLS2) }
-  ];
-  const wrap = byId("minis");
-  cfgs.forEach((c, n) => {
-    const box = cellEl("div", "mini");
-    box.appendChild(cellEl("h4", "", c.t));
-    const g = cellEl("div", "g");
-    const a = c.at.idx, ar = Math.floor(a / 3), ac = a % 3;
-    c.cells.forEach(([name], k) => {
-      const kr = Math.floor(k / 3), kc = k % 3;
-      const cls = k === a ? "now" : (Math.abs(kr - ar) + Math.abs(kc - ac) === 1 ? "near" : "");
-      g.appendChild(cellEl("div", cls, name));
-    });
-    box.appendChild(g); wrap.appendChild(box);
-  });
-  const tb = byId("postureRows");
-  POSTURE.forEach(r => {
-    const tr = document.createElement("tr");
-    tr.appendChild(cellEl("td", "name", "Chart " + r.chart));
-    tr.appendChild(cellEl("td", "name", r.cell));
-    tr.appendChild(cellEl("td", "", r.rel));
-    tr.appendChild(cellEl("td", "why", r.sig));
-    tr.appendChild(cellEl("td", "why", r.post));
-    tb.appendChild(tr);
-  });
-})();
-
 /* ---------- 4. direction of travel ---------- */
 /* Overrides to the 2026 ratings, by year. A field that is not listed carries from the nearest year toward 2026
    (2024 from 2025, 2025 from 2026) or from 2026 (2027), then from 2027 (2028). */
@@ -1714,23 +1694,51 @@ drawTraj("str", "trav2", "travRows2");
 /* ---------- Australia tab ---------- */
 (function () {
   const au = DATA.find(d => d.n === "Australia");
-  const trail = byId("ausTrail");
-  ["dir", "str"].forEach(k => trail.appendChild(panelFor(au, MODES[k], MODES[k].name)));
-  const sits = byId("ausSits");
-  const box = (h, t) => { const e = cellEl("div"); e.appendChild(cellEl("h3", "", h)); e.appendChild(cellEl("p", "", t)); sits.appendChild(e); };
-  box("Push", `Push scores ${au.pushDir} on direction and ${au.pushStr} on strength. ${au.pw}`);
-  box("Bite", `Bite scores ${au.respDir} on direction and ${au.respStr} on strength, with regulation at ${au.bite} and support for AI at ${au.boost}.`);
-  box("What binds now", au.why);
-  box("What enables now", au.bw);
+  const RATE = ["No evidence", "Weak", "Documented", "Dominant"];
   const tb = byId("ausWatch");
-  au.p.map((v, k) => ({ v, k })).filter(o => o.v >= 2).sort((a, b) => b.v - a.v).forEach(({ v, k }) => {
+  PRESS_ROWS.map((r, k) => ({ r, v: au.p[k] })).sort((a, b) => b.v - a.v).forEach(({ r, v }) => {
     const tr = document.createElement("tr");
-    tr.appendChild(cellEl("td", "name", TRIG[k][0]));
-    tr.appendChild(cellEl("td", "c", v));
-    tr.appendChild(cellEl("td", "why", TRIG[k][1]));
-    tr.appendChild(cellEl("td", "why", TRIG[k][4]));
+    tr.appendChild(cellEl("td", "name", r[0]));
+    tr.appendChild(cellEl("td", "", RATE[v]));
+    tr.appendChild(cellEl("td", "why", r[1]));
+    tr.appendChild(cellEl("td", "why", r[2]));
     tb.appendChild(tr);
   });
+  const svg = byId("auLine"), leg = byId("auLegend"), note = byId("auNote");
+  const SETS = {
+    dir: { yt: "Strength of policy", lines: [["reg", "sprot", "Regulation", "rules that are in force and enforced."], ["sup", "spro", "Support for AI", "investment, programs to drive adoption, and relief from rules."]],
+      note: "Support for AI doubled in 2025 with the National AI Plan and adoption guidance, and has stayed moderate since. Regulation rose slowly through online safety and privacy rules, and would become strong in 2027 if the national AI standards and other reforms pass." },
+    str: { yt: "Strength of pressure", lines: [["pro", "spro", "Pressure to promote AI", "rivalry with other states, sovereignty, growth and industry lobbying."], ["prot", "sprot", "Pressure to protect people", "rights, public harm, labour and control of information."]],
+      note: "Pressure to promote AI rose quickly in 2025 and 2026, with the push for productivity, data centre investment and, from July 2026, sovereignty. Pressure to protect people rose in 2026 with child safety concerns and the Medicare incident, and is projected to rise again in 2027 as labour concerns grow." }
+  };
+  const W = 560, H = 320, L = 100, R = 16, T = 22, B = 34, PW = W - L - R, PH = H - T - B;
+  const sx = i => L + 18 + i * (PW - 36) / 4, sy = v => T + PH * (1 - v / 100);
+  const mk = (tag, at, txt, par) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; (par || svg).appendChild(e); return e; };
+  function draw(mode) {
+    const S = SETS[mode], ser = au.series; svg.textContent = "";
+    mk("rect", { class: "tb", x: L, y: T, width: PW, height: PH });
+    mk("rect", { class: "tproj", x: (sx(2) + sx(3)) / 2, y: T, width: L + PW - (sx(2) + sx(3)) / 2, height: PH });
+    mk("text", { class: "tpl", x: (sx(3) + sx(4)) / 2, y: T - 7, "text-anchor": "middle" }, "Projected");
+    [1, 2].forEach(k => mk("line", { class: "tgl", x1: L, x2: L + PW, y1: sy(k * 100 / 3), y2: sy(k * 100 / 3) }));
+    [["Strong", 5 / 6], ["Moderate", 1 / 2], ["Weak", 1 / 6]].forEach(([t, f]) => mk("text", { class: "tband", x: L - 8, y: sy(f * 100) + 4, "text-anchor": "end" }, t));
+    mk("text", { class: "tyt", x: 18, y: T + PH / 2, "text-anchor": "middle", transform: `rotate(-90 18 ${T + PH / 2})` }, S.yt + " \u2192");
+    YEARS.forEach((y, i) => mk("text", { class: "tx", x: sx(i), y: T + PH + 22, "text-anchor": "middle" }, String(y)));
+    mk("rect", { class: "tf", x: L, y: T, width: PW, height: PH });
+    S.lines.forEach(([k, cls]) => ser.forEach((s, i) => {
+      if (i) mk("line", { class: "tline " + cls, x1: sx(i - 1), y1: sy(ser[i - 1][k]), x2: sx(i), y2: sy(s[k]), "stroke-dasharray": s.year > 2026 ? "6 5" : "none" });
+      mk("circle", { class: "tdot " + cls + (s.year > 2026 ? " proj" : ""), cx: sx(i), cy: sy(s[k]), r: 5 });
+    }));
+    svg.setAttribute("aria-label", "Australia. " + S.lines.map(([k, , lab]) => `${lab}: ` + ser.map(s => `${s.year} ${s[k]}`).join(", ")).join(". "));
+    leg.innerHTML = S.lines.map(([, cls, lab, def]) => `<span class="li"><span class="lsw ${cls}" aria-hidden="true"></span><span><b>${lab}:</b> ${def}</span></span>`).join("");
+    note.innerHTML = ""; note.appendChild(cellEl("p", "jx-obs", S.note));
+  }
+  const tabs = [...document.querySelectorAll("#auSwitch [role=tab]")];
+  const set = (m, focus) => { tabs.forEach(t => { const on = t.dataset.q === m; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); }); draw(m); };
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => set(t.dataset.q));
+    t.addEventListener("keydown", e => { if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) { e.preventDefault(); set(tabs[(i + 1) % 2].dataset.q, true); } });
+  });
+  set("dir");
 })();
 
 /* ---------- hero plot on the home screen ---------- */
