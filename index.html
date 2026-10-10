@@ -437,7 +437,11 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 .jx-svg .tdot.proj { fill: var(--chart-wash); stroke-width: 2.5; }
 .jx-svg .tend { font-size: 12.5px; font-weight: 700; }
 .jx-svg .tend.l1 { fill: var(--rule); } .jx-svg .tend.l2 { fill: var(--form-vol); }
-.jx-key b { color: var(--text-primary); }
+.jx-legend { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-lg); font-size: 0.8125rem; line-height: 1.4; color: var(--text-secondary); }
+.jx-legend .li { display: flex; align-items: baseline; gap: var(--space-sm); flex: 1 1 16rem; }
+.jx-legend b { color: var(--text-primary); }
+.jx-legend .lsw { flex: 0 0 auto; width: 22px; height: 3px; transform: translateY(-3px); }
+.jx-legend .lsw.l1 { background: var(--rule); } .jx-legend .lsw.l2 { background: var(--form-vol); }
 /* Theme 3: controls */
 .qswitch .ct-txt strong { font-size: 1rem; line-height: 1.3; }
 .qswitch .qn { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -715,7 +719,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
         <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
         <div class="jx-main">
           <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><button type="button" class="jx-replay">Replay</button></span></div>
-          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 660 330" role="img"></svg><p class="caption jx-key"><b>Regulation:</b> rules that are in force and enforced. <b>Support for AI:</b> investment, programs to drive adoption, and relief from rules.</p></div>
+          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 560 320" role="img"></svg><div class="jx-legend"><span class="li"><span class="lsw l1" aria-hidden="true"></span><span><b>Regulation:</b> rules that are in force and enforced.</span></span><span class="li"><span class="lsw l2" aria-hidden="true"></span><span><b>Support for AI:</b> investment, programs to drive adoption, and relief from rules.</span></span></div></div>
           <div class="jx-note" aria-live="polite"></div>
         </div>
       </div>
@@ -734,7 +738,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
         <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
         <div class="jx-main">
           <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><button type="button" class="jx-replay">Replay</button></span></div>
-          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 660 330" role="img"></svg><p class="caption jx-key"><b>Pressure to promote AI:</b> rivalry with other states, sovereignty, growth and industry lobbying. <b>Pressure to protect people:</b> rights, public harm, labour and control of information.</p></div>
+          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 560 320" role="img"></svg><div class="jx-legend"><span class="li"><span class="lsw l1" aria-hidden="true"></span><span><b>Pressure to promote AI:</b> rivalry with other states, sovereignty, growth and industry lobbying.</span></span><span class="li"><span class="lsw l2" aria-hidden="true"></span><span><b>Pressure to protect people:</b> rights, public harm, labour and control of information.</span></span></div></div>
           <div class="jx-note" aria-live="polite"></div>
         </div>
       </div>
@@ -1614,7 +1618,7 @@ drawTraj("str", "trav2", "travRows2");
     const mode = jx.dataset.mode, LN = LINES[mode];
     const svg = jx.querySelector(".jx-svg"), list = jx.querySelector(".jx-list"), note = jx.querySelector(".jx-note");
     const nameEl = jx.querySelector(".jx-name"), replay = jx.querySelector(".jx-replay");
-    const W = 660, H = 330, L = 100, R = 160, T = 22, B = 34, PW = W - L - R, PH = H - T - B;
+    const W = 560, H = 320, L = 100, R = 16, T = 22, B = 34, PW = W - L - R, PH = H - T - B;
     const sx = i => L + 18 + i * (PW - 36) / 4, sy = v => T + PH * (1 - v / 100);
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const mk = (tag, at, txt, par) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; (par || svg).appendChild(e); return e; };
@@ -1642,10 +1646,6 @@ drawTraj("str", "trav2", "travRows2");
           mk("circle", { class: "tdot " + l.cls + (s.year > 2026 ? " proj" : ""), cx: sx(i), cy: sy(s[l.k]), r: 5 }, null, steps[i]);
         });
       });
-      const e0 = S[4][LN[0].k], e1 = S[4][LN[1].k];
-      let y0 = sy(e0) + 4, y1 = sy(e1) + 4;
-      if (Math.abs(y0 - y1) < 14) { if (y0 <= y1) { y0 -= 7; y1 += 7; } else { y0 += 7; y1 -= 7; } }
-      LN.forEach((l, j) => mk("text", { class: "tend " + l.cls, x: sx(4) + 12, y: j ? y1 : y0 }, l.lab, steps[4]));
       if (!anim) return;
       steps.forEach((g, i) => timers.push(setTimeout(() => { g.classList.remove("hid"); ticks.forEach((t, k) => t.classList.toggle("on", k === i)); }, 200 + i * 650)));
       timers.push(setTimeout(() => ticks.forEach(t => t.classList.remove("on")), 200 + 5 * 650 + 600));
