@@ -593,7 +593,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   <div class="chart-block" id="pl-t1">
     <p class="chart-no"><span>Theme 1 of 3</span></p>
     <h2 class="chart-q">See where policy is likely to change next</h2>
-    <p class="chart-read">Policy tends to catch up with the pressure on a government, with a delay. Where push and bite differ, the difference shows which way policy is likely to move next. Two measures show the difference: the gap, in strength, and the lean, in direction. Choose one to see what it means.</p>
+    <p class="chart-read">Policy tends to catch up with the pressure on a government, with a delay. When the pressure and the policy response differ, policy is likely to change to close the difference. Two measures show it. The gap compares their strength, and the lean compares their direction. Choose one to see what it means.</p>
 
     <div class="concepts" role="tablist" aria-label="Choose a measure">
       <button type="button" role="tab" id="ct-gap" aria-controls="cp-measure" aria-selected="true" data-measure="gap">
@@ -610,10 +610,10 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       <div class="m-view" data-view="gap">
         <div class="def-row">
           <div class="def-text">
-            <p>The gap between the pressure a government faces and the strength of its policy response. A positive gap means the push is stronger than the bite, and a negative gap means the government has done more than the pressure calls for. A gap of 10 points or more counts as a clear difference.</p>
+            <p>The gap between the pressure a government faces and the strength of its policy response. A positive gap means the pressure is stronger than the policy response. A negative gap means the policy goes further than the pressure calls for. A gap of 10 points or more counts as a clear difference.</p>
             <ul class="axes">
-              <li><b>Push stronger than bite:</b> expect stronger policy on the side the push comes from: funding and relief for a promotion-led push, and regulation for a protection-led push.</li>
-              <li><b>Bite stronger than push:</b> expect the extra to be reduced if pressure falls. Where the extra is support for AI, a harm incident that raises the push is the more likely way for the gap to narrow.</li>
+              <li><b>Pressure stronger than policy:</b> expect stronger policy of the kind the pressure calls for. That means funding and relief when the pressure is to promote AI, and regulation when it is to protect people.</li>
+              <li><b>Policy stronger than pressure:</b> expect the extra to be cut back if the pressure falls. Where the extra is support for AI, the difference is more likely to close because an incident of harm raises the pressure.</li>
             </ul>
           </div>
           <figure class="fig-gap" id="figGapA"></figure>
@@ -624,7 +624,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
           <div class="def-text">
             <p>Whether policy points the same way as the pressure. A lean near zero means it does. A positive lean means policy leans further towards regulating AI than the pressure on the government asks for, and a negative lean means it leans further towards supporting AI than the pressure asks for.</p>
             <ul class="axes">
-              <li><b>Large negative lean under a mixed push:</b> regulation is more likely to follow if pressure to protect rises, as in Montana.</li>
+              <li><b>Policy much more supportive than the pressure:</b> regulation is more likely to follow if pressure to protect people rises, as in Montana.</li>
             </ul>
           </div>
           <figure class="fig-gap" id="figGapB"></figure>
@@ -635,10 +635,10 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
         <div class="insights">
           <h3>Insights</h3>
           <ul class="axes">
-            <li><b>Only two jurisdictions face more pressure than their policies have answered, and both have weak policy.</b> Taiwan's gap is +15 and the gap for the African Union and members is +12. Taiwan's push is led by promotion factors, so funding and relief are more likely than regulation. The African Union evidence is too limited for a further reading.</li>
-            <li><b>Six jurisdictions have policies that go further than the pressure they face, and in each the extra is mostly support for AI.</b> Singapore has the widest gap at 29 points, followed by the United Kingdom, India, Japan, the UAE and Saudi Arabia, and South Korea. Their policy is built on funding, adoption and relief, so new regulation would need a protection trigger first.</li>
-            <li><b>China and the United States are one rating step from joining that group.</b> Their gaps are −6 and −9, just short of the 10-point difference, and both have strong support for AI. A one-step rise in any one of the four enabling ratings would take either of them past it.</li>
-            <li><b>Lean shows a difference that the gap hides in Brazil and Montana.</b> Brazil's push and bite are close in strength, but the bite of its policy is 18 points more constraining than the direction of the push. The bite of Montana's policy is 26 points more enabling than the direction of the push.</li>
+            <li><b>In only two jurisdictions is the pressure stronger than the policy response, and both have weak policy.</b> Taiwan's gap is +15 and the gap for the African Union and members is +12. Most of the pressure on Taiwan is to promote AI, so more funding and relief are more likely than regulation. The evidence for the African Union is too limited to say more.</li>
+            <li><b>Six jurisdictions have policies that go further than the pressure they face, and in each the extra is mostly support for AI.</b> Singapore has the widest gap at 29 points, followed by the United Kingdom, India, Japan, the UAE and Saudi Arabia, and South Korea. Their policy is built on funding, adoption and relief, so new regulation is unlikely until something raises the pressure to protect people, such as an incident of harm.</li>
+            <li><b>China and the United States are one rating step from joining that group.</b> Their gaps are −6 and −9, just short of the 10-point difference, and both have strong support for AI. If any one of their four support ratings rose by one step, either of them would pass it.</li>
+            <li><b>In Brazil and Montana, the lean shows a difference that the gap misses.</b> In Brazil, policy matches the pressure in strength but points 18 points further towards regulation. In Montana, policy points 26 points further towards supporting AI than the pressure does.</li>
           </ul>
           <p class="caption">The gap and lean are calculated from sixteen scores made by judgement, so treat them as indications and not proof.</p>
         </div>
@@ -657,12 +657,12 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   <div class="chart-block" id="pl-t2">
     <p class="chart-no"><span>Theme 2 of 3</span></p>
     <h2 class="chart-q">Find the jurisdictions that face the same pressures</h2>
-    <p class="chart-read">Governments face eight kinds of pressure on AI policy. Which of them act most strongly sorts the sixteen jurisdictions into four groups. Select a pressure to see what it covers and how governments usually answer it, or select a group to see the pressures that define it.</p>
+    <p class="chart-read">Governments face eight kinds of pressure on AI policy. Grouping the sixteen jurisdictions by their strongest pressures gives four groups. Select a pressure to see what it covers and how governments usually respond to it, or select a group to see the pressures that define it.</p>
 
     <div class="press" id="press">
       <div class="press-row"><span class="press-lab">To promote AI</span><div class="chips" id="chipsPro"></div></div>
       <div class="press-row"><span class="press-lab">To protect against AI</span><div class="chips" id="chipsProt"></div></div>
-      <div class="drill" id="drill" aria-live="polite"><span class="hint">Point to a pressure for its definition. Select it for the signals and the policy that usually answers it.</span></div>
+      <div class="drill" id="drill" aria-live="polite"><span class="hint">Point to a pressure to see its definition. Select it to see the early signs and the policy governments usually use in response.</span></div>
     </div>
 
     <div class="chart-unit">
@@ -1588,7 +1588,7 @@ drawTraj("str", "trav2", "travRows2");
   GROUPS.forEach(g => g.factors = [0, 1, 2, 3, 4, 5, 6, 7].filter(k => g.members.filter(d => d.p[k] >= 2).length * 2 > g.members.length));
 
   const press = byId("press"), drill = byId("drill"), gl = byId("groups");
-  const DRILL_HINT = '<span class="hint">Point to a pressure for its definition. Select it for the signals and the policy that usually answers it.</span>';
+  const DRILL_HINT = '<span class="hint">Point to a pressure to see its definition. Select it to see the early signs and the policy governments usually use in response.</span>';
   let pressed = null, openG = null;
   const chips = TRIG.map((r, k) => {
     const b = cellEl("button", "chip " + (k < 4 ? "pro" : "prot"));
@@ -1611,7 +1611,7 @@ drawTraj("str", "trav2", "travRows2");
     const sigs = [rise && `<p><b>Pressure rising:</b> ${esc(rise)}</p>`, moves && `<p><b>Early policy moves:</b> ${esc(moves)}</p>`].filter(Boolean).join("");
     const inG = GROUPS.filter(g => g.factors.includes(pressed)).map(g => g.name);
     drill.innerHTML = `<b>${esc(r[0])}.</b> ${esc(DEF[pressed])} ${inG.length ? "It helps define " + ["", "one group", "two groups", "three groups", "all four groups"][inG.length] + ": " + esc(inG.map(x => x.toLowerCase()).join("; ")) + "." : "It does not define any group."}
-      <div class="dgrid"><div><span class="dk">Signals</span>${sigs}</div><div><span class="dk">Speed</span><p>${esc(r[2])}</p></div><div><span class="dk">Policy that usually answers it</span><p>${esc(r[3])}</p></div></div>`;
+      <div class="dgrid"><div><span class="dk">Signals</span>${sigs}</div><div><span class="dk">Speed</span><p>${esc(r[2])}</p></div><div><span class="dk">Usual policy response</span><p>${esc(r[3])}</p></div></div>`;
     restoreLinks();
   }
   function linkFromFactor(k) {
