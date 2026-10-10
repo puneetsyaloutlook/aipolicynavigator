@@ -146,6 +146,13 @@ td.why { min-width: 300px; width: 42%; }
 td.c, th.c, td.num, th.num { width: 1%; padding-inline: 8px; }
 tbody tr.active td { background: var(--surface-quiet); }
 .chart-block > h3 { font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.3; font-weight: 600; }
+td.math { white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.math .eq { color: var(--text-secondary); margin-right: 6px; }
+td.math b { font-weight: 700; }
+td.reading { min-width: 13rem; }
+td.reading span { display: block; }
+td.reading span + span { color: var(--text-secondary); margin-top: 2px; }
+th small { display: block; white-space: normal; font-weight: 400; color: var(--text-secondary); font-size: 0.75rem; line-height: 1.3; max-width: 16ch; }
 .gapbar { display: grid; grid-template-columns: 56px 56px; align-items: center; gap: 0; min-width: 112px; }
 .gapbar span { height: 10px; display: block; }
 .gapbar .neg { justify-self: end; background: var(--form-vol); border-radius: 2px 0 0 2px; }
@@ -638,8 +645,8 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
     <details class="boxes">
       <summary>Gap and lean for all sixteen jurisdictions, as a table</summary>
       <div class="table-scroll">
-        <table style="min-width: 900px">
-          <thead><tr><th>Jurisdiction</th><th class="num">Push strength</th><th class="num">Bite strength</th><th>Gap</th><th class="num">Lean</th><th>Reading</th><th>What it suggests</th></tr></thead>
+        <table style="min-width: 960px">
+          <thead><tr><th>Jurisdiction</th><th>Gap<small>Strength of pressure minus strength of policy</small></th><th>Lean<small>Direction of policy minus direction of pressure</small></th><th>Reading</th><th>What it suggests</th></tr></thead>
           <tbody id="gapRows"></tbody>
         </table>
       </div>
@@ -1209,22 +1216,22 @@ function cellEl(tag, cls, text) { const e = document.createElement(tag); if (cls
 
 /* ---------- 1. gap as forecast ---------- */
 const NEXT = {
-  "China": "Push and bite are matched on both measures. Expect refinement of existing controls and no change of pattern.",
-  "United States, federal": "Push and bite are within 10 points of each other, with bite slightly stronger because of export controls and procurement. A further agent incident would raise push and create a gap that the voluntary September 2026 accord does not address.",
-  "European Union": "Push and bite are matched on strength. The scheduled rise in bite is the high-risk rules from 2 December 2027, which push alone would not predict, because competitiveness pressure works against them.",
-  "California": "Push and bite are matched at low strength, in the Protective regulation box. The 2026 laws will set the level of bite as reporting and enforcement mature.",
-  "Australia": "Push and bite are close. Binding rules still come from online safety and privacy, and the mandatory national standards are a proposal until legislated. Harm is already at the maximum, so a gap is more likely to appear through sovereignty, rights or labour pressure.",
-  "United Kingdom": "Bite is stronger than push, mostly because of support for AI. Expect little new constraint unless a harm incident raises push. Ofcom's chatbot work is the unresolved item.",
-  "Singapore": "This is the largest gap. Bite is much stronger than push, mostly because of support for AI. Push is rated on few factors, so part of the gap reflects limited evidence.",
-  "India": "Bite is stronger than push, mostly because of support for AI. Constraint is likely to stay limited to the labelling rules while the investment framing lasts.",
-  "Brazil": "Push and bite are matched on strength, but bite leans more toward constraining than push does, because it comes from data protection law and not from AI policy. The AI bill has not progressed in the Chamber.",
-  "Canada": "Push and bite are matched at moderate strength. New regulation is more likely to come from the pending privacy and online safety bills than from an AI law.",
-  "South Korea": "Bite is stronger than push, mostly because of support for AI. The scheduled change is the end of the fine deferral, at least one year after January 2026.",
-  "African Union and members": "Push is stronger than bite, both are weak, and the evidence is limited, so no further reading is offered.",
-  "Japan": "Bite is stronger than push, mostly because of support for AI, under a Promotion Act with no penalties. Expect no constraint without a new protection trigger.",
-  "UAE and Saudi Arabia": "Bite is stronger than push, mostly because of support for AI, and the evidence is weak.",
-  "Taiwan": "Push is stronger than bite, and the push is led by promotion factors. The gap is more likely to narrow with funding and relief than with regulation.",
-  "Montana": "Push and bite are matched on strength, but bite leans toward enabling while push is mixed. The Act lists protecting minors among permitted reasons to regulate, so a protection trigger would change that."
+  "China": "Policy matches the pressure in both strength and direction. China is likely to refine its existing controls rather than change course.",
+  "United States, federal": "Policy is slightly stronger than the pressure, mainly because of export controls and procurement rules. Another serious incident involving AI agents would raise the pressure, and the voluntary accord of September 2026 would not answer it, so binding rules would become more likely.",
+  "European Union": "Policy matches the pressure in strength. The high-risk rules are scheduled to apply from 2 December 2027, so EU policy is set to get stronger even though industry and competitiveness concerns argue against it.",
+  "California": "Policy matches the pressure, and both are weak. How strong policy becomes depends on how the 2026 laws are reported on and enforced.",
+  "Australia": "Policy matches the pressure. Binding rules still come from online safety and privacy law, and the national AI standards are a proposal until they are legislated. Public harm is already rated at the maximum, so any new pressure would have to come from sovereignty, rights or labour concerns.",
+  "United Kingdom": "Policy goes further than the pressure, mostly through support for AI, and it points more towards regulation than the pressure does. Little new regulation is likely unless an incident raises the pressure. Ofcom's work on chatbots is the open question.",
+  "Singapore": "Policy goes much further than the pressure, mostly through support for AI. This is the largest difference of the sixteen. The pressure is rated on few factors, so part of the difference reflects limited evidence.",
+  "India": "Policy goes further than the pressure, mostly through support for AI. Regulation is likely to stay limited to the labelling rules while the government's focus remains on investment.",
+  "Brazil": "Policy matches the pressure in strength but points more towards regulation, because it comes from data protection law and not from an AI law. The AI bill has not progressed in the Chamber.",
+  "Canada": "Policy matches the pressure. New regulation is more likely to come from the pending privacy and online safety bills than from an AI law.",
+  "South Korea": "Policy goes further than the pressure, mostly through support for AI. The next scheduled change is the end of the grace period on fines, at least one year after January 2026.",
+  "African Union and members": "The pressure is stronger than the policy response, so more policy change is possible. Both are weak and the evidence is limited, so no further reading is offered.",
+  "Japan": "Policy goes further than the pressure, mostly through support for AI, under a Promotion Act with no penalties. Regulation is unlikely without a new concern about harm or rights.",
+  "UAE and Saudi Arabia": "Policy goes further than the pressure, mostly through support for AI. The evidence is weak.",
+  "Taiwan": "The pressure is stronger than the policy response, so more policy change is likely. Most of the pressure is to promote AI, so the change is more likely to come as funding and relief than as regulation.",
+  "Montana": "Policy matches the pressure in strength but points much further towards supporting AI than the pressure does. The Act allows regulation to protect minors, so a concern about harm to children could change that."
 };
 (function () {
   const d = DATA.find(x => x.n === "Taiwan");
@@ -1267,20 +1274,14 @@ const NEXT = {
     .sort((a, b) => b.gap - a.gap).forEach(({ d, gap, lean }) => {
       const tr = document.createElement("tr"); tr.dataset.i = DATA.indexOf(d);
       tr.appendChild(cellEl("td", "name", d.n));
-      tr.appendChild(cellEl("td", "num", d.pushStr));
-      tr.appendChild(cellEl("td", "num", d.respStr));
-      const g = cellEl("td", "gapcell");
-      const bar = cellEl("div", "gapbar");
-      const neg = cellEl("span", "neg"), pos = cellEl("span", "pos");
-      neg.style.width = gap < 0 ? Math.min(56, Math.abs(gap) * 56 / 30) + "px" : "0";
-      pos.style.width = gap > 0 ? Math.min(56, gap * 56 / 30) + "px" : "0";
-      bar.appendChild(neg); bar.appendChild(pos);
-      bar.setAttribute("aria-hidden", "true");
-      g.appendChild(bar);
-      g.appendChild(cellEl("small", "", (gap > 0 ? "+" : gap < 0 ? "−" : "") + Math.abs(gap)));
-      tr.appendChild(g);
-      tr.appendChild(cellEl("td", "num", (lean > 0 ? "+" : lean < 0 ? "−" : "") + Math.abs(lean)));
-      tr.appendChild(cellEl("td", "name", gap >= 10 ? "Push stronger than bite" : gap <= -10 ? "Bite stronger than push" : "Matched"));
+      const sg = v => (v > 0 ? "+" : v < 0 ? "\u2212" : "") + Math.abs(v);
+      const math = (x, y, v) => { const td = cellEl("td", "math"); td.appendChild(cellEl("span", "eq", `${x} \u2212 ${y} =`)); td.appendChild(cellEl("b", "", sg(v))); return td; };
+      tr.appendChild(math(d.pushStr, d.respStr, gap));
+      tr.appendChild(math(d.respDir, d.pushDir, lean));
+      const rd = cellEl("td", "reading");
+      rd.appendChild(cellEl("span", "", gap >= 10 ? "Pressure stronger than policy" : gap <= -10 ? "Policy stronger than pressure" : "Matched in strength"));
+      rd.appendChild(cellEl("span", "", lean >= 10 ? "Policy points more to regulation" : lean <= -10 ? "Policy points more to support for AI" : "Same direction"));
+      tr.appendChild(rd);
       tr.appendChild(cellEl("td", "why", NEXT[d.n]));
       tb.appendChild(tr);
     });
