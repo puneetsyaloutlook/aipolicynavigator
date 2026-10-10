@@ -381,6 +381,41 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 #groups .gtags { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: var(--space-xs); }
 #groups .gk { font-size: 0.75rem; color: var(--text-secondary); margin-right: 2px; }
 #groups .gtag { font-size: 0.75rem; font-weight: 600; padding: 1px 7px; border: 1px solid var(--border-strong); color: var(--text-secondary); }
+/* Theme 3: one jurisdiction at a time */
+.jx { display: grid; grid-template-columns: minmax(0, 1fr) 15rem; gap: var(--space-lg); align-items: start; }
+.jx-main { min-width: 0; display: flex; flex-direction: column; gap: var(--space-sm); }
+.jx-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-sm); border-top: 1px solid var(--rule); padding-top: var(--space-sm); }
+.jx-name { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; margin: 0; }
+.jx-replay { font: inherit; font-size: 0.8125rem; font-weight: 600; min-height: 36px; padding: 4px 12px; background: var(--surface-card); color: var(--text-primary); border: 1px solid var(--border-strong); cursor: pointer; }
+.jx-replay:hover { border-color: var(--rule); }
+.jx-replay:focus-visible, .jx-item:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.jx-svg { width: 100%; max-width: 560px; height: auto; display: block; }
+.jx-svg .jb { fill: var(--chart-wash); }
+.jx-svg .jl { stroke: var(--chart-line); }
+.jx-svg .jf { fill: none; stroke: var(--chart-line); }
+.jx-svg .jc { fill: var(--text-muted); font-size: 10.5px; font-style: italic; }
+.jx-svg .je { fill: var(--text-muted); font-size: 11.5px; font-style: italic; }
+.jx-svg .jt { fill: var(--text-muted); font-size: 12px; font-weight: 600; }
+.jx-svg .jg circle { fill: var(--chart-ink); fill-opacity: 0.12; }
+.jx-svg .jy { fill: var(--text-primary); font-size: 20px; font-weight: 700; font-family: var(--font-serif); }
+.jx-svg .jlab { fill: var(--text-primary); font-size: 11.5px; font-weight: 600; paint-order: stroke; stroke: var(--chart-wash); stroke-width: 3px; }
+.jx-svg .js { transition: opacity 360ms var(--ease); }
+.jx-svg .js.hid { opacity: 0; }
+.jx-note { display: flex; flex-direction: column; gap: var(--space-xs); font-size: 0.9375rem; line-height: 1.55; max-width: 62ch; }
+.jx-note .jx-obs { color: var(--text-primary); }
+.jx-note p:not(.jx-obs) { font-size: 0.875rem; color: var(--text-secondary); }
+.jx-note b { color: var(--text-primary); }
+.jx-list { display: flex; flex-direction: column; border-top: 1px solid var(--rule); max-height: 640px; overflow-y: auto; }
+.jx-item { font: inherit; font-size: 0.875rem; text-align: left; display: flex; align-items: center; gap: var(--space-sm); min-height: 40px; padding: 6px var(--space-sm); background: none; color: var(--text-secondary); border: 0; border-bottom: 1px solid var(--border-default); cursor: pointer; transition: background var(--t-fast), color var(--t-fast); }
+.jx-item .sw { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+.jx-item:hover { background: var(--chart-wash); color: var(--text-primary); }
+.jx-item[aria-selected="true"] { background: var(--rule); color: var(--surface-page); font-weight: 600; }
+@media (max-width: 760px) {
+  .jx { grid-template-columns: 1fr; }
+  .jx-list { order: -1; flex-direction: row; flex-wrap: nowrap; overflow-x: auto; max-height: none; border-top: 0; gap: 4px; padding-bottom: 4px; }
+  .jx-item { flex: 0 0 auto; border: 1px solid var(--border-default); min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) { .jx-svg .js { transition: none; } }
 /* Theme 3: controls */
 .qswitch .ct-txt strong { font-size: 1rem; line-height: 1.3; }
 .qswitch .qn { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -654,17 +689,22 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       <button type="button" role="tab" id="qt-str" aria-controls="q3-str" aria-selected="false" data-q="str" tabindex="-1"><span class="ct-txt"><span class="qn">Question 2 of 2</span><strong>How is the strength of the bite changing, given how hard the government is pushed?</strong></span></button>
     </div>
     <div class="sub" data-mode="dir" id="q3-dir" role="tabpanel" aria-labelledby="qt-dir">
-      <p class="chart-read">Each panel follows one jurisdiction across the first chart.</p>
+      <p class="chart-read">Choose a jurisdiction to watch it move across the first chart, year by year.</p>
       <div class="ctl">
         <details class="fly fly-down"><summary>How to read</summary><div class="fly-body"><ul class="axes">
           <li><b>Push, across:</b> the forces acting on the government, from promotion (0) to protection (100).</li>
           <li><b>Bite, up:</b> what the policy does, from enabling (0) to constraining (100).</li>
           <li><b>Line:</b> the solid line runs from 2024 to 2026, with 2026 as the large dot. The dashed line and hollow dots are projected to 2028. Colour is legal form, as on the charts.</li>
-          <li><b>Year slider:</b> drag it, or press play, to draw each line one year at a time.</li>
         </ul></div></details>
-        <div class="scrub"><button type="button" class="play" aria-pressed="false" aria-label="Play from 2024 to 2028"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></button><div class="yrs"><input type="range" min="2024" max="2028" step="1" value="2028" aria-label="Year shown"><div class="yl" aria-hidden="true"><span data-y="2024">2024</span><span data-y="2025">2025</span><span data-y="2026">2026</span><span data-y="2027" class="pj">2027</span><span data-y="2028" class="pj">2028</span></div></div></div>
       </div>
-      <div class="trav" id="trav1"></div>
+      <div class="jx" data-mode="dir">
+        <div class="jx-main">
+          <div class="jx-head"><h4 class="jx-name"></h4><button type="button" class="jx-replay">Replay</button></div>
+          <svg class="jx-svg" viewBox="0 0 460 440" role="img"></svg>
+          <div class="jx-note" aria-live="polite"></div>
+        </div>
+        <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
+      </div>
       <details class="boxes">
         <summary>Pattern in each year, and what moved, for all sixteen jurisdictions</summary>
         <div class="table-scroll types">
@@ -676,17 +716,22 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       </details>
     </div>
     <div class="sub" data-mode="str" id="q3-str" role="tabpanel" aria-labelledby="qt-str" hidden>
-      <p class="chart-read">Each panel follows one jurisdiction across the second chart.</p>
+      <p class="chart-read">Choose a jurisdiction to watch it move across the second chart, year by year.</p>
       <div class="ctl">
         <details class="fly fly-down"><summary>How to read</summary><div class="fly-body"><ul class="axes">
           <li><b>Push, across:</b> the eight push factors added together, from weak (0) to strong (100).</li>
           <li><b>Bite, up:</b> the average of the support score and the regulation score, from weak (0) to strong (100).</li>
           <li><b>Line:</b> the solid line runs from 2024 to 2026, with 2026 as the large dot. The dashed line and hollow dots are projected to 2028. Colour is legal form, as on the charts.</li>
-          <li><b>Year slider:</b> drag it, or press play, to draw each line one year at a time.</li>
         </ul></div></details>
-        <div class="scrub"><button type="button" class="play" aria-pressed="false" aria-label="Play from 2024 to 2028"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></button><div class="yrs"><input type="range" min="2024" max="2028" step="1" value="2028" aria-label="Year shown"><div class="yl" aria-hidden="true"><span data-y="2024">2024</span><span data-y="2025">2025</span><span data-y="2026">2026</span><span data-y="2027" class="pj">2027</span><span data-y="2028" class="pj">2028</span></div></div></div>
       </div>
-      <div class="trav" id="trav2"></div>
+      <div class="jx" data-mode="str">
+        <div class="jx-main">
+          <div class="jx-head"><h4 class="jx-name"></h4><button type="button" class="jx-replay">Replay</button></div>
+          <svg class="jx-svg" viewBox="0 0 460 440" role="img"></svg>
+          <div class="jx-note" aria-live="polite"></div>
+        </div>
+        <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
+      </div>
       <details class="boxes">
         <summary>Pattern in each year, and what moved, for all sixteen jurisdictions</summary>
         <div class="table-scroll types">
@@ -1443,10 +1488,10 @@ function panelFor(d, M, title) {
 
 function drawTraj(mode, hostId, rowsId) {
   const M = MODES[mode];
-  const host = byId(hostId); host.textContent = "";
+  const host = byId(hostId); if (host) host.textContent = "";
   const tb = byId(rowsId); tb.textContent = "";
   DATA.forEach(d => {
-    host.appendChild(panelFor(d, M));
+    if (host) host.appendChild(panelFor(d, M));
     const tr = document.createElement("tr");
     tr.appendChild(cellEl("td", "name", d.n));
     d.series.forEach((s, k) => {
@@ -1551,27 +1596,110 @@ drawTraj("str", "trav2", "travRows2");
     t.addEventListener("click", () => setQ(t.dataset.q));
     t.addEventListener("keydown", e => { if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) { e.preventDefault(); setQ(qtabs[(i + 1) % 2].dataset.q, true); } });
   });
-  const PLAY = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>';
-  const PAUSE = "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><rect x=\"3\" y=\"2.5\" width=\"3.5\" height=\"11\" fill=\"currentColor\"/><rect x=\"9.5\" y=\"2.5\" width=\"3.5\" height=\"11\" fill=\"currentColor\"/></svg>";
-  document.querySelectorAll("#pl-t3 .sub").forEach(sub => {
-    const host = sub.querySelector(".trav"), range = sub.querySelector("input[type=range]"), play = sub.querySelector(".play");
-    const labels = [...sub.querySelectorAll(".yl span")];
-    let timer = null;
-    const setYear = y => {
-      range.value = y;
-      host.querySelectorAll("[data-y]").forEach(e => { const v = +e.dataset.y; e.classList.toggle("fut", v > y); if (e.tagName === "circle") e.classList.toggle("now", v === y); });
-      labels.forEach(l => l.classList.toggle("cur", +l.dataset.y === y));
-      range.setAttribute("aria-valuetext", y > 2026 ? `${y}, projected` : String(y));
-    };
-    const stop = () => { clearInterval(timer); timer = null; play.setAttribute("aria-pressed", "false"); play.setAttribute("aria-label", "Play from 2024 to 2028"); play.innerHTML = PLAY; };
-    range.addEventListener("input", () => { stop(); setYear(+range.value); });
-    play.addEventListener("click", () => {
-      if (timer) { stop(); return; }
-      let y = +range.value >= 2028 ? 2024 : +range.value; setYear(y);
-      play.setAttribute("aria-pressed", "true"); play.setAttribute("aria-label", "Pause"); play.innerHTML = PAUSE;
-      timer = setInterval(() => { y++; setYear(y); if (y >= 2028) stop(); }, 700);
+  /* one jurisdiction at a time, animated on selection */
+  const CELLSOF = { dir: CELLS1, str: CELLS2 };
+  const ENDS = { dir: { x: ["Promotion", "Protection"], y: ["Enabling", "Constraining"], xt: "Direction of push", yt: "Direction of bite" },
+                 str: { x: ["Weak", "Strong"], y: ["Weak", "Strong"], xt: "Strength of push", yt: "Strength of bite" } };
+  const r0 = v => Math.round(v);
+  function boxes(d, mode) {
+    const M = MODES[mode], out = [];
+    d.series.forEach(s => { const nm = s[M.y] == null ? null : cellOf(s[M.x], s[M.y], CELLSOF[mode]).name; if (nm && (!out.length || out[out.length - 1].nm !== nm)) out.push({ nm, y: s.year }); });
+    const first = d.series.find(s => s[M.y] != null).year;
+    const lead = first > 2024 ? `There was no AI policy in 2024, so the line starts in ${first}. ` : "";
+    if (out.length === 1) return lead + `It stays in the ${out[0].nm} box from ${out[0].y} to 2028.`;
+    let t = `It moves from the ${out[0].nm} box in ${out[0].y} to the ${out[1].nm} box in ${out[1].y}`;
+    out.slice(2).forEach(o => { t += `, then to the ${o.nm} box in ${o.y}`; });
+    return lead + t + (out[out.length - 1].y < 2028 ? ", and stays there to 2028." : ".");
+  }
+  function moveText(a, b, mode, when) {
+    const M = MODES[mode];
+    const dp = b[M.x] - a[M.x], db = a[M.y] == null || b[M.y] == null ? null : b[M.y] - a[M.y];
+    let p, q;
+    const f = when === "next";
+    if (mode === "dir") {
+      p = Math.abs(dp) < 4 ? null : (f ? "the pressure would shift" : "the pressure shifted") + (dp > 0 ? " towards protecting people" : " towards promoting AI");
+      q = db == null ? null : Math.abs(db) < 4 ? null : (f ? "policy would shift" : "policy shifted") + (db > 0 ? " towards regulation" : " towards support for AI");
+    } else {
+      p = Math.abs(dp) < 4 ? null : (dp > 0 ? (f ? "the pressure would grow stronger" : "the pressure grew stronger") : (f ? "the pressure would ease" : "the pressure eased")) + ` (${r0(a[M.x])} to ${r0(b[M.x])})`;
+      q = db == null ? null : Math.abs(db) < 4 ? null : (db > 0 ? (f ? "policy would grow stronger" : "policy grew stronger") : (f ? "policy would weaken" : "policy weakened")) + ` (${r0(a[M.y])} to ${r0(b[M.y])})`;
+    }
+    if (when === "past") {
+      if (a[M.y] == null) return p ? `From 2024 to 2026, ${p}.` : "From 2024 to 2026, the pressure changed little.";
+      if (!p && !q) return "From 2024 to 2026, neither the pressure nor policy changed much.";
+      return `From 2024 to 2026, ${p || "the pressure changed little"} and ${q || "policy changed little"}.`;
+    }
+    if (!p && !q) return "No change dated to 2028 was found, so the projection stays at the 2026 position.";
+    return `If the scheduled changes take effect, by 2028 ${[p, q].filter(Boolean).join(" and ")}.`;
+  }
+  document.querySelectorAll("#pl-t3 .jx").forEach(jx => {
+    const mode = jx.dataset.mode, M = MODES[mode], E = ENDS[mode];
+    const svg = jx.querySelector(".jx-svg"), list = jx.querySelector(".jx-list"), note = jx.querySelector(".jx-note");
+    const nameEl = jx.querySelector(".jx-name"), replay = jx.querySelector(".jx-replay");
+    const L = 52, T = 14, S = 380, sx = v => L + v / 100 * S, sy = v => T + S * (1 - v / 100);
+    const mk = (tag, at, txt, par) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; (par || svg).appendChild(e); return e; };
+    mk("rect", { class: "jb", x: L, y: T, width: S, height: S });
+    [1, 2].forEach(k => { const t = k * 100 / 3; mk("line", { class: "jl", x1: sx(t), x2: sx(t), y1: T, y2: T + S }); mk("line", { class: "jl", x1: L, x2: L + S, y1: sy(t), y2: sy(t) }); });
+    CELLSOF[mode].forEach((c, idx) => {
+      const col = idx % 3, row = Math.floor(idx / 3), x = L + col * S / 3 + 6, words = c[0].split(" "), lines = [""];
+      words.forEach(w => { const l = lines[lines.length - 1]; if ((l + " " + w).trim().length > 18 && l) lines.push(w); else lines[lines.length - 1] = (l + " " + w).trim(); });
+      const t = mk("text", { class: "jc", x, y: T + row * S / 3 + 15 });
+      lines.forEach((l, k) => mk("tspan", { x, dy: k ? 13 : 0 }, l, t));
     });
-    setYear(2028);
+    mk("rect", { class: "jf", x: L, y: T, width: S, height: S });
+    mk("text", { class: "je", x: L, y: T + S + 18 }, E.x[0]); mk("text", { class: "je", x: L + S, y: T + S + 18, "text-anchor": "end" }, E.x[1]);
+    mk("text", { class: "jt", x: L + S / 2, y: T + S + 36, "text-anchor": "middle" }, E.xt);
+    mk("text", { class: "je", x: L - 8, y: T + S, "text-anchor": "start", transform: `rotate(-90 ${L - 8} ${T + S})` }, E.y[0]);
+    mk("text", { class: "je", x: L - 8, y: T, "text-anchor": "end", transform: `rotate(-90 ${L - 8} ${T})` }, E.y[1]);
+    mk("text", { class: "jt", x: 16, y: T + S / 2, "text-anchor": "middle", transform: `rotate(-90 16 ${T + S / 2})` }, E.yt);
+    const ghosts = mk("g", { class: "jg" });
+    DATA.forEach(d => { if (d.series[2][M.y] != null) mk("circle", { cx: sx(d.series[2][M.x]), cy: sy(d.series[2][M.y]), r: 4 }, null, ghosts); });
+    const trail = mk("g", {}), yr = mk("text", { class: "jy", x: L + S - 8, y: T + S - 10, "text-anchor": "end" }, "");
+    let timers = [], cur = null;
+    const clear = () => { timers.forEach(clearTimeout); timers = []; };
+    function draw(d, animate) {
+      clear(); trail.textContent = ""; cur = d;
+      const col = `var(--form-${d.f})`, pts = d.series.filter(s => s[M.y] != null);
+      nameEl.textContent = d.n;
+      svg.setAttribute("aria-label", `${d.n}: ${pts.map(s => `${s.year} push ${r0(s[M.x])}, bite ${r0(s[M.y])}`).join("; ")}`);
+      const t = TRAJ[d.n] || {};
+      note.innerHTML = "";
+      const p1 = cellEl("p", "jx-obs", `${boxes(d, mode)} ${moveText(d.series[0], d.series[2], mode, "past")} ${moveText(d.series[2], d.series[4], mode, "next")}`);
+      note.appendChild(p1);
+      if (t.hist) { const p = cellEl("p"); p.append(cellEl("b", "", "What changed, 2024 to 2026: "), t.hist); note.appendChild(p); }
+      if (t.proj) { const p = cellEl("p"); p.append(cellEl("b", "", "What is scheduled, 2026 to 2028: "), t.proj); note.appendChild(p); }
+      const els = pts.map((s, k) => {
+        const g = mk("g", { class: "js" + (animate && !RM ? " hid" : "") }, null, trail);
+        if (k) { const a = pts[k - 1]; mk("line", { x1: sx(a[M.x]), y1: sy(a[M.y]), x2: sx(s[M.x]), y2: sy(s[M.y]), stroke: col, "stroke-width": 2.5, "stroke-linecap": "round", "stroke-dasharray": s.year > 2026 ? "6 5" : "none" }, null, g); }
+        mk("circle", s.year === 2026 ? { cx: sx(s[M.x]), cy: sy(s[M.y]), r: 8, fill: col } : s.year > 2026 ? { cx: sx(s[M.x]), cy: sy(s[M.y]), r: 5.5, fill: "var(--surface-card)", stroke: col, "stroke-width": 2.5 } : { cx: sx(s[M.x]), cy: sy(s[M.y]), r: 5, fill: col, "fill-opacity": 0.6 }, null, g);
+        const right = sx(s[M.x]) < L + S - 60;
+        mk("text", { class: "jlab", x: sx(s[M.x]) + (right ? 11 : -11), y: sy(s[M.y]) + 4, "text-anchor": right ? "start" : "end" }, String(s.year), g);
+        return { g, s };
+      });
+      // keep year labels from colliding: hide labels of points within 14px of an earlier one
+      els.forEach((e, k) => { for (let j = 0; j < k; j++) { const o = els[j]; if (Math.hypot(sx(e.s[M.x]) - sx(o.s[M.x]), sy(e.s[M.y]) - sy(o.s[M.y])) < 18 && o.g.querySelector("text")) { e.g.querySelector("text").remove(); o.lab = (o.lab || [o.s.year]).concat(e.s.year); e.merged = o; break; } } });
+      els.forEach(e => { if (e.lab) e.g.querySelector("text").textContent = e.lab.join(", "); });
+      if (!animate || RM) { yr.textContent = ""; return; }
+      els.forEach((e, k) => timers.push(setTimeout(() => { e.g.classList.remove("hid"); yr.textContent = e.s.year + (e.s.year > 2026 ? ", projected" : ""); }, 150 + k * 520)));
+      timers.push(setTimeout(() => { yr.textContent = ""; }, 150 + els.length * 520 + 700));
+    }
+    const btns = DATA.map(d => {
+      const b = cellEl("button", "jx-item"); b.type = "button"; b.setAttribute("role", "option"); b.setAttribute("aria-selected", "false");
+      const sw = cellEl("span", "sw"); sw.style.background = `var(--form-${d.f})`; sw.setAttribute("aria-hidden", "true");
+      b.append(sw, document.createTextNode(d.n.replace("United States, federal", "United States federal")));
+      b.addEventListener("click", () => select(d, true));
+      list.appendChild(b); return b;
+    });
+    list.addEventListener("keydown", e => {
+      const i = DATA.indexOf(cur);
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); select(DATA[(i + 1) % DATA.length], true, true); }
+      if (e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); select(DATA[(i + DATA.length - 1) % DATA.length], true, true); }
+    });
+    function select(d, animate, focus) {
+      btns.forEach((b, i) => { const on = DATA[i] === d; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; if (on && focus) b.focus(); });
+      draw(d, animate);
+    }
+    replay.addEventListener("click", () => cur && draw(cur, true));
+    select(DATA.find(d => d.n === "Australia"), false);
   });
 })();
 
