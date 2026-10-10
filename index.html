@@ -438,6 +438,11 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 .jx-svg .tline.sprot { stroke: var(--side-prot); } .jx-svg .tline.spro { stroke: var(--side-pro); }
 .jx-svg .tdot.sprot { fill: var(--side-prot); stroke: var(--side-prot); } .jx-svg .tdot.spro { fill: var(--side-pro); stroke: var(--side-pro); }
 .jx-svg .tdot.proj { fill: var(--chart-wash); stroke-width: 2.5; }
+.jx-svg .tdot { transform-box: fill-box; transform-origin: center; transition: opacity 260ms var(--ease), transform 260ms var(--ease); }
+.jx-svg .tdot.pre { opacity: 0; transform: scale(0.4); }
+.jx-note.swap .jx-obs { animation: noteIn 380ms var(--ease); }
+@keyframes noteIn { from { opacity: 0.25; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .jx-svg .tdot { transition: none; } .jx-note.swap .jx-obs { animation: none; } }
 .jx-legend { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-lg); font-size: 0.8125rem; line-height: 1.4; color: var(--text-secondary); }
 .jx-legend .li { display: flex; align-items: baseline; gap: var(--space-sm); flex: 1 1 16rem; }
 .jx-legend b { color: var(--text-primary); }
@@ -1631,42 +1636,67 @@ drawTraj("str", "trav2", "travRows2");
     mk("text", { class: "tyt", x: 18, y: T + PH / 2, "text-anchor": "middle", transform: `rotate(-90 18 ${T + PH / 2})` }, YT[mode] + " \u2192");
     const ticks = YEARS.map((y, i) => mk("text", { class: "tx", x: sx(i), y: T + PH + 22, "text-anchor": "middle" }, String(y)));
     mk("rect", { class: "tf", x: L, y: T, width: PW, height: PH });
-    const trail = mk("g", {});
-    let timers = [], cur = null;
-    const clear = () => { timers.forEach(clearTimeout); timers = []; ticks.forEach(t => t.classList.remove("on")); };
-    function draw(d, animate) {
-      clear(); trail.textContent = ""; cur = d;
-      const anim = animate && !RM, S = d.series;
-      nameEl.textContent = d.n;
-      svg.setAttribute("aria-label", `${d.n}. ` + LN.map(l => `${l.lab}: ` + S.map(s => `${s.year} ${s[l.k]}`).join(", ")).join(". "));
-      note.textContent = ""; note.appendChild(cellEl("p", "jx-obs", NOTES[mode][d.n] || ""));
-      const steps = YEARS.map(() => mk("g", { class: "js" + (anim ? " hid" : "") }, null, trail));
-      LN.forEach(l => {
-        S.forEach((s, i) => {
-          if (i) mk("line", { class: "tline " + l.cls, x1: sx(i - 1), y1: sy(S[i - 1][l.k]), x2: sx(i), y2: sy(s[l.k]), "stroke-dasharray": s.year > 2026 ? "6 5" : "none" }, null, steps[i]);
-          mk("circle", { class: "tdot " + l.cls + (s.year > 2026 ? " proj" : ""), cx: sx(i), cy: sy(s[l.k]), r: 5 }, null, steps[i]);
-        });
+    const cid = "clip-" + mode;
+    const defs = mk("defs", {}), cp = mk("clipPath", { id: cid }, null, defs);
+    const clipR = mk("rect", { x: 0, y: 0, width: W, height: H }, null, cp);
+    const trail = mk("g", { "clip-path": `url(#${cid})` });
+    /* persistent marks, so a new selection can glide from the old values */
+    const segs = LN.map(l => [1, 2, 3, 4].map(i => mk("line", { class: "tline " + l.cls, "stroke-dasharray": YEARS[i] > 2026 ? "6 5" : "none" }, null, trail)));
+    const dots = LN.map(l => YEARS.map(y => mk("circle", { class: "tdot " + l.cls + (y > 2026 ? " proj" : ""), r: 5 }, null, trail)));
+    let cur = null, shown = null, raf = 0;
+    const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const vals = d => LN.map(l => d.series.map(s => s[l.k]));
+    function place(v) {
+      LN.forEach((l, j) => {
+        v[j].forEach((y, i) => { dots[j][i].setAttribute("cx", sx(i)); dots[j][i].setAttribute("cy", sy(y)); });
+        segs[j].forEach((g, i) => { g.setAttribute("x1", sx(i)); g.setAttribute("y1", sy(v[j][i])); g.setAttribute("x2", sx(i + 1)); g.setAttribute("y2", sy(v[j][i + 1])); });
       });
-      if (!anim) return;
-      steps.forEach((g, i) => timers.push(setTimeout(() => { g.classList.remove("hid"); ticks.forEach((t, k) => t.classList.toggle("on", k === i)); }, 200 + i * 650)));
-      timers.push(setTimeout(() => ticks.forEach(t => t.classList.remove("on")), 200 + 5 * 650 + 600));
+    }
+    function glide(from, to, ms) {
+      cancelAnimationFrame(raf); const t0 = performance.now();
+      const step = now => { const k = Math.min(1, (now - t0) / ms), e = ease(k);
+        place(from.map((r, j) => r.map((v, i) => v + (to[j][i] - v) * e)));
+        if (k < 1) raf = requestAnimationFrame(step); };
+      raf = requestAnimationFrame(step);
+    }
+    function reveal(ms) {
+      cancelAnimationFrame(raf); const t0 = performance.now(), x0 = L, x1 = L + PW + 12;
+      dots.flat().forEach(c => c.classList.add("pre"));
+      const step = now => { const k = Math.min(1, (now - t0) / ms), x = x0 + (x1 - x0) * ease(k);
+        clipR.setAttribute("width", x);
+        dots.forEach(r => r.forEach((c, i) => { if (sx(i) <= x + 2) c.classList.remove("pre"); }));
+        ticks.forEach((t, i) => t.classList.toggle("on", k < 1 && Math.abs(sx(i) - x) < (PW - 36) / 8));
+        if (k < 1) raf = requestAnimationFrame(step); else { clipR.setAttribute("width", W); ticks.forEach(t => t.classList.remove("on")); } };
+      clipR.setAttribute("width", x0); raf = requestAnimationFrame(step);
+    }
+    function draw(d, how) {
+      cur = d;
+      nameEl.textContent = d.n;
+      svg.setAttribute("aria-label", `${d.n}. ` + LN.map(l => `${l.lab}: ` + d.series.map(s => `${s.year} ${s[l.k]}`).join(", ")).join(". "));
+      note.classList.remove("swap"); void note.offsetWidth; note.classList.add("swap");
+      note.textContent = ""; note.appendChild(cellEl("p", "jx-obs", NOTES[mode][d.n] || ""));
+      const to = vals(d);
+      if (RM || !how) { cancelAnimationFrame(raf); clipR.setAttribute("width", W); place(to); }
+      else if (how === "glide" && shown) { clipR.setAttribute("width", W); glide(shown, to, 650); }
+      else { place(to); reveal(1800); }
+      shown = to;
     }
     const btns = DATA.map(d => {
       const b = cellEl("button", "jx-item", d.n.replace("United States, federal", "United States federal")); b.type = "button"; b.setAttribute("role", "option"); b.setAttribute("aria-selected", "false");
-      b.addEventListener("click", () => select(d, true));
+      b.addEventListener("click", () => select(d, "glide"));
       list.appendChild(b); return b;
     });
     list.addEventListener("keydown", e => {
       const i = DATA.indexOf(cur);
-      if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); select(DATA[(i + 1) % DATA.length], true, true); }
-      if (e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); select(DATA[(i + DATA.length - 1) % DATA.length], true, true); }
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); select(DATA[(i + 1) % DATA.length], "glide", true); }
+      if (e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); select(DATA[(i + DATA.length - 1) % DATA.length], "glide", true); }
     });
-    function select(d, animate, focus) {
+    function select(d, how, focus) {
       btns.forEach((b, i) => { const on = DATA[i] === d; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; if (on && focus) b.focus(); });
-      draw(d, animate);
+      draw(d, how);
     }
-    replay.addEventListener("click", () => cur && draw(cur, true));
-    select(DATA.find(d => d.n === "Australia"), false);
+    replay.addEventListener("click", () => cur && draw(cur, "reveal"));
+    select(DATA.find(d => d.n === "Australia"), null);
     /* table */
     const tb = byId(mode === "dir" ? "travRows1" : "travRows2"); tb.textContent = "";
     DATA.forEach(d => {
