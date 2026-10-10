@@ -501,11 +501,25 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 
   <div class="chart-block">
     <p class="chart-no"><span>Theme 2 of 3</span></p>
-    <h2 class="chart-q">Early-warning signals and what to build</h2>
-    <p class="chart-read">The eight push factors are the pressures that make a government act on AI, such as strategic rivalry, public harm or industry lobbying. For each factor, the table lists the events that show the pressure is growing, how quickly governments usually turn it into binding rules, the kind of policy they tend to answer it with, and what an organisation could prepare in advance. The last column gives Australia's current rating for the factor, from 0 (no evidence) to 3 (dominant).</p>
+    <h2 class="chart-q">Which pressures are likely to turn into rules</h2>
+    <p class="chart-read">Each of the eight push factors has a typical speed at which it turns into rules, and a typical kind of policy that answers it. Reading Australia's ratings against those shows which pressures to expect rules from first.</p>
+    <div class="chart-unit">
+      <div class="insights">
+        <h3>Insights</h3>
+        <ul class="axes">
+          <li><b>Public harm and information control turn into rules fastest.</b> Both are protection-side pressures. Public harm moves in months, and information control moves fast near elections. Rights tradition and growth are the slowest, taking years.</li>
+          <li><b>Pressure to promote AI mostly produces support, and support is easy to reverse.</b> Growth pressure is answered with investment, an adoption drive and relief, and relief given by omission can be taken back. Industry pressure works against new rules, because it delays duties that are already legislated.</li>
+          <li><b>Australia's two strongest pressures pull in opposite directions and move at different speeds.</b> Growth and investment and public harm are both rated 3. Public harm is the fast one, so the next rules are most likely to come from it and to be narrow and aimed at the harm, as the under-16 minimum age was. Growth pressure shows up in plans and funding, and is slower and reversible, as when the mandatory guardrails were set aside in December 2025.</li>
+          <li><b>The research gives no basis to expect rules in Australia from strategic rivalry or information control.</b> Both are rated 0, meaning no evidence. Sovereignty and industry pressure are rated 2, and rights tradition and labour are rated 1.</li>
+        </ul>
+        <p class="caption">The ratings are judgements made at a single date, so treat these patterns as indications and not proof.</p>
+      </div>
+    </div>
+    <details class="boxes">
+      <summary>Signals, speed and likely policy for each of the eight push factors</summary>
     <div class="table-scroll">
       <table style="min-width: 1100px">
-        <thead><tr><th>Push factor</th><th>Signals to watch</th><th>Speed</th><th>Bite the government is likely to use</th><th>What to build</th><th class="c">Australia</th></tr></thead>
+        <thead><tr><th>Push factor</th><th>Signals to watch</th><th>Speed</th><th>Policy the government is likely to use</th><th>What to build</th><th class="c">Australia</th></tr></thead>
         <tbody id="trigRows"></tbody>
       </table>
     </div>
@@ -516,6 +530,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       <div><strong>Detection</strong><span>Build monitoring and logs, so that a problem is found by you before it is found by a regulator or a journalist.</span></div>
       <div><strong>Sanction and enforcement</strong><span>Build an evidence trail and an incident record: what was tested, what was found, what was fixed and when.</span></div>
     </div>
+    </details>
   </div>
 
   <div class="chart-block">
@@ -1086,14 +1101,14 @@ const NEXT = {
 
 /* ---------- 2. triggers and what to build ---------- */
 const TRIG = [
-  ["Strategic rivalry", "Watch for export control rulings, outcomes of summits between the United States and China, frontier releases from rival states and procurement exclusions of foreign models.", "Medium", "Governments act at the point of control over compute, chips and model access, and add backing for domestic capacity.", "Keep a register of which models and providers are in use and where each is hosted, and test a path to switch to a second provider."],
-  ["Sovereignty", "Watch for sovereign compute and data centre announcements, and for data location terms in procurement and critical-infrastructure rules.", "Medium", "Governments act at the point of control and add specificity about where data and compute are located.", "Map where data, inference and logs are kept for each use case, and list the hosting options."],
-  ["Growth and investment", "Watch for productivity reviews and national plans, dropped or delayed duties, and new funding lines.", "Slow, and reversible", "Governments use support for AI: investment, an adoption drive and relief.", "Scale use cases while the rules are light. Keep the internal standard at the level of the dropped rules, because relief given by omission can be taken back."],
-  ["Industry and partner pressure", "Watch for peak body submissions, pauses and delays, and objections from partner governments.", "Medium, and it works against new duties", "Governments grant relief and delay duties that are already legislated.", "Plan to the original date of a duty and not the delayed one. Record a delay as a date that moved and not as a cancellation."],
-  ["Rights tradition", "Watch for privacy reform, transparency requirements for automated decisions, court decisions, and commissioner and ombudsman reports.", "Slow", "Governments put a duty in force and make it specific.", "Give notice and an explanation for decisions made with AI, provide a way for a person to contest one, and keep a register of automated decisions."],
-  ["Public harm and demand", "Watch for child safety findings, high-profile incidents, regulator reports, polling and inquiries.", "Fast", "Governments apply sanctions and enforcement, with a point of control at the platform.", "Set up an incident response and escalation path, test for vulnerable users before launch, and keep an evidence trail of what was tested and fixed."],
-  ["Labour and stability", "Watch for union campaigns, retrenchments tied to AI, workplace law reviews and state work health and safety changes.", "Medium", "Governments set duties with specific steps, such as consultation and assessment.", "Record consultation with staff, and complete an impact assessment before AI is used for rostering, monitoring or hiring."],
-  ["Information control", "Watch for election deepfake incidents, labelling proposals and takedown orders to platforms.", "Fast near elections", "Governments act at a point of control and add detection, such as labelling and provenance.", "Add provenance and labelling to generated content, and keep logs that let an output be traced to its source."]
+  ["Strategic rivalry", ["Outcomes of summits between the United States and China, and frontier releases from rival states.", "Export control rulings and procurement exclusions of foreign models."], "Medium", "Governments act at the point of control over compute, chips and model access, and add backing for domestic capacity.", "Keep a register of which models and providers are in use and where each is hosted, and test a path to switch to a second provider."],
+  ["Sovereignty", ["", "Sovereign compute and data centre announcements, and data location terms in procurement and critical-infrastructure rules."], "Medium", "Governments act at the point of control and add specificity about where data and compute are located.", "Map where data, inference and logs are kept for each use case, and list the hosting options."],
+  ["Growth and investment", ["Productivity reviews.", "National plans, dropped or delayed duties and new funding lines."], "Slow, and reversible", "Governments use support for AI: investment, an adoption drive and relief.", "Scale use cases while the rules are light. Keep the internal standard at the level of the dropped rules, because relief given by omission can be taken back."],
+  ["Industry and partner pressure", ["Peak body submissions and objections from partner governments.", "Pauses and delays."], "Medium, and it works against new duties", "Governments grant relief and delay duties that are already legislated.", "Plan to the original date of a duty and not the delayed one. Record a delay as a date that moved and not as a cancellation."],
+  ["Rights tradition", ["Court decisions, and commissioner and ombudsman reports.", "Privacy reform and transparency requirements for automated decisions."], "Slow", "Governments put a duty in force and make it specific.", "Give notice and an explanation for decisions made with AI, provide a way for a person to contest one, and keep a register of automated decisions."],
+  ["Public harm and demand", ["Child safety findings, high-profile incidents, regulator reports, polling and inquiries.", ""], "Fast", "Governments apply sanctions and enforcement, with a point of control at the platform.", "Set up an incident response and escalation path, test for vulnerable users before launch, and keep an evidence trail of what was tested and fixed."],
+  ["Labour and stability", ["Union campaigns, retrenchments tied to AI and workplace law reviews.", "State work health and safety changes."], "Medium", "Governments set duties with specific steps, such as consultation and assessment.", "Record consultation with staff, and complete an impact assessment before AI is used for rostering, monitoring or hiring."],
+  ["Information control", ["Election deepfake incidents.", "Labelling proposals and takedown orders to platforms."], "Fast near elections", "Governments act at a point of control and add detection, such as labelling and provenance.", "Add provenance and labelling to generated content, and keep logs that let an output be traced to its source."]
 ];
 (function () {
   const au = DATA.find(d => d.n === "Australia");
@@ -1101,7 +1116,17 @@ const TRIG = [
   TRIG.forEach((r, k) => {
     const tr = document.createElement("tr");
     tr.appendChild(cellEl("td", "name", r[0]));
-    r.slice(1).forEach(v => tr.appendChild(cellEl("td", "", v)));
+    r.slice(1).forEach((v, k) => {
+      if (k === 0) {
+        const td = cellEl("td", "");
+        [["Pressure rising", v[0]], ["Early policy moves", v[1]]].forEach(([lab, txt]) => {
+          if (!txt) return;
+          const d = document.createElement("div"), b = document.createElement("b");
+          b.textContent = lab + ": "; d.append(b, txt); td.appendChild(d);
+        });
+        tr.appendChild(td);
+      } else tr.appendChild(cellEl("td", "", v));
+    });
     tr.appendChild(cellEl("td", "c", au.p[k]));
     tb.appendChild(tr);
   });
