@@ -383,7 +383,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 #groups .gtag { font-size: 0.75rem; font-weight: 600; padding: 1px 7px; border: 1px solid var(--border-strong); color: var(--text-secondary); }
 /* Theme 3: one jurisdiction at a time */
 .jx { display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: var(--space-lg); align-items: start; }
-.jx-main { min-width: 0; display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(14rem, 1fr); gap: var(--space-sm) var(--space-lg); align-items: start; }
+.jx-main { min-width: 0; display: grid; grid-template-columns: minmax(0, 2fr) minmax(13rem, 1fr); gap: var(--space-sm) var(--space-lg); align-items: start; }
 .jx-head { grid-column: 1 / -1; }
 .jx-note { padding-top: var(--space-md); }
 @media (max-width: 1000px) { .jx-main { grid-template-columns: 1fr; } .jx-note { padding-top: 0; } }
@@ -421,6 +421,23 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   .jx-item { flex: 0 0 auto; border: 1px solid var(--border-default); min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) { .jx-svg .js { transition: none; } }
+.jx-fig { min-width: 0; display: flex; flex-direction: column; gap: var(--space-xs); }
+.jx-svg .tb { fill: var(--chart-wash); }
+.jx-svg .tproj { fill: var(--chart-ink); fill-opacity: 0.06; }
+.jx-svg .tpl { fill: var(--text-muted); font-size: 11.5px; font-style: italic; }
+.jx-svg .tgl { stroke: var(--chart-line); }
+.jx-svg .tf { fill: none; stroke: var(--chart-line); }
+.jx-svg .tband { fill: var(--text-muted); font-size: 12px; font-style: italic; }
+.jx-svg .tyt { fill: var(--text-muted); font-size: 12px; font-weight: 600; }
+.jx-svg .tx { fill: var(--text-secondary); font-size: 12.5px; transition: fill var(--t-fast); }
+.jx-svg .tx.on { fill: var(--text-primary); font-weight: 700; }
+.jx-svg .tline { stroke-width: 3; stroke-linecap: round; fill: none; }
+.jx-svg .tline.l1 { stroke: var(--rule); } .jx-svg .tline.l2 { stroke: var(--form-vol); }
+.jx-svg .tdot.l1 { fill: var(--rule); stroke: var(--rule); } .jx-svg .tdot.l2 { fill: var(--form-vol); stroke: var(--form-vol); }
+.jx-svg .tdot.proj { fill: var(--chart-wash); stroke-width: 2.5; }
+.jx-svg .tend { font-size: 12.5px; font-weight: 700; }
+.jx-svg .tend.l1 { fill: var(--rule); } .jx-svg .tend.l2 { fill: var(--form-vol); }
+.jx-key b { color: var(--text-primary); }
 /* Theme 3: controls */
 .qswitch .ct-txt strong { font-size: 1rem; line-height: 1.3; }
 .qswitch .qn { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -688,26 +705,22 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   <div class="chart-block" id="pl-t3">
     <p class="chart-no"><span>Theme 3 of 3</span></p>
     <h2 class="chart-q">Follow how policy has moved since 2024 and where it is scheduled to go</h2>
-    <p class="chart-read">These visuals show the direction of change for each jurisdiction. They plot the change from 2024 to 2026 and then extend it to 2028. The extension is limited to changes that already have a date, such as a law coming into force or a deadline in a notice, so a jurisdiction with no dated change stays at its 2026 position.</p>
+    <p class="chart-read">For each jurisdiction, these charts show how its AI policy and the pressure on its government have changed since 2024, and how they would change to 2028. The projection includes only changes that already have a date, such as a law coming into force, so a jurisdiction with no dated change stays at its 2026 level.</p>
     <div class="concepts qswitch" role="tablist" aria-label="Choose a question">
-      <button type="button" role="tab" id="qt-dir" aria-controls="q3-dir" aria-selected="true" data-q="dir"><span class="ct-txt"><span class="qn">Question 1 of 2</span><strong>How is the way policy bites changing, given the way the government is pushed?</strong></span></button>
-      <button type="button" role="tab" id="qt-str" aria-controls="q3-str" aria-selected="false" data-q="str" tabindex="-1"><span class="ct-txt"><span class="qn">Question 2 of 2</span><strong>How is the strength of the bite changing, given how hard the government is pushed?</strong></span></button>
+      <button type="button" role="tab" id="qt-dir" aria-controls="q3-dir" aria-selected="true" data-q="dir"><span class="ct-txt"><span class="qn">Question 1 of 2</span><strong>How has the government's AI policy changed since 2024?</strong></span></button>
+      <button type="button" role="tab" id="qt-str" aria-controls="q3-str" aria-selected="false" data-q="str" tabindex="-1"><span class="ct-txt"><span class="qn">Question 2 of 2</span><strong>How has the pressure on the government changed since 2024?</strong></span></button>
     </div>
     <div class="sub" data-mode="dir" id="q3-dir" role="tabpanel" aria-labelledby="qt-dir">
       <div class="jx" data-mode="dir">
         <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
         <div class="jx-main">
-          <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><details class="fly fly-down fly-right"><summary>How to read</summary><div class="fly-body"><ul class="axes">
-          <li><b>Push, across:</b> the forces acting on the government, from promotion (0) to protection (100).</li>
-          <li><b>Bite, up:</b> what the policy does, from enabling (0) to constraining (100).</li>
-          <li><b>Line:</b> the solid line runs from 2024 to 2026, with 2026 as the large dot. The dashed line and hollow dots are projected to 2028. Colour is legal form, as on the charts.</li>
-        </ul></div></details><button type="button" class="jx-replay">Replay</button></span></div>
-          <svg class="jx-svg" viewBox="0 0 460 440" role="img"></svg>
+          <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><button type="button" class="jx-replay">Replay</button></span></div>
+          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 600 380" role="img"></svg><p class="caption jx-key"><b>Regulation:</b> rules that are in force and enforced. <b>Support for AI:</b> investment, programs to drive adoption, and relief from rules.</p></div>
           <div class="jx-note" aria-live="polite"></div>
         </div>
       </div>
       <details class="boxes">
-        <summary>Pattern in each year, and what moved, for all sixteen jurisdictions</summary>
+        <summary>Regulation and support for AI in each year, for all sixteen jurisdictions</summary>
         <div class="table-scroll types">
           <table style="min-width: 1100px">
             <thead><tr><th>Jurisdiction</th><th>2024</th><th>2025</th><th>2026</th><th>2027, projected</th><th>2028, projected</th><th>What moved, 2024 to 2026</th><th>What is assumed, 2026 to 2028</th></tr></thead>
@@ -720,17 +733,13 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       <div class="jx" data-mode="str">
         <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
         <div class="jx-main">
-          <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><details class="fly fly-down fly-right"><summary>How to read</summary><div class="fly-body"><ul class="axes">
-          <li><b>Push, across:</b> the eight push factors added together, from weak (0) to strong (100).</li>
-          <li><b>Bite, up:</b> the average of the support score and the regulation score, from weak (0) to strong (100).</li>
-          <li><b>Line:</b> the solid line runs from 2024 to 2026, with 2026 as the large dot. The dashed line and hollow dots are projected to 2028. Colour is legal form, as on the charts.</li>
-        </ul></div></details><button type="button" class="jx-replay">Replay</button></span></div>
-          <svg class="jx-svg" viewBox="0 0 460 440" role="img"></svg>
+          <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><button type="button" class="jx-replay">Replay</button></span></div>
+          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 600 380" role="img"></svg><p class="caption jx-key"><b>Pressure to promote AI:</b> rivalry with other states, sovereignty, growth and industry lobbying. <b>Pressure to protect people:</b> rights, public harm, labour and control of information.</p></div>
           <div class="jx-note" aria-live="polite"></div>
         </div>
       </div>
       <details class="boxes">
-        <summary>Pattern in each year, and what moved, for all sixteen jurisdictions</summary>
+        <summary>Pressure to promote AI and to protect people in each year, for all sixteen jurisdictions</summary>
         <div class="table-scroll types">
           <table style="min-width: 1100px">
             <thead><tr><th>Jurisdiction</th><th>2024</th><th>2025</th><th>2026</th><th>2027, projected</th><th>2028, projected</th><th>What moved, 2024 to 2026</th><th>What is assumed, 2026 to 2028</th></tr></thead>
@@ -1419,7 +1428,8 @@ function scoreSet(p, c, b) {
   const pro = sum(p.slice(0, 4)), prot = sum(p.slice(4));
   const bite = Math.round(100 * (0.6 * Math.min(...c) + 0.4 * sum(c) / c.length) / 3);
   const boost = Math.round(100 * sum(b) / 12);
-  return { pushDir: 100 * prot / (pro + prot), pushStr: 100 * (pro + prot) / 24,
+  return { reg: bite, sup: boost, pro: Math.round(100 * pro / 12), prot: Math.round(100 * prot / 12),
+    pushDir: 100 * prot / (pro + prot), pushStr: 100 * (pro + prot) / 24,
     respDir: bite + boost ? 100 * bite / (bite + boost) : null, respStr: (bite + boost) / 2 };
 }
 function seriesFor(d) {
@@ -1593,95 +1603,55 @@ drawTraj("str", "trav2", "travRows2");
     t.addEventListener("click", () => setQ(t.dataset.q));
     t.addEventListener("keydown", e => { if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) { e.preventDefault(); setQ(qtabs[(i + 1) % 2].dataset.q, true); } });
   });
-  /* one jurisdiction at a time, animated on selection */
-  const PATTERN = {"dir": {"China": "China's policy mixes regulation and support in roughly equal measure, matching a pressure that is also mixed. This has not changed since 2024, and nothing is scheduled to change it.", "United States, federal": "US federal policy turned sharply towards supporting AI in 2025, when Order 14110 and its reporting duties were revoked and the July 2025 action plan favoured relief and adoption. In 2026 the pressure began to turn back towards protecting people after the agent incidents, but policy has not followed.", "European Union": "EU policy has alternated between support and regulation as its law phases in. It favoured support in 2025 as concern about competitiveness grew, and regulation in 2026 as the rules for general-purpose models took effect. The same alternation is scheduled: sandboxes add support in 2027, and the high-risk rules add regulation in 2028.", "California": "The pressure on California moved towards protecting people in 2025, driven by concern about child safety and chatbots. Its policy already favoured regulation, and is projected to favour it more from 2027 as incident reporting under the 2026 laws begins.", "Australia": "Australian policy has kept a mix of regulation and support, but has changed course. In 2025 it moved towards support, as pressure for growth rose and the proposed mandatory guardrails were set aside. If the national AI standards, the Digital Duty of Care and the privacy reforms pass, it will move back towards regulation from 2027, to about where it was in 2024.", "United Kingdom": "In 2025 the pressure on the UK moved towards promoting AI, with the AI Opportunities Action Plan, while UK policy moved towards regulation as the Online Safety Act duties took effect. The two moved in opposite directions and have not changed since.", "Singapore": "In 2025 the pressure on Singapore moved towards protecting people, as online harms led to new criminal laws. Its policy moved slightly the other way, towards support for AI, because adoption programs grew faster than the rules.", "India": "Indian policy leaned towards support in 2025 as IndiaAI Mission funding grew, then moved back towards regulation in 2026 when the rules on labelling synthetic content arrived.", "Brazil": "Brazilian policy has not changed since 2024 and favours regulation, because it comes from data protection law. The pressure moved towards promoting AI in 2025 as industry lobbied the Chamber over the AI bill, so policy now favours regulation more than the pressure does.", "Canada": "Canada has moved steadily towards promoting and supporting AI. The AI bill lapsed in January 2025, and after the 2025 tariffs the government spent on sovereign compute instead of regulating.", "South Korea": "South Korean policy was almost all support until the Framework Act took effect in January 2026 and added some regulation. If fines begin in 2027 as assumed, policy will move further towards regulation.", "African Union and members": "No change was found from 2024 to 2028. Policy mixes some regulation, mainly through data protection authorities, with limited support. The evidence is limited.", "Japan": "Japanese policy added a little regulation in 2025 when the Promotion Act took effect, though the Act is mainly about support. In 2026 the Grok episode added the first documented pressure to protect people. Both pressure and policy still lean heavily towards promotion and support.", "UAE and Saudi Arabia": "Policy in the UAE and Saudi Arabia is almost entirely support for AI, matching a pressure that is entirely about promotion. Little has changed since 2024, and the evidence is weak.", "Taiwan": "Taiwanese policy added a little regulation in 2025 when the basic act replaced the draft, but it remains almost entirely support for AI. Nothing further is scheduled.", "Montana": "Montana had no AI policy until the Right to Compute Act of 2025. The Act limits regulation, so policy favours support for AI while the pressure is mixed. Nothing has changed since."}, "str": {"China": "China faces the strongest pressure of the sixteen and has the strongest policy. Policy strengthened further in 2025 when the labelling rules took effect, and has not changed since.", "United States, federal": "US federal policy is strong, mostly through export controls and support for AI. The pressure rose in 2026 after the agent incidents, but policy did not strengthen, because the government answered with a voluntary accord and not with binding rules.", "European Union": "EU policy has strengthened every year and is scheduled to strengthen fastest in 2027 and 2028, when the high-risk rules apply. That would be the largest scheduled increase of the sixteen, provided the rules are not delayed again.", "California": "California's policy barely strengthened in 2025 and 2026, while its new laws waited to take effect. It is projected to strengthen sharply in 2027, as incident reporting and enforcement under those laws begin.", "Australia": "The pressure on Australia has risen every year. Policy strengthened in 2025 with the under-16 minimum age and online safety codes, barely changed in 2026, and would strengthen again from 2027 if the national AI standards and other reforms pass.", "United Kingdom": "Both pressure and policy rose sharply in 2025, with the AI Opportunities Action Plan and the Online Safety Act duties. Since then policy has kept strengthening slowly, mostly through support for AI, while the pressure has stayed the same.", "Singapore": "Singapore's policy has strengthened every year while the pressure has barely changed. This is why its policy goes further beyond the pressure than in any other jurisdiction.", "India": "Indian policy has strengthened steadily, mostly through IndiaAI Mission funding, with the labelling rules adding regulation in 2026. The pressure rose a little in 2025.", "Brazil": "The pressure on Brazil rose in 2025, but its policy has not changed since 2024, because the AI bill has stalled in the Chamber.", "Canada": "The pressure on Canada rose in 2025 with the tariffs and concern about sovereignty. Policy has strengthened slowly, through spending on compute and not through new rules.", "South Korea": "South Korean policy did not change until the Framework Act took effect in 2026. It is projected to strengthen faster in 2027, if fines begin as assumed.", "African Union and members": "Both the pressure and policy are weak, and no change was found from 2024 to 2028. The evidence is limited.", "Japan": "Japanese policy strengthened in 2025 when the Promotion Act took effect, almost entirely through support for AI, and has not changed since. The pressure rose slightly in 2026.", "UAE and Saudi Arabia": "Policy strengthened in 2025 as state compute and adoption programs grew, and has not changed since. The evidence is weak.", "Taiwan": "Taiwanese policy strengthened slightly in 2025 when the basic act replaced the draft, and has not changed since. The pressure has stayed the same and is stronger than the policy.", "Montana": "Montana had no AI policy until the Right to Compute Act of 2025. The pressure and policy both rose from almost nothing that year, both remain weak, and nothing has changed since."}};
-
-  const CELLSOF = { dir: CELLS1, str: CELLS2 };
-  const ENDS = { dir: { x: ["Promotion", "Protection"], y: ["Enabling", "Constraining"], xt: "Direction of push", yt: "Direction of bite" },
-                 str: { x: ["Weak", "Strong"], y: ["Weak", "Strong"], xt: "Strength of push", yt: "Strength of bite" } };
-  const r0 = v => Math.round(v);
-  function boxes(d, mode) {
-    const M = MODES[mode], out = [];
-    d.series.forEach(s => { const nm = s[M.y] == null ? null : cellOf(s[M.x], s[M.y], CELLSOF[mode]).name; if (nm && (!out.length || out[out.length - 1].nm !== nm)) out.push({ nm, y: s.year }); });
-    const first = d.series.find(s => s[M.y] != null).year;
-    const lead = first > 2024 ? `There was no AI policy in 2024, so the line starts in ${first}. ` : "";
-    if (out.length === 1) return lead + `It stays in the ${out[0].nm} box from ${out[0].y} to 2028.`;
-    let t = `It moves from the ${out[0].nm} box in ${out[0].y} to the ${out[1].nm} box in ${out[1].y}`;
-    out.slice(2).forEach(o => { t += `, then to the ${o.nm} box in ${o.y}`; });
-    return lead + t + (out[out.length - 1].y < 2028 ? ", and stays there to 2028." : ".");
-  }
-  function moveText(a, b, mode, when) {
-    const M = MODES[mode];
-    const dp = b[M.x] - a[M.x], db = a[M.y] == null || b[M.y] == null ? null : b[M.y] - a[M.y];
-    let p, q;
-    const f = when === "next";
-    if (mode === "dir") {
-      p = Math.abs(dp) < 4 ? null : (f ? "the pressure would shift" : "the pressure shifted") + (dp > 0 ? " towards protecting people" : " towards promoting AI");
-      q = db == null ? null : Math.abs(db) < 4 ? null : (f ? "policy would shift" : "policy shifted") + (db > 0 ? " towards regulation" : " towards support for AI");
-    } else {
-      p = Math.abs(dp) < 4 ? null : (dp > 0 ? (f ? "the pressure would grow stronger" : "the pressure grew stronger") : (f ? "the pressure would ease" : "the pressure eased")) + ` (${r0(a[M.x])} to ${r0(b[M.x])})`;
-      q = db == null ? null : Math.abs(db) < 4 ? null : (db > 0 ? (f ? "policy would grow stronger" : "policy grew stronger") : (f ? "policy would weaken" : "policy weakened")) + ` (${r0(a[M.y])} to ${r0(b[M.y])})`;
-    }
-    if (when === "past") {
-      if (a[M.y] == null) return p ? `From 2024 to 2026, ${p}.` : "From 2024 to 2026, the pressure changed little.";
-      if (!p && !q) return "From 2024 to 2026, neither the pressure nor policy changed much.";
-      return `From 2024 to 2026, ${p || "the pressure changed little"} and ${q || "policy changed little"}.`;
-    }
-    if (!p && !q) return "";
-    return `If the scheduled changes take effect, by 2028 ${[p, q].filter(Boolean).join(" and ")}.`;
-  }
+  /* one jurisdiction at a time: policy or pressure over time */
+  const NOTES = {"dir": {"China": "China's policy is strong in both regulation and support. Both rose in 2025, as the labelling rules took effect and the AI Plus program expanded adoption. Nothing is scheduled to change it.", "United States, federal": "US federal policy swapped regulation for support in 2025. Regulation fell from strong to moderate when Order 14110 was revoked, and support rose to strong with the July 2025 action plan. Nothing is scheduled to change this, despite the 2026 agent incidents.", "European Union": "EU regulation was weak until its rules began to apply. It rose to moderate in 2026 with the rules for general-purpose models, and would become strong in 2028 when the high-risk rules apply. Support is rising too, through compute programs and sandboxes due in 2027.", "California": "California's regulation has risen steadily and would become strong in 2027, as reporting and enforcement under the 2026 laws begin. Support for AI is weak and has not changed, because the state does little to promote AI.", "Australia": "Support for AI doubled in 2025 with the National AI Plan and adoption guidance, and has stayed moderate since. Regulation rose slowly through online safety and privacy rules, and would become strong in 2027 if the national AI standards and other reforms pass.", "United Kingdom": "Both rose in 2025. Regulation went from weak to moderate as the Online Safety Act duties took effect. Support has kept rising since the AI Opportunities Action Plan, and would be strong by 2027 if the planned sandbox opens.", "Singapore": "Support for AI has risen steadily to strong, through government-wide adoption and testing tools for industry. Regulation has stayed moderate and comes mainly from criminal laws on deepfakes and intimate images.", "India": "Support for AI rose to strong in 2025 with IndiaAI Mission funding. Regulation rose a little in 2026 with the labelling rules. Nothing further is scheduled, because the government has chosen not to make an AI law.", "Brazil": "Neither has changed since 2024. Regulation is moderate and comes from data protection law, and support is weak. The AI bill would change this, but it has stalled in the Chamber.", "Canada": "Regulation is weak and has not changed since the AI bill lapsed in January 2025. Support has risen, through spending on sovereign compute after the 2025 tariffs.", "South Korea": "Support for AI has been strong throughout. Regulation was almost nil until the Framework Act took effect in January 2026, and would rise to moderate in 2027 if fines begin as assumed.", "African Union and members": "Both are weak, and no change was found from 2024 to 2028. The evidence is limited.", "Japan": "Support for AI rose to strong in 2025 when the Promotion Act took effect. Regulation is almost nil, because the Act has no penalties by design.", "UAE and Saudi Arabia": "Support for AI is strong and rose in 2025 as state compute and adoption programs grew. Regulation is almost nil. The evidence is weak.", "Taiwan": "Support for AI is moderate and rose slightly when the basic act took effect. Regulation is almost nil, because the Act's duties fall on government and carry no penalties.", "Montana": "Montana had no AI policy until the Right to Compute Act of 2025. The Act added weak support, by limiting state restrictions on computing, and almost no regulation."}, "str": {"China": "Pressure on China is strong on both sides. Competition with the United States and the drive for self-reliance push it to promote AI, and information control and job stability push it to protect people. This has not changed since 2024.", "United States, federal": "Pressure to promote AI is strong and rose in 2025, led by competition with China, growth and industry lobbying. Pressure to protect people is weak, though it rose in 2026 after the agent incidents.", "European Union": "Pressure to promote AI rose to strong in 2025, as concern about competitiveness, industry lobbying and pressure from Washington grew. Pressure to protect people is moderate and steady, grounded in fundamental rights.", "California": "Pressure to protect people rose to moderate in 2025, with concern about child safety, chatbots and workers. Pressure to promote AI is weak, apart from industry lobbying.", "Australia": "Pressure to promote AI rose quickly in 2025 and 2026, with the push for productivity, data centre investment and, from July 2026, sovereignty. Pressure to protect people rose in 2026 with child safety concerns and the Medicare incident, and is projected to rise again in 2027 as labour concerns grow.", "United Kingdom": "Pressure to promote AI rose to strong in 2025, led by growth and security. Pressure to protect people is weak and comes mainly from child safety.", "Singapore": "Both pressures are weak. Growth as a hub is the main pressure, and online harms added a little pressure to protect people in 2025.", "India": "Pressure to promote AI is moderate and steady, led by innovation and sovereign compute. Pressure to protect people rose a little in 2025 with deepfake harms.", "Brazil": "Pressure to promote AI rose in 2025 as industry lobbied over the AI bill. It now equals the pressure to protect people, which comes from the bill's basis in rights.", "Canada": "Pressure to promote AI rose to strong in 2025, as the tariffs raised concern about sovereignty. Pressure to protect people is moderate and steady, from privacy and online safety.", "South Korea": "Pressure to promote AI is moderate and steady, led by industrial support and sovereign investment. There is almost no pressure to protect people.", "African Union and members": "Both pressures are weak and steady, led by development and jobs. The evidence is limited.", "Japan": "Pressure to promote AI is moderate, driven by adoption, labour shortages and stagnant wages. The first pressure to protect people appeared in 2026 with the Grok episode.", "UAE and Saudi Arabia": "Pressure to promote AI is strong, led by sovereign compute and investment. No pressure to protect people was documented. The evidence is weak.", "Taiwan": "Pressure to promote AI is strong and steady, led by growth, security and sovereignty. Pressure to protect people is weak.", "Montana": "Both pressures start in 2025, because Montana's ratings come from the text of its 2025 Act. Both are weak."}};
+  const LINES = {
+    dir: [{ k: "reg", lab: "Regulation", cls: "l1" }, { k: "sup", lab: "Support for AI", cls: "l2" }],
+    str: [{ k: "pro", lab: "Pressure to promote AI", cls: "l1" }, { k: "prot", lab: "Pressure to protect people", cls: "l2" }]
+  };
+  const YT = { dir: "Strength of policy", str: "Strength of pressure" };
   document.querySelectorAll("#pl-t3 .jx").forEach(jx => {
-    const mode = jx.dataset.mode, M = MODES[mode], E = ENDS[mode];
+    const mode = jx.dataset.mode, LN = LINES[mode];
     const svg = jx.querySelector(".jx-svg"), list = jx.querySelector(".jx-list"), note = jx.querySelector(".jx-note");
     const nameEl = jx.querySelector(".jx-name"), replay = jx.querySelector(".jx-replay");
-    const L = 52, T = 14, S = 380, sx = v => L + v / 100 * S, sy = v => T + S * (1 - v / 100);
+    const W = 600, H = 380, L = 84, R = 140, T = 22, B = 34, PW = W - L - R, PH = H - T - B;
+    const sx = i => L + 18 + i * (PW - 36) / 4, sy = v => T + PH * (1 - v / 100);
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const mk = (tag, at, txt, par) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; (par || svg).appendChild(e); return e; };
-    mk("rect", { class: "jb", x: L, y: T, width: S, height: S });
-    [1, 2].forEach(k => { const t = k * 100 / 3; mk("line", { class: "jl", x1: sx(t), x2: sx(t), y1: T, y2: T + S }); mk("line", { class: "jl", x1: L, x2: L + S, y1: sy(t), y2: sy(t) }); });
-    CELLSOF[mode].forEach((c, idx) => {
-      const col = idx % 3, row = Math.floor(idx / 3), x = L + col * S / 3 + 6, words = c[0].split(" "), lines = [""];
-      words.forEach(w => { const l = lines[lines.length - 1]; if ((l + " " + w).trim().length > 18 && l) lines.push(w); else lines[lines.length - 1] = (l + " " + w).trim(); });
-      const t = mk("text", { class: "jc", x, y: T + row * S / 3 + 15 });
-      lines.forEach((l, k) => mk("tspan", { x, dy: k ? 13 : 0 }, l, t));
-    });
-    mk("rect", { class: "jf", x: L, y: T, width: S, height: S });
-    mk("text", { class: "je", x: L, y: T + S + 18 }, E.x[0]); mk("text", { class: "je", x: L + S, y: T + S + 18, "text-anchor": "end" }, E.x[1]);
-    mk("text", { class: "jt", x: L + S / 2, y: T + S + 36, "text-anchor": "middle" }, E.xt);
-    mk("text", { class: "je", x: L - 8, y: T + S, "text-anchor": "start", transform: `rotate(-90 ${L - 8} ${T + S})` }, E.y[0]);
-    mk("text", { class: "je", x: L - 8, y: T, "text-anchor": "end", transform: `rotate(-90 ${L - 8} ${T})` }, E.y[1]);
-    mk("text", { class: "jt", x: 16, y: T + S / 2, "text-anchor": "middle", transform: `rotate(-90 16 ${T + S / 2})` }, E.yt);
-    const ghosts = mk("g", { class: "jg" });
-    DATA.forEach(d => { if (d.series[2][M.y] != null) mk("circle", { cx: sx(d.series[2][M.x]), cy: sy(d.series[2][M.y]), r: 4 }, null, ghosts); });
-    const trail = mk("g", {}), yr = mk("text", { class: "jy", x: L + S - 8, y: T + S - 10, "text-anchor": "end" }, "");
+    mk("rect", { class: "tb", x: L, y: T, width: PW, height: PH });
+    mk("rect", { class: "tproj", x: (sx(2) + sx(3)) / 2, y: T, width: L + PW - (sx(2) + sx(3)) / 2, height: PH });
+    mk("text", { class: "tpl", x: (sx(3) + sx(4)) / 2, y: T - 7, "text-anchor": "middle" }, "Projected");
+    [1, 2].forEach(k => mk("line", { class: "tgl", x1: L, x2: L + PW, y1: sy(k * 100 / 3), y2: sy(k * 100 / 3) }));
+    [["Strong", 5 / 6], ["Moderate", 1 / 2], ["Weak", 1 / 6]].forEach(([t, f]) => mk("text", { class: "tband", x: L - 8, y: sy(f * 100) + 4, "text-anchor": "end" }, t));
+    mk("text", { class: "tyt", x: 16, y: T + PH / 2, "text-anchor": "middle", transform: `rotate(-90 16 ${T + PH / 2})` }, YT[mode]);
+    const ticks = YEARS.map((y, i) => mk("text", { class: "tx", x: sx(i), y: T + PH + 22, "text-anchor": "middle" }, String(y)));
+    mk("rect", { class: "tf", x: L, y: T, width: PW, height: PH });
+    const trail = mk("g", {});
     let timers = [], cur = null;
-    const clear = () => { timers.forEach(clearTimeout); timers = []; };
+    const clear = () => { timers.forEach(clearTimeout); timers = []; ticks.forEach(t => t.classList.remove("on")); };
     function draw(d, animate) {
       clear(); trail.textContent = ""; cur = d;
-      const col = `var(--form-${d.f})`, pts = d.series.filter(s => s[M.y] != null);
+      const anim = animate && !RM, S = d.series;
       nameEl.textContent = d.n;
-      svg.setAttribute("aria-label", `${d.n}: ${pts.map(s => `${s.year} push ${r0(s[M.x])}, bite ${r0(s[M.y])}`).join("; ")}`);
-      note.innerHTML = "";
-      note.appendChild(cellEl("p", "jx-obs", PATTERN[mode][d.n] || ""));
-      const els = pts.map((s, k) => {
-        const g = mk("g", { class: "js" + (animate && !RM ? " hid" : "") }, null, trail);
-        if (k) { const a = pts[k - 1]; mk("line", { x1: sx(a[M.x]), y1: sy(a[M.y]), x2: sx(s[M.x]), y2: sy(s[M.y]), stroke: col, "stroke-width": 2.5, "stroke-linecap": "round", "stroke-dasharray": s.year > 2026 ? "6 5" : "none" }, null, g); }
-        mk("circle", s.year === 2026 ? { cx: sx(s[M.x]), cy: sy(s[M.y]), r: 8, fill: col } : s.year > 2026 ? { cx: sx(s[M.x]), cy: sy(s[M.y]), r: 5.5, fill: "var(--surface-card)", stroke: col, "stroke-width": 2.5 } : { cx: sx(s[M.x]), cy: sy(s[M.y]), r: 5, fill: col, "fill-opacity": 0.6 }, null, g);
-        const right = sx(s[M.x]) < L + S - 60;
-        const cy = sy(s[M.y]), inCell = (cy - T) % (S / 3), ly = inCell < 34 ? cy + 18 : cy + 4;
-        mk("text", { class: "jlab", x: sx(s[M.x]) + (right ? 11 : -11), y: ly, "text-anchor": right ? "start" : "end" }, String(s.year), g);
-        return { g, s };
+      svg.setAttribute("aria-label", `${d.n}. ` + LN.map(l => `${l.lab}: ` + S.map(s => `${s.year} ${s[l.k]}`).join(", ")).join(". "));
+      note.textContent = ""; note.appendChild(cellEl("p", "jx-obs", NOTES[mode][d.n] || ""));
+      const steps = YEARS.map(() => mk("g", { class: "js" + (anim ? " hid" : "") }, null, trail));
+      LN.forEach(l => {
+        S.forEach((s, i) => {
+          if (i) mk("line", { class: "tline " + l.cls, x1: sx(i - 1), y1: sy(S[i - 1][l.k]), x2: sx(i), y2: sy(s[l.k]), "stroke-dasharray": s.year > 2026 ? "6 5" : "none" }, null, steps[i]);
+          mk("circle", { class: "tdot " + l.cls + (s.year > 2026 ? " proj" : ""), cx: sx(i), cy: sy(s[l.k]), r: 5 }, null, steps[i]);
+        });
       });
-      // keep year labels from colliding: hide labels of points within 14px of an earlier one
-      els.forEach((e, k) => { for (let j = 0; j < k; j++) { const o = els[j]; if (Math.hypot(sx(e.s[M.x]) - sx(o.s[M.x]), sy(e.s[M.y]) - sy(o.s[M.y])) < 18 && o.g.querySelector("text")) { e.g.querySelector("text").remove(); o.lab = (o.lab || [o.s.year]).concat(e.s.year); e.merged = o; break; } } });
-      els.forEach(e => { if (e.lab) e.g.querySelector("text").textContent = e.lab.join(", "); });
-      if (!animate || RM) { yr.textContent = ""; return; }
-      els.forEach((e, k) => timers.push(setTimeout(() => { e.g.classList.remove("hid"); yr.textContent = e.s.year + (e.s.year > 2026 ? ", projected" : ""); }, 150 + k * 520)));
-      timers.push(setTimeout(() => { yr.textContent = ""; }, 150 + els.length * 520 + 700));
+      const e0 = S[4][LN[0].k], e1 = S[4][LN[1].k];
+      let y0 = sy(e0) + 4, y1 = sy(e1) + 4;
+      if (Math.abs(y0 - y1) < 14) { if (y0 <= y1) { y0 -= 7; y1 += 7; } else { y0 += 7; y1 -= 7; } }
+      LN.forEach((l, j) => mk("text", { class: "tend " + l.cls, x: sx(4) + 12, y: j ? y1 : y0 }, l.lab, steps[4]));
+      if (!anim) return;
+      steps.forEach((g, i) => timers.push(setTimeout(() => { g.classList.remove("hid"); ticks.forEach((t, k) => t.classList.toggle("on", k === i)); }, 200 + i * 650)));
+      timers.push(setTimeout(() => ticks.forEach(t => t.classList.remove("on")), 200 + 5 * 650 + 600));
     }
     const btns = DATA.map(d => {
-      const b = cellEl("button", "jx-item"); b.type = "button"; b.setAttribute("role", "option"); b.setAttribute("aria-selected", "false");
-      const sw = cellEl("span", "sw"); sw.style.background = `var(--form-${d.f})`; sw.setAttribute("aria-hidden", "true");
-      b.append(sw, document.createTextNode(d.n.replace("United States, federal", "United States federal")));
+      const b = cellEl("button", "jx-item", d.n.replace("United States, federal", "United States federal")); b.type = "button"; b.setAttribute("role", "option"); b.setAttribute("aria-selected", "false");
       b.addEventListener("click", () => select(d, true));
       list.appendChild(b); return b;
     });
@@ -1696,8 +1666,19 @@ drawTraj("str", "trav2", "travRows2");
     }
     replay.addEventListener("click", () => cur && draw(cur, true));
     select(DATA.find(d => d.n === "Australia"), false);
+    /* table */
+    const tb = byId(mode === "dir" ? "travRows1" : "travRows2"); tb.textContent = "";
+    DATA.forEach(d => {
+      const tr = document.createElement("tr");
+      tr.appendChild(cellEl("td", "name", d.n));
+      d.series.forEach(s => tr.appendChild(cellEl("td", "num" + (s.year > 2026 ? " proj" : ""), `${s[LN[0].k]} / ${s[LN[1].k]}`)));
+      const t = TRAJ[d.n] || {};
+      tr.appendChild(cellEl("td", "why", t.hist || "")); tr.appendChild(cellEl("td", "why", t.proj || ""));
+      tb.appendChild(tr);
+    });
   });
 })();
+
 
 /* ---------- Australia tab ---------- */
 (function () {
