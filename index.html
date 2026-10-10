@@ -496,9 +496,9 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       <span class="tag">The AI policy navigator</span>
     </button>
     <div class="tabbar" role="tablist" aria-label="Sections">
-      <button type="button" role="tab" id="tab-home" aria-controls="panel-home" data-tab="home">Home</button>
-      <button type="button" role="tab" id="tab-charts" aria-controls="panel-charts" data-tab="charts">Charts</button>
-      <button type="button" role="tab" id="tab-planning" aria-controls="panel-planning" data-tab="planning">Outlook</button>
+      <button type="button" role="tab" id="tab-home" aria-controls="panel-home" data-tab="home">Overview</button>
+      <button type="button" role="tab" id="tab-charts" aria-controls="panel-charts" data-tab="charts">Where policy stands</button>
+      <button type="button" role="tab" id="tab-planning" aria-controls="panel-planning" data-tab="planning">Where policy is heading</button>
       <button type="button" role="tab" id="tab-australia" aria-controls="panel-australia" data-tab="australia">Australia</button>
       <button type="button" role="tab" id="tab-method" aria-controls="panel-method" data-tab="method">Scoring and evidence</button>
     </div>
@@ -542,16 +542,16 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 
     <h2>Where to go next</h2>
     <div class="cards">
-      <button type="button" class="card" data-go="charts"><strong>Charts</strong><span>How sixteen jurisdictions compare on direction and on strength, and the patterns each chart gives.</span></button>
-      <button type="button" class="card" data-go="planning"><strong>Outlook</strong><span>Where policy is likely to change next, which jurisdictions face the same pressures, and how policy has moved since 2024 and is scheduled to move to 2028.</span></button>
+      <button type="button" class="card" data-go="charts"><strong>Where policy stands</strong><span>How sixteen jurisdictions compare in 2026, on the direction and on the strength of pressure and policy.</span></button>
+      <button type="button" class="card" data-go="planning"><strong>Where policy is heading</strong><span>Where policy is likely to change next, which jurisdictions face the same pressures, and how policy has moved since 2024 and is scheduled to move to 2028.</span></button>
       <button type="button" class="card" data-go="australia"><strong>Australia</strong><span>Where Australian AI policy stands now, how it got here, and four ways it could change next.</span></button>
-      <button type="button" class="card" data-go="method"><strong>Scoring and evidence</strong><span>How push, bite and dot size are scored, the sources, and the limits of the evidence.</span></button>
+      <button type="button" class="card" data-go="method"><strong>Scoring and evidence</strong><span>How pressure, policy and dot size are scored, the ratings and evidence behind each score, and the limits of that evidence.</span></button>
     </div>
     <p class="caption">All push and bite scores are judgements made from the research report, for sixteen jurisdictions as at 3 October 2026. They are not measurements. Government intent is scored. Self-regulation by firms is not.</p>
   </section>
 
   <section class="panel" id="panel-charts" role="tabpanel" aria-labelledby="tab-charts" hidden>
-    <div class="pagehead"><p class="kicker">Charts</p><h1>How sixteen jurisdictions compare</h1><p class="deck">Dot area shows private AI investment in 2025 as a share of GDP and dot colour shows legal form. Hover or focus a dot for its scores. The Scoring and evidence tab explains how each score is set.</p></div>
+    <div class="pagehead"><p class="kicker">Where policy stands</p><h1>How sixteen jurisdictions compare</h1><p class="deck">Dot area shows private AI investment in 2025 as a share of GDP and dot colour shows legal form. Hover or focus a dot for its scores. The Scoring and evidence tab explains how each score is set.</p></div>
   <div class="chart-block" id="q1">
     <p class="chart-no"><span>Question 1 of 2</span></p>
     <h2 class="chart-q">How does policy bite, given the way the government is pushed?</h2>
@@ -622,7 +622,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   </section>
 
   <section class="panel" id="panel-planning" role="tabpanel" aria-labelledby="tab-planning" hidden>
-    <div class="pagehead"><p class="kicker">Outlook</p><h1>Where AI policy is heading</h1><p class="deck">The charts show where each jurisdiction's policy stands in 2026. This page uses the same push and bite scores to look ahead, in three themes: where policy is likely to change next, which jurisdictions face the same pressures, and how policy has moved since 2024 and is scheduled to move to 2028. The scores are judgements that have not been tested against outcomes, so treat what follows as leads and not predictions.</p></div>
+    <div class="pagehead"><p class="kicker">Where policy is heading</p><h1>Where AI policy is heading</h1><p class="deck">The previous tab shows where each jurisdiction's policy stands in 2026. This page uses the same push and bite scores to look ahead, in three themes: where policy is likely to change next, which jurisdictions face the same pressures, and how policy has moved since 2024 and is scheduled to move to 2028. The scores are judgements that have not been tested against outcomes, so treat what follows as leads and not predictions.</p></div>
 
   <nav class="rail" aria-label="Themes on this page">
     <a href="#pl-t1" data-rail="pl-t1"><span class="rn">1</span><span class="rt">Where policy will change next</span></a>
@@ -896,7 +896,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   </div>
   </details>
 
-  <h2>Measures used on the Outlook and Australia tabs</h2>
+  <h2>Other measures used in the app</h2>
   <div class="comp">
     <div><b>Gap.</b> The strength of the push minus the strength of the bite. A positive gap means the pressure is stronger than the policy response. A gap of 10 points or more counts as a clear difference, because a one-step change in a single rating moves a score by about that much.</div>
     <div><b>Lean.</b> The direction of the bite minus the direction of the push. A positive lean means policy points further towards regulation than the pressure does, and a negative lean means it points further towards support for AI.</div>
