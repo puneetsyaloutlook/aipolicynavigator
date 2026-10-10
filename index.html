@@ -16,6 +16,7 @@
   --form-leg: #376DA4; --form-exec: #B8963E; --form-vol: #479FA4;
   --chart-ink: #4D4D55; --chart-line: #D9D9D4; --chart-wash: #FAFAF8;
   --focus: #326891;
+  --side-prot: #8E3B5C; --side-pro: #2F7D4F;
 
   --font-sans: 'Libre Franklin', system-ui, sans-serif;
   --font-serif: 'Source Serif 4', Georgia, serif;
@@ -31,6 +32,7 @@
     --text-link: #8DB8E3;
     --form-leg: #5A8DBE; --form-exec: #C39A44; --form-vol: #9AD4D4; --chart-ink: #C4C4CC; --chart-line: #3A3A40; --chart-wash: #1B1B1D;
     --focus: #8DB8E3;
+    --side-prot: #D58CAA; --side-pro: #72C495;
     color-scheme: dark;
   }
 }
@@ -41,6 +43,7 @@
   --text-link: #8DB8E3;
   --form-leg: #5A8DBE; --form-exec: #C39A44; --form-vol: #9AD4D4; --chart-ink: #C4C4CC; --chart-line: #3A3A40; --chart-wash: #1B1B1D;
   --focus: #8DB8E3;
+  --side-prot: #D58CAA; --side-pro: #72C495;
   color-scheme: dark;
 }
 
@@ -432,16 +435,14 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 .jx-svg .tx { fill: var(--text-secondary); font-size: 12.5px; transition: fill var(--t-fast); }
 .jx-svg .tx.on { fill: var(--text-primary); font-weight: 700; }
 .jx-svg .tline { stroke-width: 3; stroke-linecap: round; fill: none; }
-.jx-svg .tline.l1 { stroke: var(--rule); } .jx-svg .tline.l2 { stroke: var(--form-vol); }
-.jx-svg .tdot.l1 { fill: var(--rule); stroke: var(--rule); } .jx-svg .tdot.l2 { fill: var(--form-vol); stroke: var(--form-vol); }
+.jx-svg .tline.sprot { stroke: var(--side-prot); } .jx-svg .tline.spro { stroke: var(--side-pro); }
+.jx-svg .tdot.sprot { fill: var(--side-prot); stroke: var(--side-prot); } .jx-svg .tdot.spro { fill: var(--side-pro); stroke: var(--side-pro); }
 .jx-svg .tdot.proj { fill: var(--chart-wash); stroke-width: 2.5; }
-.jx-svg .tend { font-size: 12.5px; font-weight: 700; }
-.jx-svg .tend.l1 { fill: var(--rule); } .jx-svg .tend.l2 { fill: var(--form-vol); }
 .jx-legend { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-lg); font-size: 0.8125rem; line-height: 1.4; color: var(--text-secondary); }
 .jx-legend .li { display: flex; align-items: baseline; gap: var(--space-sm); flex: 1 1 16rem; }
 .jx-legend b { color: var(--text-primary); }
 .jx-legend .lsw { flex: 0 0 auto; width: 22px; height: 3px; transform: translateY(-3px); }
-.jx-legend .lsw.l1 { background: var(--rule); } .jx-legend .lsw.l2 { background: var(--form-vol); }
+.jx-legend .lsw.sprot { background: var(--side-prot); } .jx-legend .lsw.spro { background: var(--side-pro); }
 /* Theme 3: controls */
 .qswitch .ct-txt strong { font-size: 1rem; line-height: 1.3; }
 .qswitch .qn { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -719,7 +720,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
         <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
         <div class="jx-main">
           <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><button type="button" class="jx-replay">Replay</button></span></div>
-          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 560 320" role="img"></svg><div class="jx-legend"><span class="li"><span class="lsw l1" aria-hidden="true"></span><span><b>Regulation:</b> rules that are in force and enforced.</span></span><span class="li"><span class="lsw l2" aria-hidden="true"></span><span><b>Support for AI:</b> investment, programs to drive adoption, and relief from rules.</span></span></div></div>
+          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 560 320" role="img"></svg><div class="jx-legend"><span class="li"><span class="lsw sprot" aria-hidden="true"></span><span><b>Regulation:</b> rules that are in force and enforced.</span></span><span class="li"><span class="lsw spro" aria-hidden="true"></span><span><b>Support for AI:</b> investment, programs to drive adoption, and relief from rules.</span></span></div></div>
           <div class="jx-note" aria-live="polite"></div>
         </div>
       </div>
@@ -738,7 +739,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
         <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
         <div class="jx-main">
           <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><button type="button" class="jx-replay">Replay</button></span></div>
-          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 560 320" role="img"></svg><div class="jx-legend"><span class="li"><span class="lsw l1" aria-hidden="true"></span><span><b>Pressure to promote AI:</b> rivalry with other states, sovereignty, growth and industry lobbying.</span></span><span class="li"><span class="lsw l2" aria-hidden="true"></span><span><b>Pressure to protect people:</b> rights, public harm, labour and control of information.</span></span></div></div>
+          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 560 320" role="img"></svg><div class="jx-legend"><span class="li"><span class="lsw spro" aria-hidden="true"></span><span><b>Pressure to promote AI:</b> rivalry with other states, sovereignty, growth and industry lobbying.</span></span><span class="li"><span class="lsw sprot" aria-hidden="true"></span><span><b>Pressure to protect people:</b> rights, public harm, labour and control of information.</span></span></div></div>
           <div class="jx-note" aria-live="polite"></div>
         </div>
       </div>
@@ -1610,8 +1611,8 @@ drawTraj("str", "trav2", "travRows2");
   /* one jurisdiction at a time: policy or pressure over time */
   const NOTES = {"dir": {"China": "China's policy is strong in both regulation and support. Both rose in 2025, as the labelling rules took effect and the AI Plus program expanded adoption. Nothing is scheduled to change it.", "United States, federal": "US federal policy swapped regulation for support in 2025. Regulation fell from strong to moderate when Order 14110 was revoked, and support rose to strong with the July 2025 action plan. Nothing is scheduled to change this, despite the 2026 agent incidents.", "European Union": "EU regulation was weak until its rules began to apply. It rose to moderate in 2026 with the rules for general-purpose models, and would become strong in 2028 when the high-risk rules apply. Support is rising too, through compute programs and sandboxes due in 2027.", "California": "California's regulation has risen steadily and would become strong in 2027, as reporting and enforcement under the 2026 laws begin. Support for AI is weak and has not changed, because the state does little to promote AI.", "Australia": "Support for AI doubled in 2025 with the National AI Plan and adoption guidance, and has stayed moderate since. Regulation rose slowly through online safety and privacy rules, and would become strong in 2027 if the national AI standards and other reforms pass.", "United Kingdom": "Both rose in 2025. Regulation went from weak to moderate as the Online Safety Act duties took effect. Support has kept rising since the AI Opportunities Action Plan, and would be strong by 2027 if the planned sandbox opens.", "Singapore": "Support for AI has risen steadily to strong, through government-wide adoption and testing tools for industry. Regulation has stayed moderate and comes mainly from criminal laws on deepfakes and intimate images.", "India": "Support for AI rose to strong in 2025 with IndiaAI Mission funding. Regulation rose a little in 2026 with the labelling rules. Nothing further is scheduled, because the government has chosen not to make an AI law.", "Brazil": "Neither has changed since 2024. Regulation is moderate and comes from data protection law, and support is weak. The AI bill would change this, but it has stalled in the Chamber.", "Canada": "Regulation is weak and has not changed since the AI bill lapsed in January 2025. Support has risen, through spending on sovereign compute after the 2025 tariffs.", "South Korea": "Support for AI has been strong throughout. Regulation was almost nil until the Framework Act took effect in January 2026, and would rise to moderate in 2027 if fines begin as assumed.", "African Union and members": "Both are weak, and no change was found from 2024 to 2028. The evidence is limited.", "Japan": "Support for AI rose to strong in 2025 when the Promotion Act took effect. Regulation is almost nil, because the Act has no penalties by design.", "UAE and Saudi Arabia": "Support for AI is strong and rose in 2025 as state compute and adoption programs grew. Regulation is almost nil. The evidence is weak.", "Taiwan": "Support for AI is moderate and rose slightly when the basic act took effect. Regulation is almost nil, because the Act's duties fall on government and carry no penalties.", "Montana": "Montana had no AI policy until the Right to Compute Act of 2025. The Act added weak support, by limiting state restrictions on computing, and almost no regulation."}, "str": {"China": "Pressure on China is strong on both sides. Competition with the United States and the drive for self-reliance push it to promote AI, and information control and job stability push it to protect people. This has not changed since 2024.", "United States, federal": "Pressure to promote AI is strong and rose in 2025, led by competition with China, growth and industry lobbying. Pressure to protect people is weak, though it rose in 2026 after the agent incidents.", "European Union": "Pressure to promote AI rose to strong in 2025, as concern about competitiveness, industry lobbying and pressure from Washington grew. Pressure to protect people is moderate and steady, grounded in fundamental rights.", "California": "Pressure to protect people rose to moderate in 2025, with concern about child safety, chatbots and workers. Pressure to promote AI is weak, apart from industry lobbying.", "Australia": "Pressure to promote AI rose quickly in 2025 and 2026, with the push for productivity, data centre investment and, from July 2026, sovereignty. Pressure to protect people rose in 2026 with child safety concerns and the Medicare incident, and is projected to rise again in 2027 as labour concerns grow.", "United Kingdom": "Pressure to promote AI rose to strong in 2025, led by growth and security. Pressure to protect people is weak and comes mainly from child safety.", "Singapore": "Both pressures are weak. Growth as a hub is the main pressure, and online harms added a little pressure to protect people in 2025.", "India": "Pressure to promote AI is moderate and steady, led by innovation and sovereign compute. Pressure to protect people rose a little in 2025 with deepfake harms.", "Brazil": "Pressure to promote AI rose in 2025 as industry lobbied over the AI bill. It now equals the pressure to protect people, which comes from the bill's basis in rights.", "Canada": "Pressure to promote AI rose to strong in 2025, as the tariffs raised concern about sovereignty. Pressure to protect people is moderate and steady, from privacy and online safety.", "South Korea": "Pressure to promote AI is moderate and steady, led by industrial support and sovereign investment. There is almost no pressure to protect people.", "African Union and members": "Both pressures are weak and steady, led by development and jobs. The evidence is limited.", "Japan": "Pressure to promote AI is moderate, driven by adoption, labour shortages and stagnant wages. The first pressure to protect people appeared in 2026 with the Grok episode.", "UAE and Saudi Arabia": "Pressure to promote AI is strong, led by sovereign compute and investment. No pressure to protect people was documented. The evidence is weak.", "Taiwan": "Pressure to promote AI is strong and steady, led by growth, security and sovereignty. Pressure to protect people is weak.", "Montana": "Both pressures start in 2025, because Montana's ratings come from the text of its 2025 Act. Both are weak."}};
   const LINES = {
-    dir: [{ k: "reg", lab: "Regulation", cls: "l1" }, { k: "sup", lab: "Support for AI", cls: "l2" }],
-    str: [{ k: "pro", lab: "Pressure to promote AI", cls: "l1" }, { k: "prot", lab: "Pressure to protect people", cls: "l2" }]
+    dir: [{ k: "reg", lab: "Regulation", cls: "sprot" }, { k: "sup", lab: "Support for AI", cls: "spro" }],
+    str: [{ k: "pro", lab: "Pressure to promote AI", cls: "spro" }, { k: "prot", lab: "Pressure to protect people", cls: "sprot" }]
   };
   const YT = { dir: "Strength of policy", str: "Strength of pressure" };
   document.querySelectorAll("#pl-t3 .jx").forEach(jx => {
