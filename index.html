@@ -62,11 +62,6 @@ p { margin: 0; max-width: 68ch; }
 .lede { color: var(--text-secondary); }
 .caption { font-size: 0.75rem; line-height: 1.4; font-weight: 500; color: var(--text-secondary); }
 
-.groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md) var(--space-lg); }
-.groups > div { min-width: 0; border-top: 1px solid var(--border-default); padding-top: var(--space-sm); display: flex; flex-direction: column; gap: var(--space-xs); }
-.groups strong { font-weight: 600; font-size: 1rem; }
-.groups .who { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); }
-.groups span.d { font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); }
 @media (max-width: 640px) { .groups { grid-template-columns: 1fr; } }
 .defs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-md); }
 .defs div { min-width: 0; border-top: 1px solid var(--border-default); padding-top: var(--space-sm); display: flex; flex-direction: column; gap: var(--space-xs); }
@@ -374,47 +369,18 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 
 .hint { color: var(--text-muted); font-style: italic; }
 
-/* Theme 2: pressure chips, drill-down, linked groups */
-.press { display: flex; flex-direction: column; gap: var(--space-sm); border-top: 1px solid var(--rule); padding-top: var(--space-md); }
-.press-row { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: var(--space-sm); align-items: center; }
-.press-lab { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); }
-.chips { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
-.chip { font: inherit; font-size: 0.875rem; font-weight: 500; min-height: 44px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px; background: var(--surface-card); color: var(--text-primary); border: 1px solid var(--border-strong); cursor: pointer; transition: background var(--t-fast) var(--ease), color var(--t-fast), border-color var(--t-fast), opacity var(--t-fast), transform var(--t-fast) var(--ease); }
-.chip .sw { width: 8px; height: 8px; border: 1.5px solid currentColor; display: inline-block; transition: background var(--t-fast); }
-.chip.pro .sw { border-radius: 0; }
-.chip.prot .sw { border-radius: 50%; }
-.chip:hover { border-color: var(--rule); }
-.chip:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.chip[aria-pressed="true"] { background: var(--rule); color: var(--surface-page); border-color: var(--rule); }
-.chip[aria-pressed="true"] .sw { background: currentColor; }
-.press.linking .chip:not(.lit) { opacity: 0.35; }
-.chip.lit { border-color: var(--rule); box-shadow: inset 0 -3px 0 var(--rule); }
-.chip.lit[aria-pressed="true"] { box-shadow: none; }
-@media (max-width: 640px) { .press-row { grid-template-columns: 1fr; gap: var(--space-xs); } }
-.drill { min-height: 3.2em; border-top: 1px solid var(--border-default); padding-top: var(--space-sm); font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); }
-.drill b { color: var(--text-primary); }
-.drill .dgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-md); margin-top: var(--space-sm); animation: viewIn var(--t-mid) var(--ease); }
-.drill .dgrid > div { border-top: 1px solid var(--border-strong); padding-top: var(--space-xs); }
-.drill .dk { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 2px; }
-.drill .dgrid p + p { margin-top: var(--space-xs); }
-@media (max-width: 760px) { .drill .dgrid { grid-template-columns: 1fr; } }
-.groups li { list-style: none; }
-.groups .gbtn { font: inherit; text-align: left; width: 100%; display: flex; flex-direction: column; gap: 6px; padding: 0 0 var(--space-xs); background: none; border: 0; color: inherit; cursor: pointer; }
-.groups .gbtn:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
-.groups .gname { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-sm); font-weight: 700; }
-.groups .gname::after { content: "+"; flex: 0 0 auto; font-weight: 400; font-size: 1.25rem; line-height: 1; color: var(--text-secondary); transition: transform var(--t-mid) var(--ease); }
-.groups li.open .gname::after { transform: rotate(45deg); }
-.groups .gwho { font-size: 0.875rem; color: var(--text-secondary); }
-.groups .gtags { display: flex; flex-wrap: wrap; gap: 4px; }
-.groups .gtag { font-size: 0.75rem; font-weight: 600; padding: 1px 7px; border: 1px solid var(--border-strong); color: var(--text-secondary); }
-.groups .gdesc { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--t-mid) var(--ease); }
-.groups .gdesc > div { overflow: hidden; }
-.groups .gdesc p { padding-top: var(--space-xs); font-size: 0.9375rem; }
-.groups li.open .gdesc { grid-template-rows: 1fr; }
-.groups li { transition: opacity var(--t-fast); }
-.groups.linking li:not(.lit) { opacity: 0.35; }
-.groups li.lit { border-top-color: var(--rule) !important; }
 
+/* Theme 2: pressure list and groups */
+.plist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); border-top: 1px solid var(--rule); padding-top: var(--space-md); }
+.plist-h { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: var(--space-xs); }
+.plist dl { margin: 0; display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); gap: 6px var(--space-md); font-size: 0.875rem; line-height: 1.45; }
+.plist dt { font-weight: 600; }
+.plist dd { margin: 0; color: var(--text-secondary); }
+@media (max-width: 760px) { .plist { grid-template-columns: 1fr; } }
+@media (max-width: 420px) { .plist dl { grid-template-columns: 1fr; gap: 0; } .plist dd { margin-bottom: 6px; } }
+#groups .gtags { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: var(--space-xs); }
+#groups .gk { font-size: 0.75rem; color: var(--text-secondary); margin-right: 2px; }
+#groups .gtag { font-size: 0.75rem; font-weight: 600; padding: 1px 7px; border: 1px solid var(--border-strong); color: var(--text-secondary); }
 /* Theme 3: controls */
 .ctl { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm) var(--space-md); padding: var(--space-sm) 0; border-top: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); }
 .fly-down .fly-body { top: calc(100% + 6px); bottom: auto; width: min(520px, calc(100vw - 32px)); }
@@ -443,8 +409,8 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 .tp [data-y].fut { opacity: 0; }
 .tp circle.now { stroke-width: 3; }
 @media (prefers-reduced-motion: reduce) {
-  .rail a::after, .concepts button, .glyph *, .chip, .groups .gdesc, .groups li, .tp [data-y], .trav .tp { transition: none !important; }
-  .m-view.enter, .drill .dgrid, .trav .tp.fresh { animation: none !important; }
+  .rail a::after, .concepts button, .glyph *, .tp [data-y], .trav .tp { transition: none !important; }
+  .m-view.enter, .trav .tp.fresh { animation: none !important; }
 }
 </style>
 
@@ -657,19 +623,15 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   <div class="chart-block" id="pl-t2">
     <p class="chart-no"><span>Theme 2 of 3</span></p>
     <h2 class="chart-q">Find the jurisdictions that face the same pressures</h2>
-    <p class="chart-read">Governments face eight kinds of pressure on AI policy. Grouping the sixteen jurisdictions by their strongest pressures gives four groups. Select a pressure to see what it covers and how governments usually respond to it, or select a group to see the pressures that define it.</p>
+    <p class="chart-read">Governments face eight kinds of pressure on AI policy. Grouping the sixteen jurisdictions by their strongest pressures gives four groups. The eight pressures are listed first, then the four groups.</p>
 
-    <div class="press" id="press">
-      <div class="press-row"><span class="press-lab">To promote AI</span><div class="chips" id="chipsPro"></div></div>
-      <div class="press-row"><span class="press-lab">To protect against AI</span><div class="chips" id="chipsProt"></div></div>
-      <div class="drill" id="drill" aria-live="polite"><span class="hint">Point to a pressure to see its definition. Select it to see the early signs and the policy governments usually use in response.</span></div>
-    </div>
+    <div class="plist"><div><p class="plist-h">Pressures to promote AI</p><dl><dt>Strategic rivalry</dt><dd>Competition between states, and national security uses of AI.</dd><dt>Sovereignty</dt><dd>Domestic control of compute, data and models.</dd><dt>Growth and investment</dt><dd>Productivity gains, and competition to attract AI investment.</dd><dt>Industry and partner pressure</dt><dd>Lobbying by developers and deployers, and pressure from a larger state to loosen rules.</dd></dl></div><div><p class="plist-h">Pressures to protect people</p><dl><dt>Rights tradition</dt><dd>Fundamental rights, anti-discrimination law and constitutional values.</dd><dt>Public harm and demand</dt><dd>Child and consumer safety, public opinion, and incidents that create a window for action.</dd><dt>Labour and stability</dt><dd>Job displacement, algorithmic management and the political cost of job loss.</dd><dt>Information control</dt><dd>Control of content and the information environment.</dd></dl></div></div>
 
     <div class="chart-unit">
       <div class="insights">
         <h3>Insights</h3>
-        <ul class="axes groups" id="groups"></ul>
-        <p class="caption">A jurisdiction goes in the first group that fits: strategic rivalry rated 2 or 3, then rights tradition rated 2 or 3, then public harm rated 2 or 3, and then the rest. A pressure is marked as defining a group when most of its members rate it 2 or 3. The ratings are judgements made at a single date, so treat the groups as indications and not proof.</p>
+        <ul class="axes" id="groups"></ul>
+        <p class="caption">A jurisdiction goes in the first group that fits: strategic rivalry rated 2 or 3, then rights tradition rated 2 or 3, then public harm rated 2 or 3, and then the rest. The pressures shown for each group are those that most of its members rate 2 or 3. The ratings are judgements made at a single date, so treat the groups as indications and not proof.</p>
       </div>
     </div>
     <details class="boxes">
@@ -1587,73 +1549,17 @@ drawTraj("str", "trav2", "travRows2");
   DATA.forEach(d => GROUPS.find(g => g.test(d)).members.push(d));
   GROUPS.forEach(g => g.factors = [0, 1, 2, 3, 4, 5, 6, 7].filter(k => g.members.filter(d => d.p[k] >= 2).length * 2 > g.members.length));
 
-  const press = byId("press"), drill = byId("drill"), gl = byId("groups");
-  const DRILL_HINT = '<span class="hint">Point to a pressure to see its definition. Select it to see the early signs and the policy governments usually use in response.</span>';
-  let pressed = null, openG = null;
-  const chips = TRIG.map((r, k) => {
-    const b = cellEl("button", "chip " + (k < 4 ? "pro" : "prot"));
-    b.type = "button"; b.setAttribute("aria-pressed", "false");
-    const sw = cellEl("span", "sw"); sw.setAttribute("aria-hidden", "true");
-    b.append(sw, document.createTextNode(r[0]));
-    byId(k < 4 ? "chipsPro" : "chipsProt").appendChild(b);
-    b.addEventListener("mouseenter", () => { if (pressed == null) preview(k); linkFromFactor(k); });
-    b.addEventListener("mouseleave", () => { if (pressed == null) drill.innerHTML = DRILL_HINT; restoreLinks(); });
-    b.addEventListener("focus", () => { if (pressed == null) preview(k); });
-    b.addEventListener("blur", () => { if (pressed == null) drill.innerHTML = DRILL_HINT; });
-    b.addEventListener("click", () => { pressed = pressed === k ? null : k; renderPressed(); });
-    return b;
-  });
-  function preview(k) { drill.innerHTML = `<b>${esc(TRIG[k][0])}.</b> ${esc(DEF[k])}`; }
-  function renderPressed() {
-    chips.forEach((c, i) => c.setAttribute("aria-pressed", String(i === pressed)));
-    if (pressed == null) { drill.innerHTML = DRILL_HINT; restoreLinks(); return; }
-    const r = TRIG[pressed], [rise, moves] = r[1];
-    const sigs = [rise && `<p><b>Pressure rising:</b> ${esc(rise)}</p>`, moves && `<p><b>Early policy moves:</b> ${esc(moves)}</p>`].filter(Boolean).join("");
-    const inG = GROUPS.filter(g => g.factors.includes(pressed)).map(g => g.name);
-    drill.innerHTML = `<b>${esc(r[0])}.</b> ${esc(DEF[pressed])} ${inG.length ? "It helps define " + ["", "one group", "two groups", "three groups", "all four groups"][inG.length] + ": " + esc(inG.map(x => x.toLowerCase()).join("; ")) + "." : "It does not define any group."}
-      <div class="dgrid"><div><span class="dk">Signals</span>${sigs}</div><div><span class="dk">Speed</span><p>${esc(r[2])}</p></div><div><span class="dk">Usual policy response</span><p>${esc(r[3])}</p></div></div>`;
-    restoreLinks();
-  }
-  function linkFromFactor(k) {
-    gl.classList.add("linking");
-    [...gl.children].forEach((li, i) => li.classList.toggle("lit", GROUPS[i].factors.includes(k)));
-  }
-  function linkFromGroup(i) {
-    press.classList.add("linking");
-    chips.forEach((c, k) => c.classList.toggle("lit", GROUPS[i].factors.includes(k)));
-  }
-  function clearLinks() {
-    gl.classList.remove("linking"); press.classList.remove("linking");
-    [...gl.children].forEach(li => li.classList.remove("lit")); chips.forEach(c => c.classList.remove("lit"));
-  }
-  function restoreLinks() {
-    clearLinks();
-    if (openG != null) linkFromGroup(openG);
-    else if (pressed != null) linkFromFactor(pressed);
-  }
-  GROUPS.forEach((g, i) => {
+  const gl = byId("groups");
+  GROUPS.forEach(g => {
     const li = document.createElement("li");
-    const b = cellEl("button", "gbtn"); b.type = "button"; b.setAttribute("aria-expanded", "false");
-    const id = "gdesc" + i; b.setAttribute("aria-controls", id);
-    b.appendChild(cellEl("span", "gname", g.name));
-    b.appendChild(cellEl("span", "gwho", g.members.map(d => d.n.replace("United States, federal", "United States federal")).join(", ")));
+    li.appendChild(cellEl("b", "", g.name + ": " + g.members.map(d => d.n.replace("United States, federal", "United States federal")).join(", ") + "."));
+    li.appendChild(document.createTextNode(" " + g.desc));
     const tags = cellEl("span", "gtags");
-    g.factors.forEach(k => tags.appendChild(cellEl("span", "gtag", SHORTF[k])));
-    b.appendChild(tags);
-    const desc = cellEl("div", "gdesc"); desc.id = id;
-    const inner = cellEl("div"); inner.appendChild(cellEl("p", "", g.desc)); desc.appendChild(inner);
-    li.append(b, desc); gl.appendChild(li);
-    b.addEventListener("mouseenter", () => { clearLinks(); linkFromGroup(i); });
-    b.addEventListener("mouseleave", restoreLinks);
-    b.addEventListener("focus", () => { clearLinks(); linkFromGroup(i); });
-    b.addEventListener("blur", restoreLinks);
-    b.addEventListener("click", () => {
-      openG = openG === i ? null : i;
-      [...gl.children].forEach((x, j) => { x.classList.toggle("open", j === openG); x.querySelector(".gbtn").setAttribute("aria-expanded", String(j === openG)); });
-      restoreLinks(); if (openG === i) { clearLinks(); linkFromGroup(i); }
-    });
+    tags.appendChild(cellEl("span", "gk", "Main pressures"));
+    g.factors.forEach(k => tags.appendChild(cellEl("span", "gtag", TRIG[k][0])));
+    li.appendChild(tags);
+    gl.appendChild(li);
   });
-  drill.innerHTML = DRILL_HINT;
 
   /* ---------- Theme 3: filter and year scrubber ---------- */
   const PLAY = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>';
