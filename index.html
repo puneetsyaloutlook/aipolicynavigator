@@ -62,6 +62,12 @@ p { margin: 0; max-width: 68ch; }
 .lede { color: var(--text-secondary); }
 .caption { font-size: 0.75rem; line-height: 1.4; font-weight: 500; color: var(--text-secondary); }
 
+.groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md) var(--space-lg); }
+.groups > div { min-width: 0; border-top: 1px solid var(--border-default); padding-top: var(--space-sm); display: flex; flex-direction: column; gap: var(--space-xs); }
+.groups strong { font-weight: 600; font-size: 1rem; }
+.groups .who { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); }
+.groups span.d { font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); }
+@media (max-width: 640px) { .groups { grid-template-columns: 1fr; } }
 .defs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-md); }
 .defs div { min-width: 0; border-top: 1px solid var(--border-default); padding-top: var(--space-sm); display: flex; flex-direction: column; gap: var(--space-xs); }
 .defs strong { font-weight: 600; font-size: 0.875rem; }
@@ -502,7 +508,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   <div class="chart-block">
     <p class="chart-no"><span>Theme 2 of 3</span></p>
     <h2 class="chart-q">Groups of jurisdictions by the pressures acting on them</h2>
-    <p class="chart-read">Every jurisdiction faces some of eight pressures on AI policy, four that push toward promoting AI and four toward protecting people from it. Each is rated 0 to 3 for how strongly it acted in 2025 and 2026. Which pressures are rated high differs between jurisdictions, and that sorts the sixteen into four groups. The table below the insights lists the signals, speed and typical policy for each pressure.</p>
+    <p class="chart-read">Governments face eight kinds of pressure on AI policy, four toward promoting AI and four toward protecting people from it. Which of them act most strongly differs between jurisdictions, and that sorts the sixteen into four groups. The insights describe what each group has produced, and the table below them lists the signals, speed and typical policy for each pressure.</p>
     <p class="caption"><b>Four pressures to promote AI</b></p>
     <div class="defs">
       <div><strong>Strategic rivalry</strong><span>Competition between states, and national security uses of AI.</span></div>
@@ -517,16 +523,23 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       <div><strong>Labour and stability</strong><span>Job displacement, algorithmic management and the political cost of job loss.</span></div>
       <div><strong>Information control</strong><span>Control of content and the information environment.</span></div>
     </div>
+    <p class="caption"><b>Four groups</b></p>
+    <div class="groups">
+      <div><strong>Competing with other states</strong><span class="who">China, United States federal, United Kingdom, Taiwan</span><span class="d">These governments treat AI as part of competition between states, mainly between the United States and China, and growth pressure is strong as well. Their protection pressure is weaker and comes from different places: information control and job stability in China, child safety in the United States and United Kingdom, and rights principles and help for displaced workers in Taiwan.</span></div>
+      <div><strong>Rights-based law</strong><span class="who">European Union, Brazil</span><span class="d">In both, fundamental rights are the stated basis for AI law. The pressure working against it is industry lobbying, with competitiveness concerns and pressure from Washington added in the European Union.</span></div>
+      <div><strong>Specific harms</strong><span class="who">Australia, Canada, Singapore, India, California</span><span class="d">Growth or sovereignty leads general policy in most of these, and specific harms drive the binding law: child safety and chatbots in Australia and California, deepfakes in Singapore, India and Australia, and privacy and online safety in Canada. California is the exception on growth, because the state promotes little.</span></div>
+      <div><strong>Growth first</strong><span class="who">South Korea, Japan, UAE and Saudi Arabia, African Union and members, Montana</span><span class="d">The main aim is to adopt and build AI, through industrial support, sovereign compute, or development and jobs. Few protection pressures were documented. Montana's rating comes from the text of its Act only.</span></div>
+    </div>
+    <p class="caption">A jurisdiction goes in the first group that fits: strategic rivalry rated 2 or 3, then rights tradition rated 2 or 3, then public harm rated 2 or 3, and then the rest. The ratings are judgements made at a single date, so treat the groups as indications and not proof.</p>
     <div class="chart-unit">
       <div class="insights">
         <h3>Insights</h3>
         <ul class="axes">
-          <li><b>Competition with other states (4): China, United States federal, United Kingdom, Taiwan.</b> Each rates strategic rivalry 2 or 3 and growth 3, and each scores 50 or more on support for AI. Their regulation scores differ widely, from 78 for China to 4 for Taiwan. The difference follows the protection pressures: China rates labour and information control 3, and Taiwan rates them 1 and 0.</li>
-          <li><b>Rights tradition (2): European Union, Brazil.</b> These are the only two where fundamental rights and anti-discrimination law are rated 2 or 3, and neither faces strategic rivalry. Both also face industry pressure rated 2 or 3. Regulation scores 44 for the EU and 36 for Brazil, and support for AI scores 50 and 17.</li>
-          <li><b>Public harm (5): Australia, Canada, Singapore, India, California.</b> Public harm is rated 2 or 3 in all five. Regulation scores between 33 and 44 in all five, and support for AI scores between 50 and 75 in four of them. California rates growth 1 where the other four rate it 3, and its support for AI scores 17.</li>
-          <li><b>Growth with little other pressure (5): South Korea, Japan, UAE and Saudi Arabia, African Union and members, Montana.</b> Public harm and strategic rivalry are each rated 0 or 1, and regulation scores 13 or lower in all five. Support for AI is high in South Korea, Japan and the UAE and Saudi Arabia (67 to 83) and low in the African Union and Montana (17 and 25).</li>
+          <li><b>Competition with other states produces control at gates and backing for domestic AI, not rules on how AI is used.</b> The United States uses export licensing, procurement and chip controls, China requires a filing and security assessment before release, and the United Kingdom has built AI Growth Zones and a Sovereign AI Unit. Rules on use come from a separate pressure, such as child safety in the United Kingdom and information control in China.</li>
+          <li><b>Where specific harms lead, the law that results is narrow.</b> Australia has a minimum age for social media and a deepfake offence, Singapore has criminal law on election deepfakes and intimate images, and India requires labelling of synthetic content. The broader AI bills have not passed: Canada's lapsed, and Australia's national standards are still in consultation.</li>
+          <li><b>The European Union's rights-based law is broad, and it is also being delayed.</b> The Union has prohibitions, model duties and transparency rules in force with fines tied to turnover, but its high-risk duties have been postponed and no fine has been found. Brazil's rights-based bill is not law, and its industry lobbying changed the high-risk list.</li>
+          <li><b>Where growth is the main aim, the AI law itself is mostly a promotion law.</b> Japan's Act has no penalties by design, South Korea's fines are capped and deferred, and the African Union's continental strategy is non-binding. Where the Acts commit governments to anything, it is state support, such as South Korea's support for research, data centres and small firms.</li>
         </ul>
-        <p class="caption">A jurisdiction goes in the first group that fits: strategic rivalry rated 2 or 3, then rights tradition rated 2 or 3, then public harm rated 2 or 3, and then the rest. The ratings are judgements made at a single date, so treat the groups as indications and not proof.</p>
       </div>
     </div>
     <details class="boxes">
