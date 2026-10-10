@@ -837,37 +837,24 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   </section>
 
   <section class="panel" id="panel-method" role="tabpanel" aria-labelledby="tab-method" hidden>
-    <div class="pagehead"><p class="kicker">Scoring and evidence</p><h1>How the scores are built</h1><p class="deck">Every score is a judgement made from the research report. These tables show each rating, the evidence behind it and the limits of that evidence.</p></div>
-  <h2>How push is scored</h2>
-  <p>Each factor is rated 0 to 3 for how strongly it operated on policy in 2025 and 2026: 0 no evidence, 1 stated only or weak evidence, 2 documented, 3 dominant. Direction is the protection total as a share of both totals. Strength is both totals as a share of the maximum of 24.</p>
-  <div class="comp two">
-    <div>
-      <h3>Factors pushing toward promotion</h3>
-      <p><b>Strategic rivalry.</b> Competition between states and national security uses.</p>
-      <p><b>Sovereignty.</b> Domestic control of compute, data and models.</p>
-      <p><b>Growth and investment.</b> Productivity gains and competition for AI investment.</p>
-      <p><b>Industry and partner pressure.</b> Lobbying by developers and deployers, and pressure from a larger state to loosen rules.</p>
-    </div>
-    <div>
-      <h3>Factors pushing toward protection</h3>
-      <p><b>Rights tradition.</b> Fundamental rights, anti-discrimination law and constitutional values.</p>
-      <p><b>Public harm and demand.</b> Child and consumer safety, public opinion, and incidents that create a window for action.</p>
-      <p><b>Labour and stability.</b> Displacement, algorithmic management and the political cost of job loss.</p>
-      <p><b>Information control.</b> Control of content and the information environment.</p>
-    </div>
-  </div>
+    <div class="pagehead"><p class="kicker">Scoring and evidence</p><h1>How the scores are built</h1><p class="deck">Every score is a judgement made from the research report. On the charts, push means the pressure on a government and bite means what its AI policy does. Each section says how a measure is scored, and the full ratings and evidence sit in the table under it.</p></div>
+  <h2>How pressure is scored</h2>
+  <p>Each of eight pressures is rated 0 to 3 for how strongly it acted on policy in 2025 and 2026: 0 no evidence, 1 stated only or weak evidence, 2 documented, 3 dominant. Pressure to promote AI is the total of the four promotion pressures, and pressure to protect people is the total of the four protection pressures, each out of 12. On the charts, the direction of push is the protection total as a share of both totals, and the strength of push is both totals as a share of 24.</p>
+  <div class="plist"><div><p class="plist-h">Pressures to promote AI</p><dl><dt>Strategic rivalry</dt><dd>Competition between states, and national security uses of AI.</dd><dt>Sovereignty</dt><dd>Domestic control of compute, data and models.</dd><dt>Growth and investment</dt><dd>Productivity gains, and competition to attract AI investment.</dd><dt>Industry and partner pressure</dt><dd>Lobbying by developers and deployers, and pressure from a larger state to loosen rules.</dd></dl></div><div><p class="plist-h">Pressures to protect people</p><dl><dt>Rights tradition</dt><dd>Fundamental rights, anti-discrimination law and constitutional values.</dd><dt>Public harm and demand</dt><dd>Child and consumer safety, public opinion, and incidents that create a window for action.</dd><dt>Labour and stability</dt><dd>Job displacement, algorithmic management and the political cost of job loss.</dd><dt>Information control</dt><dd>Control of content and the information environment.</dd></dl></div></div>
+  <details class="boxes"><summary>Pressure ratings and evidence for all sixteen jurisdictions</summary>
   <div class="table-scroll">
     <table>
       <thead>
-        <tr><th rowspan="2">Jurisdiction</th><th rowspan="2" class="num">Direction</th><th rowspan="2" class="num">Strength</th><th colspan="4" class="tgroup">Toward promotion</th><th colspan="4" class="tgroup">Toward protection</th><th rowspan="2" class="gl">Basis for the scores</th></tr>
+        <tr><th rowspan="2">Jurisdiction</th><th rowspan="2" class="num">Push direction</th><th rowspan="2" class="num">Push strength</th><th colspan="4" class="tgroup">To promote AI</th><th colspan="4" class="tgroup">To protect people</th><th rowspan="2" class="gl">Basis for the scores</th></tr>
         <tr><th class="c gl">Rivalry</th><th class="c">Sovereignty</th><th class="c">Growth</th><th class="c">Industry</th><th class="c gl">Rights</th><th class="c">Harm</th><th class="c">Labour</th><th class="c">Control</th></tr>
       </thead>
       <tbody id="pushRows"></tbody>
     </table>
   </div>
+  </details>
 
-  <h2>How bite is scored</h2>
-  <p>Bite has two sides. Regulation is how hard rules bind the actors they apply to. Support for AI is how much the state commits to building and adopting AI. Direction is regulation as a share of both. Strength is the average of the two. The sides describe what the policy does to firms, not why: a constraint can serve a promotion aim, as United States export controls do.</p>
+  <h2>How policy is scored</h2>
+  <p>Policy has two sides. Regulation is how hard rules bind the actors they apply to. Support for AI is how much the state commits to building and adopting AI. On the charts, the direction of bite is regulation as a share of both, and the strength of bite is the average of the two. The sides describe what the policy does to firms, not why: a constraint can serve a promotion aim, as United States export controls do.</p>
 
   <h3>Regulation</h3>
   <p>Each component is rated 0 to 3 for the main instruments operating on the reference date. The regulation score is 60 per cent the lowest component and 40 per cent the average, scaled to 100, because the components form a chain and a missing link disables the rest.</p>
@@ -879,12 +866,14 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
     <div><b>Sanction.</b> Cost of a breach relative to the firm. 0 none, 3 loss of market access or turnover-based fines.</div>
     <div><b>Enforcement.</b> The sanction has been used. 0 no record or not yet possible, 3 routine use.</div>
   </div>
+  <details class="boxes"><summary>Regulation ratings and evidence for all sixteen jurisdictions</summary>
   <div class="table-scroll">
     <table>
       <thead><tr><th>Jurisdiction</th><th class="num">Regulation</th><th>Form</th><th class="c">Duty</th><th class="c">Specific</th><th class="c">Control</th><th class="c">Detect</th><th class="c">Sanction</th><th class="c">Enforce</th><th>Basis for the scores</th></tr></thead>
       <tbody id="biteRows"></tbody>
     </table>
   </div>
+  </details>
 
   <h3>Support for AI</h3>
   <p>Each component is rated 0 to 3. The support score is the plain average scaled to 100, because these measures substitute for each other and do not form a chain.</p>
@@ -898,28 +887,41 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       <p><b>Strategic backing.</b> State-owned vehicles, export promotion, trade measures and deals with developers.</p>
     </div>
   </div>
+  <details class="boxes"><summary>Support ratings and evidence for all sixteen jurisdictions</summary>
   <div class="table-scroll">
     <table>
       <thead><tr><th>Jurisdiction</th><th class="num">Support for AI</th><th class="c">Investment</th><th class="c">Adoption</th><th class="c">Relief</th><th class="c">Backing</th><th class="num gl">Bite direction</th><th class="num">Bite strength</th><th class="gl">Basis for the scores</th></tr></thead>
       <tbody id="boostRows"></tbody>
     </table>
   </div>
+  </details>
+
+  <h2>Measures used on the Outlook and Australia tabs</h2>
+  <div class="comp">
+    <div><b>Gap.</b> The strength of the push minus the strength of the bite. A positive gap means the pressure is stronger than the policy response. A gap of 10 points or more counts as a clear difference, because a one-step change in a single rating moves a score by about that much.</div>
+    <div><b>Lean.</b> The direction of the bite minus the direction of the push. A positive lean means policy points further towards regulation than the pressure does, and a negative lean means it points further towards support for AI.</div>
+    <div><b>Weak, moderate and strong.</b> The charts over time mark each score as weak in the bottom third of the scale, moderate in the middle third and strong in the top third, the same cuts used for the boxes on the main charts.</div>
+    <div><b>Groups by pressure.</b> A jurisdiction goes in the first group that fits: strategic rivalry rated 2 or 3, then rights tradition rated 2 or 3, then public harm rated 2 or 3, and then the rest. The main pressures shown for a group are those that most of its members rate 2 or 3.</div>
+    <div><b>Ratings over time.</b> The 2024 and 2025 ratings are made now, in hindsight, from dated events in the research, and are less certain than 2026. The 2027 and 2028 ratings are projections, not forecasts: a change is applied only where a law or notice sets a date, and otherwise the 2026 rating is kept. Projections that depend on a bill passing say so.</div>
+    <div><b>How quickly policy follows.</b> A judgement, from the research, of how fast a rise in each pressure has led to binding rules. Fast means months, slow means years, and medium falls between them.</div>
+  </div>
 
   <h2>How dot size is set</h2>
   <p>Dot size shows private AI investment in 2025 as a share of GDP. It is a measured proxy for how much AI weighs in the economy and is not a measure of AI's contribution to output, for which no comparable statistic exists. The area of each dot is proportional to its exact share, so a dot with twice the share has twice the area. Shares run from 0.03 per cent to 5.1 per cent, and California, at the top of that range, is larger than the biggest circle in the legend. Small hollow dots have no figure.</p>
+  <details class="boxes"><summary>Investment, GDP and share for all sixteen jurisdictions</summary>
   <div class="table-scroll">
     <table>
       <thead><tr><th>Jurisdiction</th><th class="num">Investment, USD billion</th><th class="num">GDP, USD billion</th><th class="num">Share of GDP</th><th>Note</th></tr></thead>
       <tbody id="sizeRows"></tbody>
     </table>
   </div>
+  </details>
   <p class="caption">Investment: Stanford AI Index 2026, figure 4.2.8, from Quid data on companies that have raised more than USD 1.5 million. GDP: IMF World Economic Outlook, April 2026, estimates for 2025.</p>
 
   <div class="notes">
     <p>All push and bite scores are judgements made from the research report. They are not measurements, and no published index was used. Dot size is the only measured quantity on the charts.</p>
     <p>The investment figures count venture and private funding of AI companies by where the company is based. They favour jurisdictions that host developers and say little about adoption, so China and Japan appear small.</p>
     <p>Strength of push partly reflects how much evidence the research found. A factor with no evidence is rated 0, so jurisdictions with less coverage (India, Brazil, the Gulf states, Africa, Montana) and those with little independent analysis of motives (Singapore, Japan) will score low on push strength whether or not the pressure is weak.</p>
-    <p>The gap is the strength of the push minus the strength of the bite, and the lean is the direction of the bite minus the direction of the push, both taken from the charts. A gap of 10 points or more is treated as a signal, because a one-step change in a single rating moves a score by about that much.</p>
   <p>The nine boxes on each chart come from cutting each axis at one third and two thirds. The cut points are arbitrary, and a jurisdiction near a line could fall either side with a one-point change in a rating. A jurisdiction exactly on a line is placed in the higher cell. The dotted lines compare two scales built in different ways, so distance from the line is indicative.</p>
     <p>The push factors condense ten of the report's fourteen drivers. Institutional structure, state capacity, diffusion and electoral politics shape the form of a policy more than its direction and are left out. Support for AI was not a focus of the research, and compute and industrial policy were covered in less depth than regulation.</p>
     <p>Regulation is scored on whichever instruments operate on AI products today. In Australia, the United Kingdom, Singapore, India, Brazil and Canada those are mostly online safety, privacy or intermediary laws. Detection and enforcement ratings rest on limited evidence.</p>
