@@ -715,7 +715,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
         <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
         <div class="jx-main">
           <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><button type="button" class="jx-replay">Replay</button></span></div>
-          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 640 330" role="img"></svg><p class="caption jx-key"><b>Regulation:</b> rules that are in force and enforced. <b>Support for AI:</b> investment, programs to drive adoption, and relief from rules.</p></div>
+          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 660 330" role="img"></svg><p class="caption jx-key"><b>Regulation:</b> rules that are in force and enforced. <b>Support for AI:</b> investment, programs to drive adoption, and relief from rules.</p></div>
           <div class="jx-note" aria-live="polite"></div>
         </div>
       </div>
@@ -734,7 +734,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
         <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
         <div class="jx-main">
           <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><button type="button" class="jx-replay">Replay</button></span></div>
-          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 640 330" role="img"></svg><p class="caption jx-key"><b>Pressure to promote AI:</b> rivalry with other states, sovereignty, growth and industry lobbying. <b>Pressure to protect people:</b> rights, public harm, labour and control of information.</p></div>
+          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 660 330" role="img"></svg><p class="caption jx-key"><b>Pressure to promote AI:</b> rivalry with other states, sovereignty, growth and industry lobbying. <b>Pressure to protect people:</b> rights, public harm, labour and control of information.</p></div>
           <div class="jx-note" aria-live="polite"></div>
         </div>
       </div>
@@ -1614,7 +1614,7 @@ drawTraj("str", "trav2", "travRows2");
     const mode = jx.dataset.mode, LN = LINES[mode];
     const svg = jx.querySelector(".jx-svg"), list = jx.querySelector(".jx-list"), note = jx.querySelector(".jx-note");
     const nameEl = jx.querySelector(".jx-name"), replay = jx.querySelector(".jx-replay");
-    const W = 640, H = 330, L = 78, R = 160, T = 22, B = 34, PW = W - L - R, PH = H - T - B;
+    const W = 660, H = 330, L = 100, R = 160, T = 22, B = 34, PW = W - L - R, PH = H - T - B;
     const sx = i => L + 18 + i * (PW - 36) / 4, sy = v => T + PH * (1 - v / 100);
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const mk = (tag, at, txt, par) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; (par || svg).appendChild(e); return e; };
@@ -1623,7 +1623,7 @@ drawTraj("str", "trav2", "travRows2");
     mk("text", { class: "tpl", x: (sx(3) + sx(4)) / 2, y: T - 7, "text-anchor": "middle" }, "Projected");
     [1, 2].forEach(k => mk("line", { class: "tgl", x1: L, x2: L + PW, y1: sy(k * 100 / 3), y2: sy(k * 100 / 3) }));
     [["Strong", 5 / 6], ["Moderate", 1 / 2], ["Weak", 1 / 6]].forEach(([t, f]) => mk("text", { class: "tband", x: L - 8, y: sy(f * 100) + 4, "text-anchor": "end" }, t));
-    mk("text", { class: "tyt", x: L, y: T - 7 }, YT[mode]);
+    mk("text", { class: "tyt", x: 18, y: T + PH / 2, "text-anchor": "middle", transform: `rotate(-90 18 ${T + PH / 2})` }, YT[mode] + " \u2192");
     const ticks = YEARS.map((y, i) => mk("text", { class: "tx", x: sx(i), y: T + PH + 22, "text-anchor": "middle" }, String(y)));
     mk("rect", { class: "tf", x: L, y: T, width: PW, height: PH });
     const trail = mk("g", {});
