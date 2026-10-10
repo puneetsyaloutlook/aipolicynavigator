@@ -382,10 +382,12 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 #groups .gk { font-size: 0.75rem; color: var(--text-secondary); margin-right: 2px; }
 #groups .gtag { font-size: 0.75rem; font-weight: 600; padding: 1px 7px; border: 1px solid var(--border-strong); color: var(--text-secondary); }
 /* Theme 3: one jurisdiction at a time */
-.jx { display: grid; grid-template-columns: minmax(0, 1fr) 15rem; gap: var(--space-lg); align-items: start; }
+.jx { display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: var(--space-lg); align-items: start; }
 .jx-main { min-width: 0; display: flex; flex-direction: column; gap: var(--space-sm); }
 .jx-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-sm); border-top: 1px solid var(--rule); padding-top: var(--space-sm); }
 .jx-name { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; margin: 0; }
+.jx-tools { display: flex; gap: var(--space-sm); align-items: center; }
+.fly-right .fly-body { left: auto; right: 0; }
 .jx-replay { font: inherit; font-size: 0.8125rem; font-weight: 600; min-height: 36px; padding: 4px 12px; background: var(--surface-card); color: var(--text-primary); border: 1px solid var(--border-strong); cursor: pointer; }
 .jx-replay:hover { border-color: var(--rule); }
 .jx-replay:focus-visible, .jx-item:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
@@ -412,7 +414,7 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
 .jx-item[aria-selected="true"] { background: var(--rule); color: var(--surface-page); font-weight: 600; }
 @media (max-width: 760px) {
   .jx { grid-template-columns: 1fr; }
-  .jx-list { order: -1; flex-direction: row; flex-wrap: nowrap; overflow-x: auto; max-height: none; border-top: 0; gap: 4px; padding-bottom: 4px; }
+  .jx-list { flex-direction: row; flex-wrap: nowrap; overflow-x: auto; max-height: none; border-top: 0; gap: 4px; padding-bottom: 4px; }
   .jx-item { flex: 0 0 auto; border: 1px solid var(--border-default); min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) { .jx-svg .js { transition: none; } }
@@ -689,21 +691,17 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       <button type="button" role="tab" id="qt-str" aria-controls="q3-str" aria-selected="false" data-q="str" tabindex="-1"><span class="ct-txt"><span class="qn">Question 2 of 2</span><strong>How is the strength of the bite changing, given how hard the government is pushed?</strong></span></button>
     </div>
     <div class="sub" data-mode="dir" id="q3-dir" role="tabpanel" aria-labelledby="qt-dir">
-      <p class="chart-read">Choose a jurisdiction to watch it move across the first chart, year by year.</p>
-      <div class="ctl">
-        <details class="fly fly-down"><summary>How to read</summary><div class="fly-body"><ul class="axes">
+      <div class="jx" data-mode="dir">
+        <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
+        <div class="jx-main">
+          <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><details class="fly fly-down fly-right"><summary>How to read</summary><div class="fly-body"><ul class="axes">
           <li><b>Push, across:</b> the forces acting on the government, from promotion (0) to protection (100).</li>
           <li><b>Bite, up:</b> what the policy does, from enabling (0) to constraining (100).</li>
           <li><b>Line:</b> the solid line runs from 2024 to 2026, with 2026 as the large dot. The dashed line and hollow dots are projected to 2028. Colour is legal form, as on the charts.</li>
-        </ul></div></details>
-      </div>
-      <div class="jx" data-mode="dir">
-        <div class="jx-main">
-          <div class="jx-head"><h4 class="jx-name"></h4><button type="button" class="jx-replay">Replay</button></div>
+        </ul></div></details><button type="button" class="jx-replay">Replay</button></span></div>
           <svg class="jx-svg" viewBox="0 0 460 440" role="img"></svg>
           <div class="jx-note" aria-live="polite"></div>
         </div>
-        <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
       </div>
       <details class="boxes">
         <summary>Pattern in each year, and what moved, for all sixteen jurisdictions</summary>
@@ -716,21 +714,17 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       </details>
     </div>
     <div class="sub" data-mode="str" id="q3-str" role="tabpanel" aria-labelledby="qt-str" hidden>
-      <p class="chart-read">Choose a jurisdiction to watch it move across the second chart, year by year.</p>
-      <div class="ctl">
-        <details class="fly fly-down"><summary>How to read</summary><div class="fly-body"><ul class="axes">
+      <div class="jx" data-mode="str">
+        <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
+        <div class="jx-main">
+          <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><details class="fly fly-down fly-right"><summary>How to read</summary><div class="fly-body"><ul class="axes">
           <li><b>Push, across:</b> the eight push factors added together, from weak (0) to strong (100).</li>
           <li><b>Bite, up:</b> the average of the support score and the regulation score, from weak (0) to strong (100).</li>
           <li><b>Line:</b> the solid line runs from 2024 to 2026, with 2026 as the large dot. The dashed line and hollow dots are projected to 2028. Colour is legal form, as on the charts.</li>
-        </ul></div></details>
-      </div>
-      <div class="jx" data-mode="str">
-        <div class="jx-main">
-          <div class="jx-head"><h4 class="jx-name"></h4><button type="button" class="jx-replay">Replay</button></div>
+        </ul></div></details><button type="button" class="jx-replay">Replay</button></span></div>
           <svg class="jx-svg" viewBox="0 0 460 440" role="img"></svg>
           <div class="jx-note" aria-live="polite"></div>
         </div>
-        <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
       </div>
       <details class="boxes">
         <summary>Pattern in each year, and what moved, for all sixteen jurisdictions</summary>
@@ -1628,7 +1622,7 @@ drawTraj("str", "trav2", "travRows2");
       if (!p && !q) return "From 2024 to 2026, neither the pressure nor policy changed much.";
       return `From 2024 to 2026, ${p || "the pressure changed little"} and ${q || "policy changed little"}.`;
     }
-    if (!p && !q) return "No change dated to 2028 was found, so the projection stays at the 2026 position.";
+    if (!p && !q) return "";
     return `If the scheduled changes take effect, by 2028 ${[p, q].filter(Boolean).join(" and ")}.`;
   }
   document.querySelectorAll("#pl-t3 .jx").forEach(jx => {
@@ -1661,18 +1655,16 @@ drawTraj("str", "trav2", "travRows2");
       const col = `var(--form-${d.f})`, pts = d.series.filter(s => s[M.y] != null);
       nameEl.textContent = d.n;
       svg.setAttribute("aria-label", `${d.n}: ${pts.map(s => `${s.year} push ${r0(s[M.x])}, bite ${r0(s[M.y])}`).join("; ")}`);
-      const t = TRAJ[d.n] || {};
       note.innerHTML = "";
-      const p1 = cellEl("p", "jx-obs", `${boxes(d, mode)} ${moveText(d.series[0], d.series[2], mode, "past")} ${moveText(d.series[2], d.series[4], mode, "next")}`);
-      note.appendChild(p1);
-      if (t.hist) { const p = cellEl("p"); p.append(cellEl("b", "", "What changed, 2024 to 2026: "), t.hist); note.appendChild(p); }
-      if (t.proj) { const p = cellEl("p"); p.append(cellEl("b", "", "What is scheduled, 2026 to 2028: "), t.proj); note.appendChild(p); }
+      const nxt = moveText(d.series[2], d.series[4], mode, "next");
+      note.appendChild(cellEl("p", "jx-obs", `${boxes(d, mode)} ${moveText(d.series[0], d.series[2], mode, "past")}${nxt ? " " + nxt : ""}`));
       const els = pts.map((s, k) => {
         const g = mk("g", { class: "js" + (animate && !RM ? " hid" : "") }, null, trail);
         if (k) { const a = pts[k - 1]; mk("line", { x1: sx(a[M.x]), y1: sy(a[M.y]), x2: sx(s[M.x]), y2: sy(s[M.y]), stroke: col, "stroke-width": 2.5, "stroke-linecap": "round", "stroke-dasharray": s.year > 2026 ? "6 5" : "none" }, null, g); }
         mk("circle", s.year === 2026 ? { cx: sx(s[M.x]), cy: sy(s[M.y]), r: 8, fill: col } : s.year > 2026 ? { cx: sx(s[M.x]), cy: sy(s[M.y]), r: 5.5, fill: "var(--surface-card)", stroke: col, "stroke-width": 2.5 } : { cx: sx(s[M.x]), cy: sy(s[M.y]), r: 5, fill: col, "fill-opacity": 0.6 }, null, g);
         const right = sx(s[M.x]) < L + S - 60;
-        mk("text", { class: "jlab", x: sx(s[M.x]) + (right ? 11 : -11), y: sy(s[M.y]) + 4, "text-anchor": right ? "start" : "end" }, String(s.year), g);
+        const cy = sy(s[M.y]), inCell = (cy - T) % (S / 3), ly = inCell < 34 ? cy + 18 : cy + 4;
+        mk("text", { class: "jlab", x: sx(s[M.x]) + (right ? 11 : -11), y: ly, "text-anchor": right ? "start" : "end" }, String(s.year), g);
         return { g, s };
       });
       // keep year labels from colliding: hide labels of points within 14px of an earlier one
