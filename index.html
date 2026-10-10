@@ -147,6 +147,7 @@ td.c, th.c, td.num, th.num { width: 1%; padding-inline: 8px; }
 tbody tr.active td { background: var(--surface-quiet); }
 .chart-block > h3 { font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.3; font-weight: 600; }
 td.math { white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.math .gapbar { width: 112px; margin: 4px 0 6px; }
 td.math .eq { color: var(--text-secondary); margin-right: 6px; }
 td.math b { font-weight: 700; }
 td.reading { min-width: 13rem; }
@@ -1275,7 +1276,10 @@ const NEXT = {
       const tr = document.createElement("tr"); tr.dataset.i = DATA.indexOf(d);
       tr.appendChild(cellEl("td", "name", d.n));
       const sg = v => (v > 0 ? "+" : v < 0 ? "\u2212" : "") + Math.abs(v);
-      const math = (x, y, v) => { const td = cellEl("td", "math"); td.appendChild(cellEl("span", "eq", `${x} \u2212 ${y} =`)); td.appendChild(cellEl("b", "", sg(v))); return td; };
+      const math = (x, y, v) => { const td = cellEl("td", "math");
+        const bar = cellEl("div", "gapbar"), neg = cellEl("span", "neg"), pos = cellEl("span", "pos");
+        neg.style.width = v < 0 ? Math.min(56, -v * 56 / 30) + "px" : "0"; pos.style.width = v > 0 ? Math.min(56, v * 56 / 30) + "px" : "0";
+        bar.append(neg, pos); bar.setAttribute("aria-hidden", "true"); td.appendChild(bar); td.appendChild(cellEl("span", "eq", `${x} \u2212 ${y} =`)); td.appendChild(cellEl("b", "", sg(v))); return td; };
       tr.appendChild(math(d.pushStr, d.respStr, gap));
       tr.appendChild(math(d.respDir, d.pushDir, lean));
       tr.appendChild(cellEl("td", "why", NEXT[d.n]));
