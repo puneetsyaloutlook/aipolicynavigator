@@ -635,20 +635,14 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
       </div>
     </div>
     <details class="boxes">
-      <summary>Signals, speed and likely policy for all eight pressures, as a table</summary>
+      <summary>Signs, likely policy response and timing for all eight pressures, as a table</summary>
     <div class="table-scroll">
-      <table style="min-width: 1100px">
-        <thead><tr><th>Push factor</th><th>Signals to watch</th><th>Speed</th><th>Policy the government is likely to use</th><th>What to build</th><th class="c">Australia</th></tr></thead>
+      <table style="min-width: 820px">
+        <thead><tr><th>Pressure</th><th>Signs it is rising</th><th>Likely policy response</th><th>How quickly policy follows</th></tr></thead>
         <tbody id="trigRows"></tbody>
       </table>
     </div>
-    <p class="caption">Speed is a judgement of how quickly a rise in the factor has turned into binding rules in the research, from fast (months) to slow (years). Australian examples: the under-16 minimum age took effect on 10 December 2025, and the guardrails proposed in September 2024 were set aside by December 2025.</p>
-    <div class="defs">
-      <div><strong>Duty in force and specificity</strong><span>Build an internal standard written to the same wording as the rule: an owner, a risk assessment, a list of what is in scope.</span></div>
-      <div><strong>Point of control</strong><span>Build a gate at the same point the government would use: before launch, at procurement, at the platform, at the hosting provider.</span></div>
-      <div><strong>Detection</strong><span>Build monitoring and logs, so that a problem is found by you before it is found by a regulator or a journalist.</span></div>
-      <div><strong>Sanction and enforcement</strong><span>Build an evidence trail and an incident record: what was tested, what was found, what was fixed and when.</span></div>
-    </div>
+    <p class="caption">How quickly policy follows is a judgement, from the research, of how fast a rise in each pressure has led to binding rules. Fast means months, slow means years, and medium falls between them.</p>
     </details>
   </div>
 
@@ -1260,24 +1254,13 @@ const TRIG = [
   ["Labour and stability", ["Union campaigns, retrenchments tied to AI and workplace law reviews.", "State work health and safety changes."], "Medium", "Governments set duties with specific steps, such as consultation and assessment.", "Record consultation with staff, and complete an impact assessment before AI is used for rostering, monitoring or hiring."],
   ["Information control", ["Election deepfake incidents.", "Labelling proposals and takedown orders to platforms."], "Fast near elections", "Governments act at a point of control and add detection, such as labelling and provenance.", "Add provenance and labelling to generated content, and keep logs that let an output be traced to its source."]
 ];
+const PRESS_ROWS = [["Strategic rivalry", "Outcomes of summits between the United States and China, and new frontier models released by rival states.", "Controls on chips, compute and access to models, such as export controls and bans on foreign models in government buying, along with funding for domestic capacity.", "Medium"], ["Sovereignty", "No early signs were identified in the research.", "Rules on where data and compute must be located, in government buying and critical-infrastructure rules, and public spending on sovereign compute and data centres.", "Medium"], ["Growth and investment", "Productivity reviews.", "Support for AI: national plans, new funding, programs to drive adoption, and relief from rules that are dropped or delayed.", "Slow: years. Relief can be reversed as easily as it was given."], ["Industry and partner pressure", "Submissions from industry bodies, and objections from partner governments.", "Relief, mostly by pausing or delaying duties that are already law.", "Medium. It delays rules more than it creates new ones."], ["Rights tradition", "Court decisions, and reports by commissioners and ombudsmen.", "Specific duties in force, such as privacy reform and requirements to explain automated decisions.", "Slow: years"], ["Public harm and demand", "Child safety findings, high-profile incidents, regulator reports, polling and inquiries.", "Enforcement and penalties, usually applied to platforms.", "Fast: months"], ["Labour and stability", "Union campaigns, job losses tied to AI, and reviews of workplace law.", "Duties with specific steps, such as consulting staff and assessing the impact on work, including changes to work health and safety rules.", "Medium"], ["Information control", "Deepfake incidents during elections.", "Labelling and provenance requirements, and takedown orders to platforms.", "Fast near elections"]];
 (function () {
-  const au = DATA.find(d => d.n === "Australia");
   const tb = byId("trigRows");
-  TRIG.forEach((r, k) => {
+  PRESS_ROWS.forEach(r => {
     const tr = document.createElement("tr");
     tr.appendChild(cellEl("td", "name", r[0]));
-    r.slice(1).forEach((v, k) => {
-      if (k === 0) {
-        const td = cellEl("td", "");
-        [["Pressure rising", v[0]], ["Early policy moves", v[1]]].forEach(([lab, txt]) => {
-          if (!txt) return;
-          const d = document.createElement("div"), b = document.createElement("b");
-          b.textContent = lab + ": "; d.append(b, txt); td.appendChild(d);
-        });
-        tr.appendChild(td);
-      } else tr.appendChild(cellEl("td", "", v));
-    });
-    tr.appendChild(cellEl("td", "c", au.p[k]));
+    r.slice(1).forEach(v => tr.appendChild(cellEl("td", "", v)));
     tb.appendChild(tr);
   });
 })();
