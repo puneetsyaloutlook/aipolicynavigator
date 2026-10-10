@@ -723,31 +723,12 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   <div class="chart-block" id="pl-t3">
     <p class="chart-no"><span>Theme 3 of 3</span></p>
     <h2 class="chart-q">Follow how policy has moved since 2024 and where it is scheduled to go</h2>
-    <p class="chart-read">For each jurisdiction, these charts show how its AI policy and the pressure on its government have changed since 2024, and how they would change to 2028. The projection includes only changes that already have a date, such as a law coming into force, so a jurisdiction with no dated change stays at its 2026 level.</p>
+    <p class="chart-read">For each jurisdiction, these charts show how the pressure on its government and its AI policy have changed since 2024, and how they would change to 2028. The projection includes only changes that already have a date, such as a law coming into force, so a jurisdiction with no dated change stays at its 2026 level.</p>
     <div class="concepts qswitch" role="tablist" aria-label="Choose a question">
-      <button type="button" role="tab" id="qt-dir" aria-controls="q3-dir" aria-selected="true" data-q="dir"><span class="ct-txt"><span class="qn">Question 1 of 2</span><strong>How has the government's AI policy changed since 2024?</strong></span></button>
-      <button type="button" role="tab" id="qt-str" aria-controls="q3-str" aria-selected="false" data-q="str" tabindex="-1"><span class="ct-txt"><span class="qn">Question 2 of 2</span><strong>How has the pressure on the government changed since 2024?</strong></span></button>
+      <button type="button" role="tab" id="qt-str" aria-controls="q3-str" aria-selected="true" data-q="str"><span class="ct-txt"><span class="qn">Question 1 of 2</span><strong>How has the pressure on the government changed since 2024?</strong></span></button>
+      <button type="button" role="tab" id="qt-dir" aria-controls="q3-dir" aria-selected="false" data-q="dir" tabindex="-1"><span class="ct-txt"><span class="qn">Question 2 of 2</span><strong>How has the government's AI policy changed since 2024?</strong></span></button>
     </div>
-    <div class="sub" data-mode="dir" id="q3-dir" role="tabpanel" aria-labelledby="qt-dir">
-      <div class="jx" data-mode="dir">
-        <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
-        <div class="jx-main">
-          <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><button type="button" class="jx-replay">Replay</button></span></div>
-          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 560 320" role="img"></svg><div class="jx-legend"><span class="li"><span class="lsw sprot" aria-hidden="true"></span><span><b>Regulation:</b> rules that are in force and enforced.</span></span><span class="li"><span class="lsw spro" aria-hidden="true"></span><span><b>Support for AI:</b> investment, programs to drive adoption, and relief from rules.</span></span></div></div>
-          <div class="jx-note" aria-live="polite"></div>
-        </div>
-      </div>
-      <details class="boxes">
-        <summary>Regulation and support for AI in each year, for all sixteen jurisdictions</summary>
-        <div class="table-scroll types">
-          <table style="min-width: 1100px">
-            <thead><tr><th>Jurisdiction</th><th>2024</th><th>2025</th><th>2026</th><th>2027, projected</th><th>2028, projected</th><th>What moved, 2024 to 2026</th><th>What is assumed, 2026 to 2028</th></tr></thead>
-            <tbody id="travRows1"></tbody>
-          </table>
-        </div>
-      </details>
-    </div>
-    <div class="sub" data-mode="str" id="q3-str" role="tabpanel" aria-labelledby="qt-str" hidden>
+    <div class="sub" data-mode="str" id="q3-str" role="tabpanel" aria-labelledby="qt-str">
       <div class="jx" data-mode="str">
         <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
         <div class="jx-main">
@@ -762,6 +743,25 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
           <table style="min-width: 1100px">
             <thead><tr><th>Jurisdiction</th><th>2024</th><th>2025</th><th>2026</th><th>2027, projected</th><th>2028, projected</th><th>What moved, 2024 to 2026</th><th>What is assumed, 2026 to 2028</th></tr></thead>
             <tbody id="travRows2"></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+    <div class="sub" data-mode="dir" id="q3-dir" role="tabpanel" aria-labelledby="qt-dir" hidden>
+      <div class="jx" data-mode="dir">
+        <div class="jx-list" role="listbox" aria-label="Jurisdictions"></div>
+        <div class="jx-main">
+          <div class="jx-head"><h4 class="jx-name"></h4><span class="jx-tools"><button type="button" class="jx-replay">Replay</button></span></div>
+          <div class="jx-fig"><svg class="jx-svg" viewBox="0 0 560 320" role="img"></svg><div class="jx-legend"><span class="li"><span class="lsw sprot" aria-hidden="true"></span><span><b>Regulation:</b> rules that are in force and enforced.</span></span><span class="li"><span class="lsw spro" aria-hidden="true"></span><span><b>Support for AI:</b> investment, programs to drive adoption, and relief from rules.</span></span></div></div>
+          <div class="jx-note" aria-live="polite"></div>
+        </div>
+      </div>
+      <details class="boxes">
+        <summary>Regulation and support for AI in each year, for all sixteen jurisdictions</summary>
+        <div class="table-scroll types">
+          <table style="min-width: 1100px">
+            <thead><tr><th>Jurisdiction</th><th>2024</th><th>2025</th><th>2026</th><th>2027, projected</th><th>2028, projected</th><th>What moved, 2024 to 2026</th><th>What is assumed, 2026 to 2028</th></tr></thead>
+            <tbody id="travRows1"></tbody>
           </table>
         </div>
       </details>
@@ -793,8 +793,8 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
     <p class="chart-no"><span>Since 2024</span></p>
     <h2 class="chart-q">How Australia got here, and what is scheduled</h2>
     <div class="concepts qswitch" role="tablist" aria-label="Choose a chart" id="auSwitch">
-      <button type="button" role="tab" aria-selected="true" data-q="dir"><span class="ct-txt"><strong>Policy</strong><span>Regulation and support for AI</span></span></button>
-      <button type="button" role="tab" aria-selected="false" data-q="str" tabindex="-1"><span class="ct-txt"><strong>Pressure</strong><span>To promote AI and to protect people</span></span></button>
+      <button type="button" role="tab" aria-selected="true" data-q="str"><span class="ct-txt"><strong>Pressure</strong><span>To promote AI and to protect people</span></span></button>
+      <button type="button" role="tab" aria-selected="false" data-q="dir" tabindex="-1"><span class="ct-txt"><strong>Policy</strong><span>Regulation and support for AI</span></span></button>
     </div>
     <div class="jx-fig au-fig">
       <svg class="jx-svg" id="auLine" viewBox="0 0 560 320" role="img"></svg>
@@ -1738,7 +1738,7 @@ drawTraj("str", "trav2", "travRows2");
     t.addEventListener("click", () => set(t.dataset.q));
     t.addEventListener("keydown", e => { if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) { e.preventDefault(); set(tabs[(i + 1) % 2].dataset.q, true); } });
   });
-  set("dir");
+  set("str");
 })();
 
 /* ---------- hero plot on the home screen ---------- */
