@@ -645,8 +645,8 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
     <details class="boxes">
       <summary>Gap and lean for all sixteen jurisdictions, as a table</summary>
       <div class="table-scroll">
-        <table style="min-width: 960px">
-          <thead><tr><th>Jurisdiction</th><th>Gap<small>Strength of pressure minus strength of policy</small></th><th>Lean<small>Direction of policy minus direction of pressure</small></th><th>Reading</th><th>What it suggests</th></tr></thead>
+        <table style="min-width: 820px">
+          <thead><tr><th>Jurisdiction</th><th>Gap<small>Strength of pressure minus strength of policy</small></th><th>Lean<small>Direction of policy minus direction of pressure</small></th><th>What it suggests</th></tr></thead>
           <tbody id="gapRows"></tbody>
         </table>
       </div>
@@ -1278,10 +1278,6 @@ const NEXT = {
       const math = (x, y, v) => { const td = cellEl("td", "math"); td.appendChild(cellEl("span", "eq", `${x} \u2212 ${y} =`)); td.appendChild(cellEl("b", "", sg(v))); return td; };
       tr.appendChild(math(d.pushStr, d.respStr, gap));
       tr.appendChild(math(d.respDir, d.pushDir, lean));
-      const rd = cellEl("td", "reading");
-      rd.appendChild(cellEl("span", "", gap >= 10 ? "Pressure stronger than policy" : gap <= -10 ? "Policy stronger than pressure" : "Matched in strength"));
-      rd.appendChild(cellEl("span", "", lean >= 10 ? "Policy points more to regulation" : lean <= -10 ? "Policy points more to support for AI" : "Same direction"));
-      tr.appendChild(rd);
       tr.appendChild(cellEl("td", "why", NEXT[d.n]));
       tb.appendChild(tr);
     });
