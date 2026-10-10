@@ -237,6 +237,17 @@ h1, h2, h3 { font-family: var(--font-serif); }
 .hero-fig svg { display: block; width: 100%; height: auto; font-family: var(--font-sans); }
 .hero-fig figcaption { font-size: 0.75rem; line-height: 1.4; color: var(--text-secondary); margin-top: var(--space-sm); max-width: 60ch; }
 @media (max-width: 820px) { .hero { grid-template-columns: 1fr; } }
+.hero-dots .hdot { stroke: none; fill-opacity: 0.62; cursor: pointer; transition: fill-opacity 300ms ease; outline: none; }
+.hero-dots .hdot.big { fill-opacity: 0.4; }
+.hero-dots .hdot.nodata { fill: var(--surface-card); stroke: var(--chart-ink); stroke-width: 1.5; fill-opacity: 1; }
+.hero-dots.focus .hdot:not(.on) { fill-opacity: 0.18; }
+.hero-dots.focus .hdot.nodata:not(.on) { stroke-opacity: 0.35; }
+.hero-dots .hdot.on { fill-opacity: 0.9; }
+.hero-dots .hdot.nodata.on { stroke-width: 2.5; }
+.hero-dots .hdot:focus-visible { stroke: var(--focus); stroke-width: 3; }
+.hero-name { fill: var(--text-primary); font-size: 14px; font-weight: 700; paint-order: stroke; stroke: var(--chart-wash); stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
+.hero-read { display: flex; flex-wrap: wrap; gap: 4px var(--space-lg); font-size: 0.875rem; color: var(--text-secondary); min-height: 2.6em; margin-top: var(--space-xs); font-variant-numeric: tabular-nums; }
+.hero-read b { color: var(--text-primary); font-weight: 600; margin-right: 4px; }
 .hero-dots circle { transform-box: fill-box; transform-origin: center; animation: pop 560ms cubic-bezier(.2,.8,.3,1) both; animation-delay: calc(var(--i) * 40ms); }
 @keyframes pop { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: scale(1); } }
 @media (prefers-reduced-motion: reduce) { .hero-dots circle { animation: none; } }
@@ -524,7 +535,8 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
         </div>
       </div>
       <figure class="hero-fig">
-        <svg id="heroPlot" viewBox="0 0 560 500" role="img" aria-label="Sixteen jurisdictions plotted by direction of push, from promotion to protection, and direction of bite, from enabling to constraining."></svg>
+        <svg id="heroPlot" viewBox="0 0 560 500" role="group" aria-label="Sixteen jurisdictions plotted by direction of push, from promotion to protection, and direction of bite, from enabling to constraining."></svg>
+        <div class="hero-read" id="heroRead" aria-live="off"></div>
         <figcaption>Each dot is a jurisdiction. Its position across shows the direction of the push, from promotion to protection, and its position up shows the direction of the bite, from enabling to constraining. Dot area shows private AI investment as a share of GDP.</figcaption>
       </figure>
     </div>
@@ -1766,28 +1778,44 @@ function drawHero() {
   mk("text", { class: "axis-end", x: L - 10, y: T + ph, "text-anchor": "start", transform: `rotate(-90 ${L - 10} ${T + ph})` }, "Enabling");
   mk("text", { class: "axis-end", x: L - 10, y: T, "text-anchor": "end", transform: `rotate(-90 ${L - 10} ${T})` }, "Constraining");
   mk("text", { class: "axis-title", x: 14, y: T + ph / 2, "text-anchor": "middle", transform: `rotate(-90 14 ${T + ph / 2})` }, "Direction of bite");
-  const rr = d => d.share == null ? 4 : Math.max(2.5, 0.56 * K * Math.sqrt(d.share));
+  /* bubble area stays proportional to share; the scale is 1.41 times the old one, which doubles the area of every bubble */
+  const rr = d => d.share == null ? 5 : Math.max(4, 0.56 * Math.SQRT2 * K * Math.sqrt(d.share));
   const g = mk("g", { class: "hero-dots" });
   const order = DATA.map((d, i) => ({ d, i })).sort((a, b) => rr(b.d) - rr(a.d));
+  const dots = new Map();
   order.forEach(({ d }, n) => {
     const c = document.createElementNS(NS, "circle");
     c.setAttribute("cx", sx(d.pushDir)); c.setAttribute("cy", sy(d.respDir)); c.setAttribute("r", rr(d));
-    c.setAttribute("class", d.share == null ? "dot-nodata" : "dot f-" + d.f);
+    c.setAttribute("class", d.share == null ? "hdot nodata" : "hdot f-" + d.f + (rr(d) > 30 ? " big" : ""));
+    c.setAttribute("tabindex", "0"); c.setAttribute("role", "button"); c.setAttribute("aria-label", d.n);
     c.style.setProperty("--i", n);
-    if (d.share != null && rr(d) > 20) c.style.fillOpacity = 0.35;
-    const t = document.createElementNS(NS, "title"); t.textContent = `${d.n}: push ${d.pushDir}, bite ${d.respDir}`; c.appendChild(t);
-    g.appendChild(c);
+    g.appendChild(c); dots.set(d, c);
   });
-  const call = (name, lx, ly, anchor) => {
-    const d = DATA.find(x => x.n === name), cx = sx(d.pushDir), cy = sy(d.respDir), r = rr(d);
-    const dx = lx - cx, dy = ly - cy, len = Math.hypot(dx, dy);
-    mk("line", { class: "leader", x1: cx + dx / len * r, y1: cy + dy / len * r, x2: lx - (anchor === "end" ? -3 : 3), y2: ly });
-    mk("text", { class: "dot-label", x: lx + (anchor === "end" ? -6 : 6), y: ly + 4, "text-anchor": anchor }, name);
-  };
-  call("California", sx(97), sy(95), "end");
-  call("China", sx(12), sy(64), "start");
-  call("Australia", sx(62), sy(26), "start");
-  call("Japan", sx(30), sy(3), "start");
+  const lab = mk("text", { class: "hero-name", "text-anchor": "middle" }, "");
+  const read = byId("heroRead");
+  const fmtPct = v => v >= 1 ? v.toFixed(1) + "%" : v >= 0.1 ? v.toFixed(2) + "%" : v.toFixed(3) + "%";
+  const seq = DATA.slice().sort((a, b) => a.pushDir - b.pushDir || a.respDir - b.respDir);
+  let k = seq.findIndex(d => d.n === "Australia"), timer = null, hold = null;
+  function show(d) {
+    dots.forEach((c, x) => c.classList.toggle("on", x === d));
+    g.classList.add("focus");
+    const cx = sx(d.pushDir), cy = sy(d.respDir), r = rr(d);
+    let ly = cy - r - 9; if (ly < T + 14) ly = cy + r + 18;
+    lab.setAttribute("x", Math.min(L + pw - 60, Math.max(L + 60, cx))); lab.setAttribute("y", ly); lab.textContent = d.n;
+    g.appendChild(dots.get(d));
+    read.innerHTML = `<span><b>Push score</b> ${d.pushDir}</span><span><b>Bite score</b> ${d.respDir}</span><span><b>Main form of policy</b> ${FORM[d.f]}</span><span><b>Private AI investment</b> ${d.share == null ? "no figure" : fmtPct(d.share) + " of GDP"}</span>`;
+  }
+  const RMh = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const next = () => { k = (k + 1) % seq.length; show(seq[k]); };
+  const start = () => { if (RMh || timer) return; timer = setInterval(next, 2600); };
+  const stop = () => { clearInterval(timer); timer = null; };
+  const pick = d => { stop(); clearTimeout(hold); k = seq.indexOf(d); show(d); hold = setTimeout(start, 6000); };
+  dots.forEach((c, d) => {
+    c.addEventListener("pointerenter", () => pick(d));
+    c.addEventListener("click", () => pick(d));
+    c.addEventListener("focus", () => pick(d));
+  });
+  show(seq[k]); start();
 }
 drawHero();
 
