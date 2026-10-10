@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Push x Bite</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Source+Serif+4:wght@400;600;700&display=swap">
 <style>
@@ -487,6 +492,8 @@ details.boxes[open] summary { margin-bottom: var(--space-sm); }
   .m-view.enter, .trav .tp.fresh { animation: none !important; }
 }
 </style>
+</head>
+<body>
 
 <div class="appbar">
   <div class="appbar-in">
@@ -1817,3 +1824,6 @@ showTab(location.hash.slice(1));
 document.addEventListener("click", e => { document.querySelectorAll("details.fly[open]").forEach(d => { if (!d.contains(e.target)) d.removeAttribute("open"); }); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll("details.fly[open]").forEach(d => d.removeAttribute("open")); });
 </script>
+
+</body>
+</html>
